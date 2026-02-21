@@ -1,200 +1,73 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code)
-when working with code in this repository.
+## Project
+
+`stylelint-sass` — a Stylelint plugin for linting `.sass` (indented syntax) files. Built on
+[sass-parser](https://www.npmjs.com/package/sass-parser) (official, PostCSS-compatible, maintained
+by the Sass team).
+
+Repo: `theagenticengineer/stylelint-sass`
+
+## Commands
+
+```bash
+pnpm check            # all quality gates (typecheck + lint + format + test)
+pnpm test             # vitest run
+pnpm run lint:md      # markdownlint
+pnpm run format       # prettier --write
+pnpm run format:check
+```
+
+## Code Style
+
+- 2-space indent, LF line endings, UTF-8
+- 100 character max line length (markdownlint + prettier)
+- Prettier: `printWidth: 100`, `singleQuote: true`
+- Conventional commits: `feat(#N):`, `fix(#N):`, `chore(#N):`, `docs(#N):` — always reference
+  the issue number
+- Branch naming: `<type>/sass-lint-<issue#>-<title>`
+
+## Workflow Rules
+
+These are non-negotiable and apply to every session:
+
+1. **Human merges PRs** — the agent never merges. Submit PRs via `gt submit`, human merges via
+   Graphite Web.
+2. **Test-first** — write tests before implementation. BAD/GOOD `.sass` cases from the rule spec
+   are the acceptance criteria.
+3. **`pnpm check` before commit** — all quality gates must pass before any commit.
+4. **Every PR goes through `/review-pr`** — local PAL review, submit, monitor CI, read Gemini
+   feedback, then hand off to human.
+5. **Rule issues include full spec** — when creating a rule issue, copy the BAD/GOOD `.sass` code
+   blocks from `docs/plan/rules/` verbatim into the issue body.
+6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
+   `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
+
+## Skills
+
+- `/add-rule` — implement a rule from its spec (test-first, register, pnpm check, gt create)
+- `/create-issue` — create a structured GitHub issue via `gh` CLI
+- `/worktree` — create an isolated git worktree
+- `/merge-worktree` — clean up worktree after human merges via Graphite Web
+- `/review-pr` — 5-phase review loop: PAL local review, submit PR, monitor CI, read Gemini
+  review, hand off
+
+## Architecture
+
+- **Parser**: sass-parser (official, v0.4.x)
+- **Strategy**: Stylelint plugin using sass-parser as `customSyntax`
+- **Rule pattern**: see `docs/plan/01-architecture.md`
+- **23 rules** across 7 phases — see `docs/plan/02-roadmap.md`
 
 ## Implementation Plan
 
-The full implementation plan lives in `docs/plan/`:
+Full plan lives in `docs/plan/`:
 
-- `docs/plan/00-desired-state.md` -- Installation, configuration,
-  CLI usage, recommended config contents
-- `docs/plan/01-architecture.md` -- Package structure, rule pattern,
-  test pattern, plugin entry point
-- `docs/plan/02-roadmap.md` -- 8-phase roadmap (Phase 0-7 + future),
-  dependency graph, exit criteria per phase
-- `docs/plan/rules/` -- 18 rule specification files,
-  each with BAD/GOOD `.sass` test cases
+- `00-desired-state.md` — config, CLI usage
+- `01-architecture.md` — package structure, rule pattern
+- `02-roadmap.md` — 8-phase roadmap with exit criteria
+- `03-implementation-plan.md` — detailed implementation
+- `04-execution-steps.md` — atomic execution steps
+- `rules/` — 23 rule specs with BAD/GOOD `.sass` cases
 
-Development is designed for **autonomous agentic execution**:
-each phase has clear entry/exit criteria. Human feedback is only
-needed at explicit phase gates marked in the roadmap.
-
-## Project Overview
-
-This is a **new Sass indented syntax (`.sass`) linter** -- a
-greenfield project to fill the gap left by the abandoned
-[sasstools/sass-lint](https://github.com/sasstools/sass-lint)
-(archived March 2022). No maintained linter exists today for
-`.sass` files.
-
-### Why This Project Exists
-
-- `sasstools/sass-lint` is archived; its parser (gonzales-pe)
-  is unmaintained and can't parse modern Sass
-  (`@use`, `@forward`, CSS custom properties).
-- Stylelint + `postcss-sass` is unreliable for `.sass`:
-  postcss-sass wraps gonzales-pe, inherits its bugs, and
-  hasn't been published in 5+ years. Autofix causes
-  destructive bugs (mixins disappearing).
-- The official Sass team still invests in indented syntax
-  (Dart Sass 1.80+ added multiline statements, flexible
-  line breaks, optional semicolons for `.sass`).
-- There is no tree-sitter grammar for `.sass` either.
-
-## Architecture Strategy
-
-### Parser: sass-parser (official)
-
-The project should be built on
-**[sass-parser](https://www.npmjs.com/package/sass-parser)**
-(`pkg/sass-parser` inside the dart-sass repo):
-
-- Built by the Sass team, actively developed
-  (v0.4.x as of Feb 2026)
-- PostCSS-compatible AST -- statement nodes extend PostCSS's
-  `Rule`, `AtRule`, `Declaration`, `Comment`, `Root`
-- Natively supports `.sass`, `.scss`, and `.css`
-  via `Syntax` exports
-- Provides richer AST than plain PostCSS:
-  `Declaration.valueExpression` gives fully-parsed value
-  trees, `Rule.parsedSelector` gives fully-parsed selectors
-- **Caveat**: still alpha, incomplete "raws" (formatting
-  metadata), subset of CSS/Sass syntax supported.
-  Monitor releases.
-
-#### sass-parser Mind Map
-
-<!-- markdownlint-disable MD013 -->
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#2d333b', 'primaryTextColor': '#e6edf3', 'primaryBorderColor': '#444c56', 'secondaryColor': '#1f6feb', 'secondaryTextColor': '#e6edf3', 'tertiaryColor': '#238636', 'tertiaryTextColor': '#e6edf3', 'noteBkgColor': '#161b22', 'noteTextColor': '#e6edf3'}}}%%
-mindmap
-  root((sass-parser))
-    Origin
-      Sass team maintained
-      Lives in dart-sass repo
-      v0.4.x Feb 2026
-      Actively published to npm
-    Syntaxes
-      .sass indented
-      .scss
-      .css
-    PostCSS Compat
-      Nodes extend PostCSS base classes
-        Rule
-        AtRule
-        Declaration
-        Comment
-        Root
-      Drop-in customSyntax for Stylelint
-      Works with existing PostCSS plugins
-    Richer AST
-      Declaration.valueExpression
-        Fully-parsed value syntax trees
-      Rule.parsedSelector
-        Fully-parsed selector components
-      PostCSS treats values/selectors as opaque strings — sass-parser parses them
-    Caveats
-      Still alpha — API may change
-      Incomplete raws
-        Formatting metadata not fully preserved
-        Limits autofix / code formatting
-      Subset of CSS/Sass syntax supported
-      Action: monitor releases
-```
-
-<!-- markdownlint-enable MD013 -->
-
-### Two Viable Paths
-
-<!-- markdownlint-disable MD013 MD060 -->
-
-| Path                  | Description                                                                                                 | Tradeoff                                                                                               |
-| --------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **Stylelint plugin**  | Use sass-parser as `customSyntax` for Stylelint, write `.sass`-specific rules as a Stylelint plugin package | Inherits 168 core rules + ecosystem; depends on Stylelint release cycle and sass-parser PostCSS compat |
-| **Standalone linter** | Build a standalone CLI that uses sass-parser directly, with its own rule engine                             | Full control; more work; must implement rule engine, config loading, reporter, CLI                     |
-
-<!-- markdownlint-enable MD013 MD060 -->
-
-The Stylelint plugin path is recommended as the primary
-strategy. A standalone linter could be a fallback if
-sass-parser's PostCSS compatibility proves insufficient.
-
-### Lessons from sasstools/sass-lint's Failure
-
-1. **Don't own the parser** -- sasstools/sass-lint died
-   because gonzales-pe died. Depend on the official
-   sass-parser maintained by the Sass team.
-2. **Support custom/plugin rules** -- sass-lint's lack of
-   extensibility (issue #1046) limited community
-   contribution.
-3. **Autofix must be careful** -- postcss-sass's autofix
-   destroyed code. Any autofix for indentation-sensitive
-   syntax needs extensive snapshot testing.
-4. **Keep up with Sass evolution** --
-   `@use`/`@forward` module system, new indented syntax
-   features (Dart Sass 1.80+) must be supported from
-   day one.
-
-## Key Reference Projects
-
-<!-- markdownlint-disable MD013 MD060 -->
-
-| Project             | Role                                                             | URL                                                           |
-| ------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------- |
-| sass-parser         | Parser (official, PostCSS-compatible)                            | `npm: sass-parser` / `github: sass/dart-sass/pkg/sass-parser` |
-| Stylelint           | Potential host framework for rules                               | `github: stylelint/stylelint`                                 |
-| sasstools/sass-lint | Historical reference for rule implementations (78 rules)         | `github: sasstools/sass-lint` (archived)                      |
-| sass/linter         | Dart-based experiment by Sass team (archived 2019, 2 rules only) | `github: sass/linter`                                         |
-| gonzales-pe         | Legacy parser -- do NOT use                                      | `github: tonyganch/gonzales-pe`                               |
-| postcss-sass        | Legacy PostCSS wrapper -- do NOT use                             | `github: AleshaOleg/postcss-sass`                             |
-
-<!-- markdownlint-enable MD013 MD060 -->
-
-## MVP Rule Set (~25-30 rules)
-
-Priority rules for initial release, grouped by category:
-
-**Error prevention**: `no-duplicate-properties`,
-`no-invalid-hex`, `no-empty-rulesets`,
-`no-misspelled-properties`, `no-unknown-at-rules`,
-`no-duplicate-selectors`, `declaration-no-important`,
-`no-descending-specificity`
-
-**Naming conventions**: `class-name-format`,
-`id-name-format`, `mixin-name-format`,
-`variable-name-format`, `placeholder-name-format`
-
-**Best practices**: `nesting-depth`, `no-color-literals`,
-`no-ids`, `no-qualifying-elements`, `shorthand-values`,
-`no-vendor-prefixes`, `property-sort-order`
-
-**Indented-syntax specific**: `indentation`,
-`no-trailing-whitespace`, `empty-line-between-blocks`,
-`single-line-per-selector`, `final-newline`
-
-**Sass-specific**: `extends-before-declarations`,
-`mixins-before-declarations`,
-`declarations-before-nesting`,
-`placeholder-in-extend`, `no-debug`
-
-## Indented Syntax Parsing Challenges
-
-These are the core technical difficulties that killed
-previous projects -- any implementation must handle them:
-
-- **Whitespace-significant grammar**: indentation replaces
-  `{}`, newlines replace `;` -- the parser must track
-  indent levels and context-dependent statement boundaries
-- **Shorthand syntax**: `=` for `@mixin`, `+` for
-  `@include` -- unique to `.sass`, not in SCSS
-- **Multiline statements**: lines can continue if breaks
-  occur inside parentheses or between keywords in
-  `@`-rules
-- **Sass 1.80+ additions**: optional semicolons, inline
-  SCSS formatting in `.sass` files, flexible line
-  breaks -- the new "relaxed" indented syntax must be
-  supported
-- **Interpolation**: `#{}` inside selectors, property
-  names, and values requires special parsing
+Development is designed for autonomous agentic execution: each phase has clear entry/exit criteria.
