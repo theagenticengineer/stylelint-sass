@@ -15,16 +15,20 @@
     "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
     "prepare": "husky",
     "test": "vitest run"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
+    "@types/node": "^25.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "markdownlint-cli2": "^0.21.0",
     "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
   "pnpm": {
