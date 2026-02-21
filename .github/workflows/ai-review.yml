@@ -16,21 +16,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get PR diff
-        id: diff
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh pr diff ${{ github.event.pull_request.number }} > /tmp/pr.diff
-          echo "diff_size=$(wc -c < /tmp/pr.diff)" >> "$GITHUB_OUTPUT"
-
       - name: Review with Gemini
-        if: steps.diff.outputs.diff_size != '0'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::GEMINI_API_KEY secret is not configured"
+            exit 1
+          fi
+
+          gh pr diff "$PR_NUMBER" > /tmp/pr.diff
+          DIFF_SIZE=$(wc -c < /tmp/pr.diff)
+          if [ "$DIFF_SIZE" -eq 0 ]; then
+            echo "::notice::Empty diff, skipping AI review"
+            exit 0
+          fi
+
           DIFF=$(cat /tmp/pr.diff)
 
           PROMPT=$(cat <<'PROMPT_EOF'
@@ -61,7 +64,7 @@ jobs:
           PROMPT_EOF
           )
 
-          RESPONSE=$(curl -s \
+          HTTP_CODE=$(curl -s -o /tmp/gemini-response.json -w '%{http_code}' \
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}" \
             -H 'Content-Type: application/json' \
             -d "$(jq -n \
@@ -69,8 +72,15 @@ jobs:
               --arg diff "$DIFF" \
               '{contents: [{parts: [{text: ($prompt + "\n\n```diff\n" + $diff + "\n```")}]}]}')")
 
-          REVIEW=$(echo "$RESPONSE" | jq -r \
-            '.candidates[0].content.parts[0].text // "Review failed"')
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            ERROR=$(jq -r '.error.message // "Unknown error"' /tmp/gemini-response.json)
+            echo "::error::Gemini API returned HTTP $HTTP_CODE: $ERROR"
+            exit 1
+          else
+            REVIEW=$(jq -r \
+              '.candidates[0].content.parts[0].text // "Review failed: no content in response"' \
+              /tmp/gemini-response.json)
+          fi
 
           gh pr comment "$PR_NUMBER" \
             --body "## Gemini AI Review
