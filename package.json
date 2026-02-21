@@ -1,0 +1,21 @@
+{
+  "name": "stylelint-sass",
+  "version": "0.0.0",
+  "description": "Stylelint plugin for Sass indented syntax (.sass) linting",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theagenticengineer/stylelint-sass.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.21.0"
+  },
+  "packageManager": "pnpm@10.18.3"
+}
