@@ -355,7 +355,7 @@ docs(#1): add project plans and execution steps
    - Implement rule to make tests pass
    - Register in index.ts + recommended.ts
    - Run `pnpm check`
-   - Stack the commit: `gt create -a -m "feat(#N): add sass/<rule> rule" -m "Closes #N"`
+   - Commit: `git add -A && git commit -m "feat(#N): add sass/<rule> rule" -m "Closes #N"`
 2. Create `.claude/commands/create-issue.md`:
    - Takes `$ARGUMENTS` as a description of what the issue should cover
    - Generates a structured issue body: **Goal**, **Acceptance criteria** (checklist), **Labels**
@@ -543,7 +543,7 @@ Dependencies are added only when immediately needed.
    skeleton in Step 8b)
 4. Add `typecheck` and `build` scripts to `package.json`
 5. Verify: `pnpm run typecheck` passes, `pnpm run build` creates `dist/`
-6. Stack: `gt create -a -m "chore(#2): add TypeScript compiler and config"`
+6. Commit: `git add -A && git commit -m "chore(#2): add TypeScript compiler and config"`
 7. Run `/review-pr`
 
 ### Step 7: ESLint for TypeScript
@@ -563,7 +563,7 @@ Dependencies are added only when immediately needed.
    - Add `*.ts`: eslint --fix, prettier --write
 4. Add `lint` script to `package.json` (eslint + markdownlint)
 5. Verify: `pnpm run lint` passes (lints src/index.ts + markdown files)
-6. Stack: `gt create -a -m "chore(#2): add ESLint with TypeScript support"`
+6. Commit: `git add -A && git commit -m "chore(#2): add ESLint with TypeScript support"`
 7. Run `/review-pr`
 
 ### Step 8: Plugin skeleton + smoke tests
@@ -581,7 +581,7 @@ Each sub-step is one stacked commit.
 1. Add peerDeps: stylelint >=16, sass-parser >=0.4
 2. Add devDeps: stylelint, sass-parser (vitest already installed in Step 2d). `pnpm install`
 3. Verify: `pnpm run typecheck` still passes
-4. Stack: `gt create -a -m "chore(#2): add plugin dependencies"`
+4. Commit: `git add -A && git commit -m "chore(#2): add plugin dependencies"`
 5. Run `/review-pr`
 
 #### 8b: Plugin skeleton + smoke tests
@@ -631,7 +631,7 @@ proving the 12 core rules actually work on `.sass` in the same commit that adds 
 8. Add `check` script to `package.json` (all quality gates now available: typecheck + lint +
    format:check + lint:md + test)
 9. Verify: `pnpm run check` passes
-10. Stack: `gt create -a -m "feat(#2): add plugin skeleton with smoke tests"`
+10. Commit: `git add -A && git commit -m "feat(#2): add plugin skeleton with smoke tests"`
 11. Run `/review-pr`
 
 ### Step 9: Update CI for TypeScript quality gates
@@ -646,7 +646,8 @@ proving the 12 core rules actually work on `.sass` in the same commit that adds 
    - Add steps: typecheck, eslint, vitest
    - AI review workflow already exists (from Step 2e) — no changes needed
 2. Verify: `pnpm check` passes
-3. Stack: `gt create -a -m "chore(#2): update CI for TypeScript quality gates" -m "Closes #2"`
+3. Commit: `git add -A && git commit -m "chore(#2): update CI for TypeScript quality gates"`
+   `-m "Closes #2"`
 4. Run `/review-pr`
 
 **Postconditions**:
@@ -685,7 +686,7 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`: `"sass/no-debug": true`
 5. Run `pnpm check` — tests pass = acceptance criteria met
-6. Stack: `gt create -a -m "feat(#5): add sass/no-debug rule" -m "Closes #5"`
+6. Commit: `git add -A && git commit -m "feat(#5): add sass/no-debug rule" -m "Closes #5"`
 7. Run `/review-pr`
 
 ### Step 11: Implement sass/no-warn
@@ -701,7 +702,7 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`
 5. Run `pnpm check`
-6. Stack: `gt create -a -m "feat(#7): add sass/no-warn rule" -m "Closes #7"`
+6. Commit: `git add -A && git commit -m "feat(#7): add sass/no-warn rule" -m "Closes #7"`
 7. Run `/review-pr`
 
 ### Step 12: Implement sass/no-import
@@ -717,7 +718,7 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`
 5. Run `pnpm check`
-6. Stack: `gt create -a -m "feat(#11): add sass/no-import rule" -m "Closes #11"`
+6. Commit: `git add -A && git commit -m "feat(#11): add sass/no-import rule" -m "Closes #11"`
 7. Run `/review-pr`
 
 **Postconditions**:
@@ -741,7 +742,7 @@ implement, test, and review code simultaneously.
 1. The main agent creates three git worktrees from the same `main` commit (via `/worktree` skill)
 2. The main agent launches three subagents (via Task tool), one per worktree
 3. Each subagent works autonomously in its worktree:
-   - Implements each rule: test first → implement → register → `gt create`
+   - Implements each rule: test first → implement → register → commit
    - Runs `/review-pr` after each rule (Phases 1–4: PAL local review → submit PR → monitor CI →
      read Gemini feedback → fix issues). **Phase 5 (merge) is skipped** — see worktree mode in
      `/review-pr` skill (Step 3)
@@ -785,7 +786,7 @@ implement, test, and review code simultaneously.
 
 - `validatePattern(name, pattern)`: test name against regex
 - `parsePattern(primary)`: string → RegExp
-- Stack: `gt create -a -m "feat(#6): add shared naming pattern utility"`
+- Commit: `git add -A && git commit -m "feat(#6): add shared naming pattern utility"`
 - Run `/review-pr`
 
 **13.1.2**: `sass/dollar-variable-pattern`
@@ -794,7 +795,8 @@ implement, test, and review code simultaneously.
 - `walkDecls()`, check `$` prefix, validate name
 - BAD (7), GOOD (4), custom pattern test
 - Register, add to recommended
-- Stack: `gt create -a -m "feat(#6): add sass/dollar-variable-pattern rule" -m "Closes #6"`
+- Commit: `git add -A && git commit -m "feat(#6): add sass/dollar-variable-pattern rule"`
+  `-m "Closes #6"`
 - Run `/review-pr`
 
 **13.1.3**: `sass/percent-placeholder-pattern`
@@ -802,7 +804,8 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - `walkRules()`, check `%` prefix, validate name
 - BAD (4), GOOD (3)
-- Stack: `gt create -a -m "feat(#9): add sass/percent-placeholder-pattern rule" -m "Closes #9"`
+- Commit: `git add -A && git commit -m "feat(#9): add sass/percent-placeholder-pattern rule"`
+  `-m "Closes #9"`
 - Run `/review-pr`
 
 **13.1.4**: `sass/at-mixin-pattern`
@@ -810,7 +813,7 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - `walkAtRules('mixin')`, extract name, validate
 - BAD (4), GOOD (4)
-- Stack: `gt create -a -m "feat(#13): add sass/at-mixin-pattern rule" -m "Closes #13"`
+- Commit: `git add -A && git commit -m "feat(#13): add sass/at-mixin-pattern rule" -m "Closes #13"`
 - Run `/review-pr`
 
 **13.1.5**: `sass/at-function-pattern`
@@ -818,7 +821,7 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - `walkAtRules('function')`, extract name, validate
 - BAD (4), GOOD (3)
-- Stack: `gt create -a -m "feat(#17): add sass/at-function-pattern rule" -m "Closes #17"`
+- Commit: `git add -A && git commit -m "feat(#17): add sass/at-function-pattern rule" -m "Closes #17"`
 - Run `/review-pr`
 
 **Worktree A exit**: `pnpm check` passes, all 5 PRs submitted + reviewed + CI-green (not merged).
@@ -834,7 +837,7 @@ implement, test, and review code simultaneously.
 **13.2.1**: Create `src/utils/ordering.ts`
 
 - Type `ChildKind`, function `classifyChild(node)`
-- Stack: `gt create -a -m "feat(#8): add shared ordering utility"`
+- Commit: `git add -A && git commit -m "feat(#8): add shared ordering utility"`
 - Run `/review-pr`
 
 **13.2.2**: `sass/at-extend-no-missing-placeholder`
@@ -842,7 +845,8 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - `walkAtRules('extend')`, check `%` prefix
 - BAD (5), GOOD (3)
-- Stack: `gt create -a -m "feat(#8): add sass/at-extend-no-missing-placeholder rule" -m "Closes #8"`
+- Commit: `git add -A && git commit -m "feat(#8): add sass/at-extend-no-missing-placeholder rule"`
+  `-m "Closes #8"`
 - Run `/review-pr`
 
 **13.2.3**: `sass/extends-before-declarations`
@@ -850,7 +854,8 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - Walk children, track ordering, ignore comments
 - BAD (3), GOOD (4)
-- Stack: `gt create -a -m "feat(#14): add sass/extends-before-declarations rule" -m "Closes #14"`
+- Commit: `git add -A && git commit -m "feat(#14): add sass/extends-before-declarations rule"`
+  `-m "Closes #14"`
 - Run `/review-pr`
 
 **13.2.4**: `sass/mixins-before-declarations`
@@ -858,7 +863,8 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - Walk children, option `ignore: string[]`
 - BAD (4), GOOD (5), test ignore option
-- Stack: `gt create -a -m "feat(#20): add sass/mixins-before-declarations rule" -m "Closes #20"`
+- Commit: `git add -A && git commit -m "feat(#20): add sass/mixins-before-declarations rule"`
+  `-m "Closes #20"`
 - Run `/review-pr`
 
 **13.2.5**: `sass/declarations-before-nesting`
@@ -866,7 +872,8 @@ implement, test, and review code simultaneously.
 - Test first, then implement
 - Walk children, flag decl after nested rule
 - BAD (4), GOOD (4)
-- Stack: `gt create -a -m "feat(#24): add sass/declarations-before-nesting rule" -m "Closes #24"`
+- Commit: `git add -A && git commit -m "feat(#24): add sass/declarations-before-nesting rule"`
+  `-m "Closes #24"`
 - Run `/review-pr`
 
 **Worktree B exit**: `pnpm check` passes, all 5 PRs submitted + reviewed + CI-green (not merged).
@@ -885,7 +892,8 @@ implement, test, and review code simultaneously.
 - `walkAtRules('use')`, check `as *` in params
 - Do NOT flag `@forward ... as *`
 - BAD (3), GOOD (6)
-- Stack: `gt create -a -m "feat(#10): add sass/at-use-no-unnamespaced rule" -m "Closes #10"`
+- Commit: `git add -A && git commit -m "feat(#10): add sass/at-use-no-unnamespaced rule"`
+  `-m "Closes #10"`
 - Run `/review-pr`
 
 **Worktree C exit**: `pnpm check` passes, 1 PR submitted + reviewed + CI-green (not merged).
@@ -943,7 +951,7 @@ the base for the next.
 - Track mixin names per scope
 - Nested scopes are independent
 - BAD (4), GOOD (3)
-- Stack: `gt create -a -m "feat(#16): add sass/no-duplicate-mixins rule" -m "Closes #16"`
+- Commit: `git add -A && git commit -m "feat(#16): add sass/no-duplicate-mixins rule" -m "Closes #16"`
 - Run `/review-pr`
 
 **15b**: `sass/no-duplicate-dollar-variables`
@@ -952,7 +960,8 @@ the base for the next.
 - Track $var names per scope
 - Options: ignoreInside, ignoreDefaults
 - BAD (3), GOOD (5)
-- Stack: `gt create -a -m "feat(#22): add sass/no-duplicate-dollar-variables rule" -m "Closes #22"`
+- Commit: `git add -A && git commit -m "feat(#22): add sass/no-duplicate-dollar-variables rule"`
+  `-m "Closes #22"`
 - Run `/review-pr`
 
 **15c**: `sass/no-duplicate-load-rules`
@@ -961,7 +970,8 @@ the base for the next.
 - Collect @use/@forward/@import paths at root
 - Normalize paths, flag duplicates
 - BAD/GOOD from spec
-- Stack: `gt create -a -m "feat(#25): add sass/no-duplicate-load-rules rule" -m "Closes #25"`
+- Commit: `git add -A && git commit -m "feat(#25): add sass/no-duplicate-load-rules rule"`
+  `-m "Closes #25"`
 - Run `/review-pr`
 
 **Postconditions**:
@@ -985,7 +995,7 @@ the base for the next.
 - Flag `& .child` where `&` is redundant
 - Fixable: remove the `&` prefix
 - BAD (3), GOOD (7)
-- Stack: `gt create -a -m "feat(#12): ...nesting-selector" -m "Closes #12"`
+- Commit: `git add -A && git commit -m "feat(#12): ...nesting-selector" -m "Closes #12"`
 - Run `/review-pr`
 
 **16b**: `sass/no-color-literals`
@@ -995,7 +1005,7 @@ the base for the next.
 - Options: allowInVariables, allowInFunctions, allowedColors
 - valueExpression first, regex fallback
 - BAD (7), GOOD (5)
-- Stack: `gt create -a -m "feat(#19): add sass/no-color-literals rule" -m "Closes #19"`
+- Commit: `git add -A && git commit -m "feat(#19): add sass/no-color-literals rule" -m "Closes #19"`
 - Run `/review-pr`
 
 **16c**: `sass/operator-no-unspaced`
@@ -1005,7 +1015,7 @@ the base for the next.
 - Skip unary -, calc() ambiguity
 - Fixable: add spaces
 - BAD (8), GOOD (7)
-- Stack: `gt create -a -m "feat(#23): add sass/operator-no-unspaced rule" -m "Closes #23"`
+- Commit: `git add -A && git commit -m "feat(#23): add sass/operator-no-unspaced rule" -m "Closes #23"`
 - Run `/review-pr`
 
 **16d**: `sass/selector-no-union-class-name`
@@ -1014,7 +1024,8 @@ the base for the next.
 - Flag &-suffix, &\_suffix, &Suffix
 - Allow &.class, &:pseudo, & .desc
 - BAD/GOOD from spec
-- Stack: `gt create -a -m "feat(#26): add sass/selector-no-union-class-name rule" -m "Closes #26"`
+- Commit: `git add -A && git commit -m "feat(#26): add sass/selector-no-union-class-name rule"`
+  `-m "Closes #26"`
 - Run `/review-pr`
 
 **16e**: `sass/dimension-no-non-numeric-values`
@@ -1023,7 +1034,8 @@ the base for the next.
 - Flag $n + "px" string concatenation
 - Suggest $n \* 1px
 - BAD/GOOD from spec
-- Stack: `gt create -a -m "feat(#27): add sass/dimension-no-non-numeric-values rule" -m "Closes #27"`
+- Commit: `git add -A && git commit -m "feat(#27): add sass/dimension-no-non-numeric-values rule"`
+  `-m "Closes #27"`
 - Run `/review-pr`
 
 **Postconditions**:
@@ -1048,7 +1060,8 @@ the base for the next.
   sass:meta, sass:selector, sass:string)
 - Search values for function calls
 - BAD (8), GOOD (5)
-- Stack: `gt create -a -m "feat(#15): add sass/no-global-function-names rule" -m "Closes #15"`
+- Commit: `git add -A && git commit -m "feat(#15): add sass/no-global-function-names rule"`
+  `-m "Closes #15"`
 - Run `/review-pr`
 
 **17b**: `sass/at-use-no-redundant-alias`
@@ -1058,7 +1071,8 @@ the base for the next.
 - Compute default namespace from path
 - Flag if alias == default namespace
 - BAD/GOOD from spec
-- Stack: `gt create -a -m "feat(#18): add sass/at-use-no-redundant-alias rule" -m "Closes #18"`
+- Commit: `git add -A && git commit -m "feat(#18): add sass/at-use-no-redundant-alias rule"`
+  `-m "Closes #18"`
 - Run `/review-pr`
 
 **17c**: `sass/at-if-no-null`
@@ -1066,7 +1080,7 @@ the base for the next.
 - Test first, then implement
 - `walkAtRules('if')`, flag `!= null` / `== null`
 - BAD/GOOD from spec
-- Stack: `gt create -a -m "feat(#21): add sass/at-if-no-null rule" -m "Closes #21"`
+- Commit: `git add -A && git commit -m "feat(#21): add sass/at-if-no-null rule" -m "Closes #21"`
 - Run `/review-pr`
 
 **Postconditions**:
@@ -1089,7 +1103,7 @@ the base for the next.
 - Installation, configuration (minimal, explicit, mixed codebase), CLI usage, rule reference table,
   editor integration, contributing, license
 - Verify: `pnpm run lint:md` + `pnpm run format:check` pass
-- Stack: `gt create -a -m "docs(#4): add README with installation and rule reference"`
+- Commit: `git add -A && git commit -m "docs(#4): add README with installation and rule reference"`
 - Run `/review-pr`
 
 **18b**: Generate per-rule documentation
@@ -1097,14 +1111,14 @@ the base for the next.
 - Create `docs/rules/<rule-name>.md` for all 23
 - Description, default, options, BAD/GOOD examples
 - Verify: `pnpm run lint:md` + `pnpm run format:check` pass
-- Stack: `gt create -a -m "docs(#4): add per-rule documentation"`
+- Commit: `git add -A && git commit -m "docs(#4): add per-rule documentation"`
 - Run `/review-pr`
 
 **18c**: CHANGELOG
 
 - CHANGELOG.md (Keep a Changelog format, v0.1.0)
 - Verify: `pnpm run format:check` passes
-- Stack: `gt create -a -m "chore(#4): add changelog" -m "Closes #4"`
+- Commit: `git add -A && git commit -m "chore(#4): add changelog" -m "Closes #4"`
 - Run `/review-pr`
 
 ### Step 19: Final verification
@@ -1130,9 +1144,8 @@ the base for the next.
 
 ## Traceability Matrix
 
-Each `gt create` produces a stacked branch. Graphite auto-names branches from commit messages. The
-Branch column shows the Graphite stack root — individual branches are auto-generated per
-`gt create`.
+Each step uses a git worktree with a branch following the `<type>/sass-lint-<issue#>-<title>`
+convention, registered with Graphite via `gt track`. PRs are submitted via `gt submit`.
 
 | Step   | Ph    | Issue | Stack       | Files                                                 |
 | ------ | ----- | ----- | ----------- | ----------------------------------------------------- |

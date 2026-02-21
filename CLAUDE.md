@@ -25,7 +25,7 @@ pnpm run format:check
 - Prettier: `printWidth: 100`, `singleQuote: true`
 - Conventional commits: `feat(#N):`, `fix(#N):`, `chore(#N):`, `docs(#N):` — always reference
   the issue number
-- Branch naming: `<type>/sass-lint-<issue#>-<title>`
+- Branch naming: `<type>/sass-lint-<issue#>-<title>` (e.g. `feat/sass-lint-12-no-debug`)
 
 ## Workflow Rules
 
@@ -42,10 +42,15 @@ These are non-negotiable and apply to every session:
    blocks from `docs/plan/rules/` verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
    `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
+7. **Every branch = its own worktree** — never use `gt create` (it auto-generates bad names) or
+   `git checkout -b` in the main tree. Create worktrees via
+   `git worktree add .worktrees/<name> -b <type>/sass-lint-<issue#>-<title>`, then `gt track`.
+   The main working tree stays on `main`. To stack B on A, pass the parent branch:
+   `git worktree add .worktrees/<name> -b <branch> <parent-branch>`.
 
 ## Skills
 
-- `/add-rule` — implement a rule from its spec (test-first, register, pnpm check, gt create)
+- `/add-rule` — implement a rule from its spec (test-first, register, pnpm check, commit)
 - `/create-issue` — create a structured GitHub issue via `gh` CLI
 - `/worktree` — create an isolated git worktree
 - `/merge-worktree` — clean up worktree after human merges via Graphite Web
