@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a bug in a lint rule
+labels: ['bug']
+body:
+  - type: input
+    id: rule-name
+    attributes:
+      label: Rule name
+      description: 'Which rule is affected?'
+      placeholder: 'sass/'
+    validations:
+      required: true
+
+  - type: textarea
+    id: input-code
+    attributes:
+      label: Input code
+      description: 'The Sass code that triggers the bug'
+      render: sass
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: 'What should happen?'
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: 'What actually happens?'
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration
+      description: 'Your Stylelint config (relevant parts)'
+      render: json

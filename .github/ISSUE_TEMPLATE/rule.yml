@@ -1,0 +1,45 @@
+name: Rule request
+description: Request a new lint rule
+title: 'feat: implement sass/'
+labels: ['rule']
+body:
+  - type: input
+    id: rule-name
+    attributes:
+      label: Rule name
+      description: 'The full rule name (e.g. sass/no-debug)'
+      placeholder: 'sass/'
+    validations:
+      required: true
+
+  - type: textarea
+    id: bad-examples
+    attributes:
+      label: BAD examples
+      description: 'Sass code that should trigger a warning'
+      render: sass
+    validations:
+      required: true
+
+  - type: textarea
+    id: good-examples
+    attributes:
+      label: GOOD examples
+      description: 'Sass code that should pass without warnings'
+      render: sass
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Options
+      description: 'Describe any configuration options'
+
+  - type: dropdown
+    id: fixable
+    attributes:
+      label: Fixable?
+      options:
+        - 'No'
+        - 'Yes'
