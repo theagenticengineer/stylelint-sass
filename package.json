@@ -12,10 +12,13 @@
     "node": ">=18"
   },
   "scripts": {
-    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'"
+    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "markdownlint-cli2": "^0.21.0"
+    "markdownlint-cli2": "^0.21.0",
+    "prettier": "^3.8.1"
   },
   "packageManager": "pnpm@10.18.3"
 }
