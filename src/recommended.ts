@@ -49,5 +49,6 @@ export default {
     'sass/no-debug': true,
     'sass/no-warn': true,
     'sass/no-import': true,
+    'sass/dollar-variable-pattern': [/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/],
   },
 };
