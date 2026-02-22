@@ -34,6 +34,25 @@ jobs:
             exit 0
           fi
 
+          DIFF_HASH=$(sha256sum /tmp/pr.diff | cut -d' ' -f1)
+          echo "Diff hash: $DIFF_HASH"
+
+          EXISTING_COMMENT_ID=$(gh api \
+            "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+            --paginate -q \
+            '.[] | select(.body | contains("<!-- gemini-review -->")) | .id' \
+            | tail -1)
+
+          if [ -n "$EXISTING_COMMENT_ID" ]; then
+            PREVIOUS_HASH=$(gh api \
+              "repos/${{ github.repository }}/issues/comments/${EXISTING_COMMENT_ID}" \
+              -q '.body' | sed -n 's/.*<!-- diff-hash:\([a-f0-9]*\) -->.*/\1/p' | head -1)
+            if [ "$PREVIOUS_HASH" = "$DIFF_HASH" ]; then
+              echo "::notice::Diff unchanged since last review (hash: $DIFF_HASH), skipping"
+              exit 0
+            fi
+          fi
+
           DIFF=$(cat /tmp/pr.diff)
 
           PROMPT=$(cat <<'PROMPT_EOF'
@@ -82,10 +101,20 @@ jobs:
               /tmp/gemini-response.json)
           fi
 
-          gh pr comment "$PR_NUMBER" \
-            --body "## Gemini AI Review
+          COMMENT_BODY="<!-- gemini-review --><!-- diff-hash:${DIFF_HASH} -->
+          ## Gemini AI Review
 
           $REVIEW
 
           ---
           *Automated review by Gemini 2.5 Flash*"
+
+          if [ -n "$EXISTING_COMMENT_ID" ]; then
+            gh api \
+              "repos/${{ github.repository }}/issues/comments/${EXISTING_COMMENT_ID}" \
+              -X PATCH -f body="$COMMENT_BODY" --silent
+            echo "Updated existing review comment #${EXISTING_COMMENT_ID}"
+          else
+            gh pr comment "$PR_NUMBER" --body "$COMMENT_BODY"
+            echo "Created new review comment"
+          fi
