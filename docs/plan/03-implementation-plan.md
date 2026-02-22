@@ -211,11 +211,13 @@ and reports it. Establishes the rule pattern.
 ## Phase 7 — Polish + Publish
 
 - README (installation, config, rule reference)
-- Per-rule docs
 - CHANGELOG.md
 - Verify package.json exports
 - `pnpm pack` dry run
 - Final commit: `chore(release): prepare v0.1.0`
+
+> **Note**: Per-rule docs (`docs/rules/<rule-name>.md`) ship with each
+> rule commit in Phases 1–6, not as a separate Phase 7 task.
 
 ---
 

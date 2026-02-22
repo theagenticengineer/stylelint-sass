@@ -40,7 +40,7 @@ These are non-negotiable and apply to every session:
 4. **Every PR goes through `/review-pr`** — local PAL review, submit, monitor CI, read Gemini
    feedback, then hand off to human.
 5. **Rule issues include full spec** — when creating a rule issue, copy the BAD/GOOD `.sass` code
-   blocks from `docs/plan/rules/` verbatim into the issue body.
+   blocks from `docs/plan/rules/design/` verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
    `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
 7. **Every branch = its own worktree** — never use `gt create` (it auto-generates bad names) or

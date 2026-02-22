@@ -23,7 +23,7 @@ Implement the rule specified in `$ARGUMENTS`.
    parent branch (`main` for the first rule in a phase,
    or the previous rule's branch when stacking).
 
-2. Read the rule spec from `docs/plan/rules/sass-<rule-name>.md`
+2. Read the rule spec from `docs/plan/rules/design/sass-<rule-name>.md`
 3. Write the test file **first** at
    `src/rules/<rule-name>/index.test.ts` using the BAD/GOOD
    cases from the spec as acceptance criteria
@@ -37,8 +37,13 @@ Implement the rule specified in `$ARGUMENTS`.
    setting from the spec
 8. Add a BAD example to `src/__tests__/fixtures/invalid.sass`
    with a `// sass/<rule-name>` comment above it
-9. Run `pnpm check` — all tests must pass
-10. **If any step fails due to an issue outside the rule's scope**
+9. Write user-facing documentation at
+   `docs/rules/<rule-name>.md` — include description,
+   default severity, options (if any), and BAD/GOOD
+   examples from the spec. This ships with the rule,
+   not as a separate task.
+10. Run `pnpm check` — all tests must pass
+11. **If any step fails due to an issue outside the rule's scope**
     (infrastructure bug, tooling failure, dependency problem, etc.):
     - **Stop immediately** — do not attempt an inline workaround
     - Report back with: what failed, the error message, and a
@@ -46,7 +51,7 @@ Implement the rule specified in `$ARGUMENTS`.
     - Wait for the issue to be resolved before continuing
     - This prevents scope creep and avoids duplicate work when
       multiple agents hit the same blocker
-11. Commit:
+12. Commit:
 
 ```bash
 git add -A

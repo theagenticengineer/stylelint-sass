@@ -67,14 +67,16 @@ Example session:
 
 Every rule follows the same pattern:
 
-1. **Read the spec** at `docs/plan/rules/sass-<name>.md`
+1. **Read the spec** at `docs/plan/rules/design/sass-<name>.md`
 2. **Write tests first** at `src/rules/<name>/index.test.ts`
    using the BAD/GOOD `.sass` cases from the spec
 3. **Implement** at `src/rules/<name>/index.ts` following
    the pattern in `docs/plan/01-architecture.md`
 4. **Register** in `src/index.ts`
 5. **Add default** to `src/recommended.ts`
-6. **Verify**: `pnpm check`
+6. **Write docs** at `docs/rules/<name>.md` — description,
+   default severity, options, BAD/GOOD examples
+7. **Verify**: `pnpm check`
 
 ## Quality Standards
 

@@ -295,7 +295,7 @@ chore(#1): add vitest test scaffold
    - Labels: `bug`
 5. Create `.github/PULL_REQUEST_TEMPLATE.md`:
    - Checklist: tests pass (`pnpm check`), rule registered in index.ts + recommended.ts, spec
-     exists in docs/plan/rules/, commit message references issue number
+     exists in docs/plan/rules/design/, commit message references issue number
 
 **Commit**:
 
@@ -350,7 +350,7 @@ docs(#1): add project plans and execution steps
 **Actions**:
 
 1. Create `.claude/commands/add-rule.md`:
-   - Read spec from `docs/plan/rules/`
+   - Read spec from `docs/plan/rules/design/`
    - Write test file **first** (BAD/GOOD cases from spec = acceptance criteria)
    - Implement rule to make tests pass
    - Register in index.ts + recommended.ts
@@ -482,7 +482,7 @@ Closes #1
 
 **Issue body format for rule issues (#5–#27)**: each issue body
 includes the full acceptance criteria from the rule spec at
-`docs/plan/rules/sass-<rule-name>.md`. All 23 specs exist. The
+`docs/plan/rules/design/sass-<rule-name>.md`. All 23 specs exist. The
 BAD/GOOD `.sass` code blocks are copied verbatim into the issue
 body — an agent picking up the issue sees exactly which inputs must
 be rejected and which must pass, without needing to find a separate
@@ -503,7 +503,6 @@ spec file.
 **#4 (publish)**: checklist of deliverables
 
 - [ ] README with install, config, rule reference
-- [ ] Per-rule docs for all 23 rules
 - [ ] CHANGELOG.md (v0.1.0)
 - [ ] `pnpm pack --dry-run` produces clean tarball
 - [ ] All 23 rules in `src/index.ts`
@@ -665,6 +664,10 @@ proving the 12 core rules actually work on `.sass` in the same commit that adds 
 issue's acceptance criteria (BAD/GOOD blocks). The rule is done when `pnpm check` passes — meaning
 all acceptance criteria are met. This pattern applies to all rule steps in Phases 1–6.
 
+**Documentation ships with the rule**: each rule commit includes user-facing docs at
+`docs/rules/<rule-name>.md` (description, default severity, options, BAD/GOOD examples).
+Documentation is not a separate phase — it is part of the rule's definition of done.
+
 ### Step 10: Implement sass/no-debug
 
 **Preconditions**:
@@ -685,9 +688,10 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
    - Message: `"Unexpected @debug statement"`
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`: `"sass/no-debug": true`
-5. Run `pnpm check` — tests pass = acceptance criteria met
-6. Commit: `git add -A && git commit -m "feat(#5): add sass/no-debug rule" -m "Closes #5"`
-7. Run `/review-pr`
+5. Write `docs/rules/no-debug.md` — description, default, BAD/GOOD examples
+6. Run `pnpm check` — tests pass = acceptance criteria met
+7. Commit: `git add -A && git commit -m "feat(#5): add sass/no-debug rule" -m "Closes #5"`
+8. Run `/review-pr`
 
 ### Step 11: Implement sass/no-warn
 
@@ -701,9 +705,10 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
    - Message: `"Unexpected @warn statement"`
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`
-5. Run `pnpm check`
-6. Commit: `git add -A && git commit -m "feat(#7): add sass/no-warn rule" -m "Closes #7"`
-7. Run `/review-pr`
+5. Write `docs/rules/no-warn.md` — description, default, BAD/GOOD examples
+6. Run `pnpm check`
+7. Commit: `git add -A && git commit -m "feat(#7): add sass/no-warn rule" -m "Closes #7"`
+8. Run `/review-pr`
 
 ### Step 12: Implement sass/no-import
 
@@ -717,9 +722,10 @@ all acceptance criteria are met. This pattern applies to all rule steps in Phase
    - Message: `"Unexpected @import. Use @use or @forward instead"`
 3. Register in `src/index.ts`
 4. Add to `src/recommended.ts`
-5. Run `pnpm check`
-6. Commit: `git add -A && git commit -m "feat(#11): add sass/no-import rule" -m "Closes #11"`
-7. Run `/review-pr`
+5. Write `docs/rules/no-import.md` — description, default, BAD/GOOD examples
+6. Run `pnpm check`
+7. Commit: `git add -A && git commit -m "feat(#11): add sass/no-import rule" -m "Closes #11"`
+8. Run `/review-pr`
 
 **Postconditions**:
 
@@ -1106,19 +1112,12 @@ the base for the next.
 - Commit: `git add -A && git commit -m "docs(#4): add README with installation and rule reference"`
 - Run `/review-pr`
 
-**18b**: Generate per-rule documentation
-
-- Create `docs/rules/<rule-name>.md` for all 23
-- Description, default, options, BAD/GOOD examples
-- Verify: `pnpm run lint:md` + `pnpm run format:check` pass
-- Commit: `git add -A && git commit -m "docs(#4): add per-rule documentation"`
-- Run `/review-pr`
-
-**18c**: CHANGELOG
+**18b**: CHANGELOG
 
 - CHANGELOG.md (Keep a Changelog format, v0.1.0)
 - Verify: `pnpm run format:check` passes
-- Commit: `git add -A && git commit -m "chore(#4): add changelog" -m "Closes #4"`
+- Commit: `git add -A && git commit -m "chore(#4): add changelog"`
+  `-m "Closes #4"`
 - Run `/review-pr`
 
 ### Step 19: Final verification
@@ -1165,9 +1164,9 @@ convention, registered with Graphite via `gt track`. PRs are submitted via `gt s
 | 8a     | 0     | #2    | scaffolding | package.json (deps only)                              |
 | 8b     | 0     | #2    | scaffolding | src/utils/\*, src/index.ts, src/recommended.ts, tests |
 | 9      | 0     | #2    | scaffolding | .github/workflows/ci.yml (updated)                    |
-| 10     | 1     | #5    | phase-1     | src/rules/no-debug/\*                                 |
-| 11     | 1     | #7    | phase-1     | src/rules/no-warn/\*                                  |
-| 12     | 1     | #11   | phase-1     | src/rules/no-import/\*                                |
+| 10     | 1     | #5    | phase-1     | src/rules/no-debug/\*, docs/rules/no-debug.md         |
+| 11     | 1     | #7    | phase-1     | src/rules/no-warn/\*, docs/rules/no-warn.md           |
+| 12     | 1     | #11   | phase-1     | src/rules/no-import/\*, docs/rules/no-import.md       |
 | 13.1.1 | 2     | #6    | worktree A  | src/utils/patterns.ts                                 |
 | 13.1.2 | 2     | #6    | worktree A  | src/rules/dollar-variable-pattern/\*                  |
 | 13.1.3 | 2     | #9    | worktree A  | src/rules/percent-placeholder-pattern/\*              |
@@ -1192,6 +1191,5 @@ convention, registered with Graphite via `gt track`. PRs are submitted via `gt s
 | 17b    | 6     | #18   | phase-6     | src/rules/at-use-no-redundant-alias/\*                |
 | 17c    | 6     | #21   | phase-6     | src/rules/at-if-no-null/\*                            |
 | 18a    | 7     | #4    | phase-7     | README.md                                             |
-| 18b    | 7     | #4    | phase-7     | docs/rules/\*.md (23 files)                           |
-| 18c    | 7     | #4    | phase-7     | CHANGELOG.md                                          |
+| 18b    | 7     | #4    | phase-7     | CHANGELOG.md                                          |
 | 19     | 7     | —     | main        | (final verification)                                  |
