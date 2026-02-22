@@ -53,6 +53,7 @@ describe('recommended config', () => {
         'at-rule-no-unknown',
         'sass/no-debug',
         'sass/no-warn',
+        'sass/no-import',
       ]),
     );
   });
