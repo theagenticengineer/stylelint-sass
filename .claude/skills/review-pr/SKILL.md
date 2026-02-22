@@ -24,17 +24,19 @@ Run PAL MCP Server `codereview` tool on the diff:
    gt submit
    ```
 
-2. After submit, update the PR body with a proper summary
-   and issue link. Extract the issue number from the commit
-   message (`feat(#N):`) or branch name
-   (`feat/sass-lint-N-...`):
+2. After submit, update the PR title and body. Extract the
+   issue number from the commit message (`feat(#N):`) or
+   branch name (`feat/sass-lint-N-...`).
+
+   **PR title format**: `Closes #N: <description>` — this
+   makes GitHub auto-close the issue when the PR is merged.
 
    ```bash
-   gh pr edit <number> --title "<commit title>" --body "$(cat <<'EOF'
+   gh pr edit <number> \
+     --title "Closes #N: <short description>" \
+     --body "$(cat <<'EOF'
    ## Summary
    <bullet points describing the change>
-
-   Closes #N
 
    ## Test plan
    - [x] `pnpm check` passes
@@ -45,14 +47,14 @@ Run PAL MCP Server `codereview` tool on the diff:
    )"
    ```
 
-3. Verify the PR body is set (not the bare template):
+3. Verify the PR title and body are set correctly:
 
    ```bash
-   gh pr view <number> --json body --jq '.body' | head -5
+   gh pr view <number> --json title,body --jq '.title'
    ```
 
-   If the body still shows the default template checklist,
-   re-run the `gh pr edit` command above.
+   The title must start with `Closes #N:`. If not, re-run
+   the `gh pr edit` command above.
 
 ## Phase 3 — Monitor CI
 

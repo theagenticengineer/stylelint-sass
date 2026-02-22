@@ -51,7 +51,9 @@ Implement the rule specified in `$ARGUMENTS`.
     - Wait for the issue to be resolved before continuing
     - This prevents scope creep and avoids duplicate work when
       multiple agents hit the same blocker
-12. Commit:
+12. Commit (the `Closes #N` in the commit message body is
+    for traceability; the PR title set during `/review-pr`
+    Phase 2 is what actually auto-closes the issue):
 
 ```bash
 git add -A

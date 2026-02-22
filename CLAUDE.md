@@ -58,9 +58,11 @@ These are non-negotiable and apply to every session:
    immediately** and report back with: (a) what failed, (b) a proposed GitHub issue with clear
    description and fix actions. Never attempt an inline workaround — this causes scope creep and,
    when multiple agents hit the same issue, wastes tokens on duplicate fixes.
-10. **PR body must link its issue** — every PR body must include `Closes #N` linking to the
-    issue it resolves, plus a summary of changes and a test plan. The `/review-pr` skill
-    enforces this in Phase 2. Never submit a PR with a bare template body.
+10. **PR title auto-closes its issue** — every PR title must follow the format
+    `Closes #N: <description>` so GitHub automatically closes the linked issue on merge.
+    The `/review-pr` skill enforces this in Phase 2 via `gh pr edit --title`. The PR body
+    should also include a summary of changes and a test plan. Never submit a PR with a bare
+    template body.
 
 ## Skills
 
