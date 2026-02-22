@@ -70,7 +70,7 @@ These are non-negotiable and apply to every session:
 - `/add-rule` — implement a rule from its spec (test-first, register, pnpm check, commit)
 - `/create-issue` — create a structured GitHub issue via `gh` CLI
 - `/worktree` — create an isolated git worktree
-- `/clean-worktree` — clean up worktree after human merges via Graphite Web
+- `/post-merge` — sync main, clean up worktree, suggest next PR to review
 - `/review-pr` — 5-phase review loop: PAL local review, submit PR, monitor CI, read Gemini
   review, hand off
 
