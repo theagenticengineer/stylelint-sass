@@ -5,6 +5,28 @@ Enforce a naming pattern for mixin names in `@mixin` declarations. Default enfor
 **Default**: `/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/`
 **Fixable**: No
 
+## Why?
+
+Mixins are one of the most-used Sass abstractions — they encapsulate reusable blocks of CSS that can
+accept arguments and be included anywhere. In a large codebase, mixins form a shared API surface: any
+developer should be able to guess a mixin's name without searching.
+
+Inconsistent naming conventions (`=flexCenter`, `=FlexCenter`, `=flex_center`) make that impossible.
+Enforcing a single pattern (kebab-case by default) aligns mixin names with CSS's own convention
+(all-lowercase, hyphen-separated) and ensures discoverability across the project.
+
+Sass treats `_` and `-` as interchangeable in identifiers, so the parser normalizes underscores to
+hyphens. The `=` shorthand for `@mixin` is also normalized by sass-parser, so both `=flex-center`
+and `@mixin flex-center` are checked by this rule.
+
+## Configuration
+
+```json
+{
+  "sass/at-mixin-pattern": ["/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/"]
+}
+```
+
 ## Options
 
 A regex pattern (string or RegExp) that mixin names must match.

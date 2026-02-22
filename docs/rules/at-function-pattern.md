@@ -17,6 +17,33 @@ This rule enforces a naming pattern for `@function` names. Default enforces `keb
 **Default**: `/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/`
 **Fixable**: No
 
+## Why?
+
+Sass functions are pure computations — they take arguments, return a value, and produce no CSS output
+on their own. They appear inline in property values, variable assignments, and other expressions, so
+their names are highly visible:
+
+```sass
+font-size: to-rem(18)
+padding: spacing(2)
+z-index: z-index-above($modal)
+```
+
+Inconsistent naming conventions (`toRem`, `ToRem`, `to_rem`) make functions harder to recognize in
+expressions and harder to discover across a project. Enforcing a single pattern (kebab-case by
+default) aligns function names with CSS's own naming style and ensures a predictable API.
+
+Sass normalizes underscores to hyphens in identifiers, so `@function to_rem` and `@function to-rem`
+refer to the same function. The default pattern uses `-` to match this normalization.
+
+## Configuration
+
+```json
+{
+  "sass/at-function-pattern": ["/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/"]
+}
+```
+
 ## Options
 
 A regex pattern (string or RegExp) that function names must match.

@@ -25,6 +25,29 @@ This rule enforces a naming pattern for `%placeholder` selectors. Default enforc
 **Default**: `/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/`
 **Fixable**: No
 
+## Why?
+
+Placeholders are a first-class Sass concept — they define reusable style blocks that produce zero
+CSS output on their own. Because they only appear in compiled CSS when extended, they are widely used
+as shared abstractions (`%visually-hidden`, `%reset-list`, `%clearfix`).
+
+In a project with dozens of placeholders, inconsistent naming makes them hard to discover and easy to
+duplicate. Enforcing a naming convention (kebab-case by default) keeps the placeholder "API"
+predictable so that developers can extend placeholders by convention rather than searching the
+codebase.
+
+Unlike `$variables` and mixin names, sass-parser does **not** normalize `_` to `-` in placeholder
+selectors, so `%visually_hidden` and `%visually-hidden` are distinct. The default pattern uses `-`
+to match the broader Sass community convention.
+
+## Configuration
+
+```json
+{
+  "sass/percent-placeholder-pattern": ["/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/"]
+}
+```
+
 ## Options
 
 A regex pattern (string or RegExp) that placeholder names must match.
