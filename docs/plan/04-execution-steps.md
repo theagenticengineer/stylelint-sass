@@ -370,7 +370,7 @@ docs(#1): add project plans and execution steps
 4. Create `.claude/commands/post-merge.md`:
    - Sync merged changes: `gt sync`
    - Clean up worktree: `git worktree remove .worktrees/<name>`
-   - Delete local branches: `gt branch delete --force <branch>`
+   - Delete local branches: `gt delete --force <branch>`
    - Find next open PR, restack its worktree, propose `/review-pr`
 5. Create `.claude/commands/review-pr.md` — the agent's review loop for every PR:
 

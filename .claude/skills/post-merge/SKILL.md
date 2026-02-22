@@ -34,7 +34,7 @@ For each merged branch that still has a local worktree:
 
 ```bash
 git worktree remove .worktrees/<name>
-gt branch delete --force <branch>
+gt delete --force <branch>
 ```
 
 If `$ARGUMENTS` was given, clean that specific worktree.
