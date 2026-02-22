@@ -38,10 +38,18 @@ Implement the rule specified in `$ARGUMENTS`.
 8. Add a BAD example to `src/__tests__/fixtures/invalid.sass`
    with a `// sass/<rule-name>` comment above it
 9. Write user-facing documentation at
-   `docs/rules/<rule-name>.md` — include description,
-   default severity, options (if any), and BAD/GOOD
-   examples from the spec. This ships with the rule,
-   not as a separate task.
+   `docs/rules/<rule-name>.md`. This ships with the rule,
+   not as a separate task. Every doc **must** include:
+   - A one-line summary of what the rule enforces
+   - A **"## Why?"** section that explains _what the Sass
+     feature does_ and _why this rule matters_. Assume the
+     reader may not know the feature. Use concrete Sass
+     examples (and compiled CSS output when helpful) to
+     show the problem the rule prevents. See
+     `docs/rules/at-extend-no-missing-placeholder.md` as
+     the reference template.
+   - Default severity, options (if any)
+   - BAD/GOOD examples from the spec
 10. Run `pnpm check` — all tests must pass
 11. **If any step fails due to an issue outside the rule's scope**
     (infrastructure bug, tooling failure, dependency problem, etc.):
