@@ -1,0 +1,23 @@
+diff --git a/lib/index.js b/lib/index.js
+index 73c357f96e3c69ac87e19cc3e5d2733073d6aef3..ec6dfca91f7944bb4bd0e31d01451176623f56b5 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -29,7 +29,8 @@ const plugin = {
+                 const sourceFilePath = context.filename;
+                 // If eslint is configured with @typescript-eslint/parser, there is a parser option
+                 // to explicitly specify where the tsconfig file is. Use that if available.
+-                const tsConfigDir = context.parserOptions.tsconfigRootDir;
++                const parserOptions = context.parserOptions || (context.languageOptions && context.languageOptions.parserOptions) || {};
++                const tsConfigDir = parserOptions.tsconfigRootDir;
+                 Debug_1.Debug.log(`Linting: "${sourceFilePath}"`);
+                 const tsdocConfiguration = new tsdoc_1.TSDocConfiguration();
+                 try {
+@@ -68,7 +69,7 @@ const plugin = {
+                     });
+                 }
+                 const tsdocParser = new tsdoc_1.TSDocParser(tsdocConfiguration);
+-                const sourceCode = context.getSourceCode();
++                const sourceCode = context.sourceCode || context.getSourceCode();
+                 const checkCommentBlocks = function (node) {
+                     for (const comment of sourceCode.getAllComments()) {
+                         if (comment.type !== 'Block') {

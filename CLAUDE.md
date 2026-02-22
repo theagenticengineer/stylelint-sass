@@ -26,6 +26,7 @@ pnpm run format:check
 - Conventional commits: `feat(#N):`, `fix(#N):`, `chore(#N):`, `docs(#N):` — always reference
   the issue number
 - Branch naming: `<type>/sass-lint-<issue#>-<title>` (e.g. `feat/sass-lint-12-no-debug`)
+- TSDoc on all exported functions and constants — include `@param`, `@returns`, `@example`
 
 ## Workflow Rules
 

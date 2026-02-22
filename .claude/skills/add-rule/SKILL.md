@@ -29,11 +29,14 @@ Implement the rule specified in `$ARGUMENTS`.
    cases from the spec as acceptance criteria
 4. Implement the rule at `src/rules/<rule-name>/index.ts`
    following the pattern in `docs/plan/01-architecture.md`
-5. Register the rule in `src/index.ts`
-6. Add the rule to `src/recommended.ts` with its default
+5. Add TSDoc comments to the rule's exported function,
+   `ruleName`, `messages`, and `meta` objects. Include
+   `@example` showing a BAD case that triggers the rule.
+6. Register the rule in `src/index.ts`
+7. Add the rule to `src/recommended.ts` with its default
    setting from the spec
-7. Run `pnpm check` — all tests must pass
-8. Commit:
+8. Run `pnpm check` — all tests must pass
+9. Commit:
 
    ```bash
    git add -A
