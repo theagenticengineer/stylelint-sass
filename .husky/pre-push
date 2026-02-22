@@ -1,0 +1,18 @@
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+# Allow main (pushed directly, not via Graphite)
+if [ "$branch" = "main" ]; then
+  exit 0
+fi
+
+# Enforce branch naming convention: <type>/sass-lint-<issue#>-<title>
+if ! echo "$branch" | grep -qE '^(feat|fix|chore|docs|refactor|test|ci)/sass-lint-[0-9]+-[a-z0-9]+(-[a-z0-9]+)*$'; then
+  echo "ERROR: Branch name '$branch' does not follow convention."
+  echo ""
+  echo "  Required: <type>/sass-lint-<issue#>-<title>"
+  echo "  Example:  feat/sass-lint-12-no-debug"
+  echo ""
+  echo "  Valid types: feat, fix, chore, docs, refactor, test, ci"
+  echo "  Title must be kebab-case (lowercase letters, numbers, hyphens)"
+  exit 1
+fi

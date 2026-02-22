@@ -25,7 +25,9 @@ pnpm run format:check
 - Prettier: `printWidth: 100`, `singleQuote: true`
 - Conventional commits: `feat(#N):`, `fix(#N):`, `chore(#N):`, `docs(#N):` — always reference
   the issue number
-- Branch naming: `<type>/sass-lint-<issue#>-<title>` (e.g. `feat/sass-lint-12-no-debug`)
+- Branch naming: `<type>/sass-lint-<issue#>-<title>` (e.g. `feat/sass-lint-12-no-debug`).
+  Enforced by a `pre-push` hook (`.husky/pre-push`). Valid types: `feat`, `fix`, `chore`, `docs`,
+  `refactor`, `test`, `ci`. Title must be kebab-case. Every branch must reference an issue number.
 - TSDoc on all exported functions and constants — include `@param`, `@returns`, `@example`
 
 ## Workflow Rules
@@ -51,6 +53,9 @@ These are non-negotiable and apply to every session:
    `git worktree add .worktrees/<name> -b <branch> <parent-branch>`.
    **Never use `isolation: "worktree"` on the Task tool** — it creates worktrees in
    `.claude/worktrees/` instead of `.worktrees/`. Always create worktrees manually per this rule.
+   **Parallel branches**: when implementing independent rules in parallel, create each branch off
+   `main` (not stacked on each other). After merging one, `gt sync` to advance main, then
+   `gt restack` only the next branch to review — other worktrees remain untouched until their turn.
 8. **Pushing** — for feature branches (worktrees), never `git push`; always use `gt restack` then
    `gt submit` to keep Graphite metadata in sync. For `main`, use `git push origin main` directly
    (Graphite does not manage trunk). Never force-push main.
