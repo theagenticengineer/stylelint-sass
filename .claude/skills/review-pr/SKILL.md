@@ -18,9 +18,41 @@ Run PAL MCP Server `codereview` tool on the diff:
 
 ## Phase 2 — Submit PR
 
-```bash
-gt submit
-```
+1. Submit via Graphite:
+
+   ```bash
+   gt submit
+   ```
+
+2. After submit, update the PR body with a proper summary
+   and issue link. Extract the issue number from the commit
+   message (`feat(#N):`) or branch name
+   (`feat/sass-lint-N-...`):
+
+   ```bash
+   gh pr edit <number> --title "<commit title>" --body "$(cat <<'EOF'
+   ## Summary
+   <bullet points describing the change>
+
+   Closes #N
+
+   ## Test plan
+   - [x] `pnpm check` passes
+   - [x] <key test scenarios>
+
+   🤖 Generated with [Claude Code](https://claude.com/claude-code)
+   EOF
+   )"
+   ```
+
+3. Verify the PR body is set (not the bare template):
+
+   ```bash
+   gh pr view <number> --json body --jq '.body' | head -5
+   ```
+
+   If the body still shows the default template checklist,
+   re-run the `gh pr edit` command above.
 
 ## Phase 3 — Monitor CI
 
