@@ -40,8 +40,10 @@ These are non-negotiable and apply to every session:
    are the acceptance criteria.
 3. **`pnpm check` before commit** — all quality gates must pass before any commit.
 4. **Every PR goes through `/review-pr`** — local PAL review, submit, monitor CI, read Gemini
-   feedback, then hand off to human. When dismissing a Gemini suggestion, post a PR comment
-   explaining why — the human reviewer needs full context to make the final call.
+   feedback, then hand off to human. When dismissing a Gemini suggestion, the PR comment must
+   include **authoritative evidence** (link to upstream source code, test suite, or official docs)
+   proving the claim wrong — never post bare assertions. When Gemini raises a valid concern that
+   the upstream also has, flag it as a potential upstream issue rather than silently dismissing.
 5. **Rule issues include full spec** — when creating a rule issue, copy the BAD/GOOD `.sass` code
    blocks from `docs/plan/rules/design/` verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then

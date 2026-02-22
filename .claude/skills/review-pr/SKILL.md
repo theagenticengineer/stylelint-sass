@@ -155,14 +155,57 @@ gh api repos/theagenticengineer/stylelint-sass/pulls/<number>/comments
 ```
 
 The ai-review workflow always posts (either inline issues
-or a "no issues found" summary). For each suggestion:
+or a "no issues found" summary).
+
+### Triage each suggestion
+
+For every suggestion Gemini raises, perform a rigorous
+analysis before deciding to adopt or dismiss:
+
+1. **Understand the claim** — restate what Gemini is
+   actually arguing (bug, missing test, style issue, etc.)
+   in your own words. Don't strawman it.
+
+2. **Gather authoritative evidence** — check the upstream
+   source of truth before forming an opinion:
+   - For rule behavior: read `stylelint-scss` source code
+     and test suite for the equivalent rule. Use web search
+     or the Task tool to fetch the actual implementation.
+   - For Sass semantics: check the official Sass docs.
+   - For Stylelint API usage: check Stylelint docs/source.
+   - For general coding claims: verify with language specs
+     or library docs.
+
+3. **Evaluate against evidence** — compare Gemini's claim
+   to what the authoritative source actually does:
+   - Does the evidence **support** Gemini? → Actionable.
+   - Does the evidence **contradict** Gemini? → Dismiss
+     with proof.
+   - Is the evidence **ambiguous** or does Gemini raise a
+     valid concern the upstream also has? → Consider
+     filing an upstream issue or adopting the fix as a
+     deliberate improvement. Flag to human reviewer.
+
+### Act on the verdict
 
 - **Actionable** — fix, push, re-monitor CI (back to
   Phase 3).
-- **Dismissed** — post a PR comment explaining why the
-  suggestion was not adopted. Use `gh pr comment`.
-  Every dismissed suggestion must have a written
-  rationale so the human reviewer has full context.
+- **Upstream concern** — note it in the PR comment as a
+  potential upstream issue worth filing. Adopt or defer
+  based on scope.
+- **Dismissed** — post a PR comment with:
+  1. The specific claim being dismissed
+  2. The authoritative source consulted (link to source
+     code, test file, or docs)
+  3. What the source shows (concrete behavior, test cases,
+     or code paths)
+  4. The conclusion: why the claim is incorrect or out of
+     scope
+
+  Use `gh pr comment`. The human reviewer must be able to
+  verify the dismissal independently from the evidence
+  provided — never post bare assertions like "consistent
+  with X" without showing proof.
 
 ## Phase 5 — Hand off to human
 
