@@ -53,6 +53,11 @@ These are non-negotiable and apply to every session:
 8. **Pushing** — for feature branches (worktrees), never `git push`; always use `gt restack` then
    `gt submit` to keep Graphite metadata in sync. For `main`, use `git push origin main` directly
    (Graphite does not manage trunk). Never force-push main.
+9. **Blockers interrupt, not fix** — when a task (skill, subagent, etc.) hits an unexpected issue
+   outside its scope (infrastructure bug, tooling failure, missing dependency), it must **stop
+   immediately** and report back with: (a) what failed, (b) a proposed GitHub issue with clear
+   description and fix actions. Never attempt an inline workaround — this causes scope creep and,
+   when multiple agents hit the same issue, wastes tokens on duplicate fixes.
 
 ## Skills
 

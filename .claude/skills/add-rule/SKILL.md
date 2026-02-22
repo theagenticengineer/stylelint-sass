@@ -38,7 +38,15 @@ Implement the rule specified in `$ARGUMENTS`.
 8. Add a BAD example to `src/__tests__/fixtures/invalid.sass`
    with a `// sass/<rule-name>` comment above it
 9. Run `pnpm check` — all tests must pass
-10. Commit:
+10. **If any step fails due to an issue outside the rule's scope**
+    (infrastructure bug, tooling failure, dependency problem, etc.):
+    - **Stop immediately** — do not attempt an inline workaround
+    - Report back with: what failed, the error message, and a
+      proposed GitHub issue describing the problem and fix actions
+    - Wait for the issue to be resolved before continuing
+    - This prevents scope creep and avoids duplicate work when
+      multiple agents hit the same blocker
+11. Commit:
 
 ```bash
 git add -A
