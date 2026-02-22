@@ -16,6 +16,7 @@ import atFunctionPattern from './rules/at-function-pattern/index.js';
 import atExtendNoMissingPlaceholder from './rules/at-extend-no-missing-placeholder/index.js';
 import extendsBeforeDeclarations from './rules/extends-before-declarations/index.js';
 import mixinsBeforeDeclarations from './rules/mixins-before-declarations/index.js';
+import noGlobalFunctionNames from './rules/no-global-function-names/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -28,6 +29,7 @@ const rules: stylelint.Plugin[] = [
   atExtendNoMissingPlaceholder,
   extendsBeforeDeclarations,
   mixinsBeforeDeclarations,
+  noGlobalFunctionNames,
 ];
 
 export default rules;

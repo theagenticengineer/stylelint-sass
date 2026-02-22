@@ -56,5 +56,6 @@ export default {
     'sass/at-extend-no-missing-placeholder': true,
     'sass/extends-before-declarations': true,
     'sass/mixins-before-declarations': true,
+    'sass/no-global-function-names': true,
   },
 };
