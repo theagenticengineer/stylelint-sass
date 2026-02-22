@@ -31,7 +31,8 @@ Disallow `@debug` statements. Debug output should not ship to production.
 ```
 
 ```sass
-// @warn and @error are allowed (separate rules)
-@warn "deprecation notice"
-@error "missing argument"
+$width: 100px
+
+.container
+  max-width: $width
 ```

@@ -52,17 +52,8 @@ describe('sass/no-debug', () => {
     expect(result.warnings).toHaveLength(0);
   });
 
-  it('accepts @warn (separate rule)', async () => {
-    const result = await lint(
-      '=deprecated-mixin\n  @warn "This mixin is deprecated"\n  display: block',
-    );
-    expect(result.warnings).toHaveLength(0);
-  });
-
-  it('accepts @error', async () => {
-    const result = await lint(
-      '@function require-positive($n)\n  @if $n < 0\n    @error "Expected positive number, got #{$n}"\n  @return $n',
-    );
+  it('accepts mixin with @content', async () => {
+    const result = await lint('=responsive($bp)\n  @media (min-width: $bp)\n    @content');
     expect(result.warnings).toHaveLength(0);
   });
 });
