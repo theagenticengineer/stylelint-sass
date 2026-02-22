@@ -64,5 +64,6 @@ export default {
     'sass/no-duplicate-mixins': true,
     'sass/no-duplicate-load-rules': true,
     'sass/selector-no-redundant-nesting-selector': true,
+    'sass/no-duplicate-dollar-variables': true,
   },
 };
