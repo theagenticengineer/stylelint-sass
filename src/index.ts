@@ -12,6 +12,7 @@ import noImport from './rules/no-import/index.js';
 import dollarVariablePattern from './rules/dollar-variable-pattern/index.js';
 import atMixinPattern from './rules/at-mixin-pattern/index.js';
 import percentPlaceholderPattern from './rules/percent-placeholder-pattern/index.js';
+import atFunctionPattern from './rules/at-function-pattern/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -20,6 +21,7 @@ const rules: stylelint.Plugin[] = [
   dollarVariablePattern,
   atMixinPattern,
   percentPlaceholderPattern,
+  atFunctionPattern,
 ];
 
 export default rules;
