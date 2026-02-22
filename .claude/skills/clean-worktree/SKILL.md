@@ -2,7 +2,7 @@
 description: Clean up a worktree after PRs are merged
 ---
 
-# Merge Worktree
+# Clean Worktree
 
 Clean up worktree `$ARGUMENTS` after the human has merged
 its PR stack via Graphite Web.

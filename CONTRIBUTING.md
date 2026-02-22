@@ -52,7 +52,7 @@ Claude Code skills automate the full workflow:
 - `/add-rule` — implement a rule from its spec (test-first)
 - `/create-issue` — create a structured GitHub issue
 - `/worktree` — create an isolated git worktree
-- `/merge-worktree` — clean up a worktree after merge
+- `/clean-worktree` — clean up a worktree after merge
 - `/review-pr` — full review loop (local review, submit,
   monitor CI, read Gemini feedback)
 

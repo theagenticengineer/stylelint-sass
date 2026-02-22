@@ -65,7 +65,7 @@ branch → PR → merge cycle.
 **Init** (run once after first push to remote): `gt init`
 
 Workflow automation (stacking, submitting, syncing, cleanup) is encoded in the Claude skills
-(`/add-rule`, `/worktree`, `/merge-worktree`). See Step 3.
+(`/add-rule`, `/worktree`, `/clean-worktree`). See Step 3.
 
 ### Other prerequisites
 
@@ -152,7 +152,7 @@ These steps CREATE the SDLC. Once established, all subsequent work follows it.
      - [ ] Gemini AI review workflow posts review comments on every PR
      - [ ] GitHub issue templates (rule, bug) and PR template exist
      - [ ] Planning docs committed and validated by toolchain
-     - [ ] Claude Code skills: add-rule, create-issue, worktree, merge-worktree, review-pr
+     - [ ] Claude Code skills: add-rule, create-issue, worktree, clean-worktree, review-pr
      - [ ] CONTRIBUTING.md documents both traditional and agentic workflows
 
 **Postconditions**:
@@ -367,7 +367,7 @@ docs(#1): add project plans and execution steps
    - Initialize Graphite tracking: `gt init` (if needed)
    - Verify `pnpm check` passes
    - Report worktree path for the subagent
-4. Create `.claude/commands/merge-worktree.md`:
+4. Create `.claude/commands/clean-worktree.md`:
    - Human merges PRs via Graphite Web
    - Agent syncs merged changes: `gt sync`
    - Clean up worktree: `git worktree remove .worktrees/<name>`
@@ -915,15 +915,15 @@ the base for the next.
 
 1. **Worktree A** (naming rules — 5 PRs):
    - Human merges via Graphite Web
-   - Run `/merge-worktree` for Worktree A (syncs, cleans up)
+   - Run `/clean-worktree` for Worktree A (syncs, cleans up)
 2. **Worktree B** (ordering rules — 5 PRs):
    - In `.worktrees/phase-3`: `gt sync && gt restack`
    - Human merges via Graphite Web
-   - Run `/merge-worktree` for Worktree B
+   - Run `/clean-worktree` for Worktree B
 3. **Worktree C** (at-use-no-unnamespaced — 1 PR):
    - In `.worktrees/phase-6a`: `gt sync && gt restack`
    - Human merges via Graphite Web
-   - Run `/merge-worktree` for Worktree C
+   - Run `/clean-worktree` for Worktree C
 4. Back in main worktree: `gt sync`
 5. Verify: `pnpm check` passes on `main`
 

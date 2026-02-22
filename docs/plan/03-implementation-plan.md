@@ -131,7 +131,7 @@ Dependencies:
 - `.claude/commands/add-rule.md`
 - `.claude/commands/create-issues.md`
 - `.claude/commands/worktree-phase.md`
-- `.claude/commands/merge-worktree.md`
+- `.claude/commands/clean-worktree.md`
 - `.claude/commands/review-pr.md`
 
 **Phase 0 exit**: `pnpm check` passes.
@@ -258,4 +258,4 @@ Format: `<type>(#<issue>): <description>`
 - **100 char line limit** in TypeScript and Markdown
 - **Automated code review**: Copilot + Gemini API
 - **5 Claude skills**: add-rule, create-issues,
-  worktree-phase, merge-worktree, review-pr
+  worktree-phase, clean-worktree, review-pr
