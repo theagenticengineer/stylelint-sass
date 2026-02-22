@@ -54,5 +54,6 @@ export default {
     'sass/percent-placeholder-pattern': [/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/],
     'sass/at-function-pattern': [/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/],
     'sass/at-extend-no-missing-placeholder': true,
+    'sass/extends-before-declarations': true,
   },
 };
