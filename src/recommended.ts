@@ -44,5 +44,8 @@ export default {
     // Removed in Stylelint 16 (use Prettier instead):
     // 'no-eol-whitespace': true,
     // 'no-missing-end-of-source-newline': true,
+
+    // Plugin rules
+    'sass/no-debug': true,
   },
 };

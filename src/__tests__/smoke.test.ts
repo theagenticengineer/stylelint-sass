@@ -21,6 +21,7 @@ describe('plugin entry', () => {
 
 describe('recommended config', () => {
   const config = {
+    plugins: ['./src/index.ts'],
     rules: recommended.rules,
     customSyntax,
   };
@@ -50,6 +51,7 @@ describe('recommended config', () => {
         'no-descending-specificity',
         'max-nesting-depth',
         'at-rule-no-unknown',
+        'sass/no-debug',
       ]),
     );
   });
