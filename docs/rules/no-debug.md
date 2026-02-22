@@ -8,31 +8,31 @@ Disallow `@debug` statements. Debug output should not ship to production.
 ## BAD
 
 ```sass
+// debug output leaks to build logs
 @debug "should not ship"
 ```
 
 ```sass
+// variable inspection left over from development
 @debug $variable
 ```
 
 ```sass
 =my-mixin
+  // nested @debug is still flagged
   @debug "inside mixin"
 ```
 
 ## GOOD
 
 ```sass
-=clearfix
-  &::after
-    content: ""
-    display: table
-    clear: both
+=my-mixin
+  // removed @debug — use a test or breakpoint instead
+  color: $color
 ```
 
 ```sass
-$width: 100px
-
-.container
-  max-width: $width
+@function double($n)
+  // pure logic, no debug output
+  @return $n * 2
 ```
