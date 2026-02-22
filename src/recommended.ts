@@ -47,5 +47,6 @@ export default {
 
     // Plugin rules
     'sass/no-debug': true,
+    'sass/no-warn': true,
   },
 };

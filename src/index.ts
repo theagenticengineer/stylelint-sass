@@ -6,7 +6,8 @@
  */
 import type stylelint from 'stylelint';
 import noDebug from './rules/no-debug/index.js';
+import noWarn from './rules/no-warn/index.js';
 
-const rules: stylelint.Plugin[] = [noDebug];
+const rules: stylelint.Plugin[] = [noDebug, noWarn];
 
 export default rules;

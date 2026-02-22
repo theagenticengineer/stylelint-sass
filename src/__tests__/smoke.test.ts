@@ -52,6 +52,7 @@ describe('recommended config', () => {
         'max-nesting-depth',
         'at-rule-no-unknown',
         'sass/no-debug',
+        'sass/no-warn',
       ]),
     );
   });
