@@ -57,6 +57,7 @@ describe('recommended config', () => {
         'sass/at-use-no-unnamespaced',
         'sass/no-duplicate-mixins',
         'sass/no-duplicate-load-rules',
+        'sass/selector-no-redundant-nesting-selector',
       ]),
     );
   });

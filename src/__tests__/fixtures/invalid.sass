@@ -72,3 +72,8 @@ $fontSize: 16px
 
 =dup-mixin
   padding: 0
+
+// sass/selector-no-redundant-nesting-selector
+.redundant-parent
+  & .redundant-child
+    color: red
