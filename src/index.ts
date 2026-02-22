@@ -15,6 +15,7 @@ import percentPlaceholderPattern from './rules/percent-placeholder-pattern/index
 import atFunctionPattern from './rules/at-function-pattern/index.js';
 import atExtendNoMissingPlaceholder from './rules/at-extend-no-missing-placeholder/index.js';
 import extendsBeforeDeclarations from './rules/extends-before-declarations/index.js';
+import mixinsBeforeDeclarations from './rules/mixins-before-declarations/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -26,6 +27,7 @@ const rules: stylelint.Plugin[] = [
   atFunctionPattern,
   atExtendNoMissingPlaceholder,
   extendsBeforeDeclarations,
+  mixinsBeforeDeclarations,
 ];
 
 export default rules;
