@@ -65,5 +65,6 @@ export default {
     'sass/no-duplicate-load-rules': true,
     'sass/selector-no-redundant-nesting-selector': true,
     'sass/no-duplicate-dollar-variables': true,
+    'sass/selector-no-union-class-name': true,
   },
 };

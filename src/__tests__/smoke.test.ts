@@ -59,6 +59,7 @@ describe('recommended config', () => {
         'sass/no-duplicate-load-rules',
         'sass/selector-no-redundant-nesting-selector',
         'sass/no-duplicate-dollar-variables',
+        'sass/selector-no-union-class-name',
       ]),
     );
   });
