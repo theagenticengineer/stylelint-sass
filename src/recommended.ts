@@ -57,5 +57,6 @@ export default {
     'sass/extends-before-declarations': true,
     'sass/mixins-before-declarations': true,
     'sass/no-global-function-names': true,
+    'sass/at-use-no-redundant-alias': true,
   },
 };
