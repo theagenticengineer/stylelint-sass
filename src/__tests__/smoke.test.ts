@@ -56,6 +56,7 @@ describe('recommended config', () => {
         'sass/no-import',
         'sass/at-use-no-unnamespaced',
         'sass/no-duplicate-mixins',
+        'sass/no-duplicate-load-rules',
       ]),
     );
   });

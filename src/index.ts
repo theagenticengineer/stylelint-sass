@@ -22,6 +22,7 @@ import atIfNoNull from './rules/at-if-no-null/index.js';
 import declarationsBeforeNesting from './rules/declarations-before-nesting/index.js';
 import atUseNoUnnamespaced from './rules/at-use-no-unnamespaced/index.js';
 import noDuplicateMixins from './rules/no-duplicate-mixins/index.js';
+import noDuplicateLoadRules from './rules/no-duplicate-load-rules/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -40,6 +41,7 @@ const rules: stylelint.Plugin[] = [
   declarationsBeforeNesting,
   atUseNoUnnamespaced,
   noDuplicateMixins,
+  noDuplicateLoadRules,
 ];
 
 export default rules;
