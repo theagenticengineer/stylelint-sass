@@ -35,10 +35,12 @@ Implement the rule specified in `$ARGUMENTS`.
 6. Register the rule in `src/index.ts`
 7. Add the rule to `src/recommended.ts` with its default
    setting from the spec
-8. Run `pnpm check` — all tests must pass
-9. Commit:
+8. Add a BAD example to `src/__tests__/fixtures/invalid.sass`
+   with a `// sass/<rule-name>` comment above it
+9. Run `pnpm check` — all tests must pass
+10. Commit:
 
-   ```bash
-   git add -A
-   git commit -m "feat(#N): add sass/<rule> rule" -m "Closes #N"
-   ```
+```bash
+git add -A
+git commit -m "feat(#N): add sass/<rule> rule" -m "Closes #N"
+```

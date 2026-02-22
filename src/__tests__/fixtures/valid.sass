@@ -1,0 +1,24 @@
+.button
+  color: #fff
+  background: #333
+  margin: 1em
+  padding: 1em 2em
+
+.link
+  text-decoration: none
+  color: #0af
+
+nav
+  ul
+    list-style: none
+
+// at-rule-no-unknown — @mixin and @include are Sass-specific at-rules
+// that CSS doesn't recognize. Without the whitelist in recommended.ts,
+// Stylelint would flag them as unknown. These lines verify the whitelist
+// works: valid Sass at-rules should produce zero warnings.
+@mixin button-styles
+  display: inline-block
+  cursor: pointer
+
+.styled-button
+  @include button-styles

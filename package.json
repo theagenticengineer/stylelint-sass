@@ -4,6 +4,10 @@
   "description": "Stylelint plugin for Sass indented syntax (.sass) linting",
   "type": "module",
   "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js",
+    "./recommended": "./dist/recommended.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/theagenticengineer/stylelint-sass.git"
@@ -11,15 +15,20 @@
   "engines": {
     "node": ">=20"
   },
+  "peerDependencies": {
+    "sass-parser": ">=0.4",
+    "stylelint": ">=16"
+  },
   "scripts": {
-    "lint": "eslint . && markdownlint-cli2 '**/*.md' '#node_modules'",
-    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules'",
+    "lint": "eslint . && markdownlint-cli2 '**/*.md' '#node_modules' '#.worktrees'",
+    "lint:md": "markdownlint-cli2 '**/*.md' '#node_modules' '#.worktrees'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "prepare": "husky",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
@@ -31,7 +40,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "markdownlint-cli2": "^0.21.0",
+    "postcss": "^8.5.6",
     "prettier": "^3.8.1",
+    "sass-parser": "^0.4.42",
+    "stylelint": "^17.3.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.0",
     "vitest": "^4.0.18"

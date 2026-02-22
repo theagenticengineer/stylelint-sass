@@ -1,0 +1,50 @@
+// color-no-invalid-hex
+.invalid-hex
+  color: #gggggg
+
+// shorthand-property-no-redundant-values
+.redundant-shorthand
+  margin: 1em 1em 1em 1em
+
+// length-zero-no-unit
+.zero-with-unit
+  padding: 0px
+
+// block-no-empty
+.empty-block
+
+// no-duplicate-selectors
+.duplicate-sel
+  color: red
+
+.duplicate-sel
+  color: blue
+
+// no-descending-specificity
+// .child appears AFTER #high .child. When a .child element lives inside
+// #high, both selectors match — but a developer reading top-to-bottom
+// might expect .child (the later rule) to override. It won't: specificity
+// always beats source order, so #high .child still wins. This makes the
+// stylesheet confusing and is usually a sign the selectors need reordering.
+#high .child
+  color: red
+
+.child
+  color: blue
+
+// max-nesting-depth (limit is 3, so depth 4 triggers)
+.level-1
+  .level-2
+    .level-3
+      .level-4
+        .level-5
+          color: red
+
+// at-rule-no-unknown
+// CSS has built-in at-rules like @media and @keyframes. Sass adds its own
+// like @mixin, @include, and @use. This rule flags any at-rule that is
+// neither a recognized CSS at-rule nor one of the Sass at-rules we
+// whitelist in recommended.ts — catching typos like @inclde or made-up
+// directives like @unknown-thing below.
+@unknown-thing
+  color: red

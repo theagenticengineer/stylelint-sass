@@ -48,6 +48,8 @@ These are non-negotiable and apply to every session:
    `git worktree add .worktrees/<name> -b <type>/sass-lint-<issue#>-<title>`, then `gt track`.
    The main working tree stays on `main`. To stack B on A, pass the parent branch:
    `git worktree add .worktrees/<name> -b <branch> <parent-branch>`.
+8. **Never `git push`** — always use `gt restack` then `gt submit` to push branches. This keeps
+   Graphite metadata in sync and ensures proper stack management.
 
 ## Skills
 
