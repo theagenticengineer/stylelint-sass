@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "pnpm install && npm i -g @anthropic-ai/claude-code @withgraphite/graphite-cli && echo \"alias claude!='claude --dangerously-skip-permissions'\" >> ~/.bashrc",
+  "postCreateCommand": "pnpm install && npm i -g @withgraphite/graphite-cli && curl -fsSL https://claude.ai/install.sh | bash && echo \"alias claude!='claude --dangerously-skip-permissions'\" >> ~/.bashrc",
   "customizations": {
     "vscode": {
       "extensions": [
