@@ -78,9 +78,14 @@ gh api repos/theagenticengineer/stylelint-sass/pulls/<number>/comments
 ```
 
 The ai-review workflow always posts (either inline issues
-or a "no issues found" summary). Address actionable
-comments, push fixes if needed. Re-monitor CI if fixes
-were pushed (back to Phase 3).
+or a "no issues found" summary). For each suggestion:
+
+- **Actionable** — fix, push, re-monitor CI (back to
+  Phase 3).
+- **Dismissed** — post a PR comment explaining why the
+  suggestion was not adopted. Use `gh pr comment`.
+  Every dismissed suggestion must have a written
+  rationale so the human reviewer has full context.
 
 ## Phase 5 — Hand off to human
 
