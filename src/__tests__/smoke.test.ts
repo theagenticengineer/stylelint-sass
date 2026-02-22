@@ -54,6 +54,7 @@ describe('recommended config', () => {
         'sass/no-debug',
         'sass/no-warn',
         'sass/no-import',
+        'sass/at-use-no-unnamespaced',
       ]),
     );
   });

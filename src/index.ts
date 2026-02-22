@@ -20,6 +20,7 @@ import noGlobalFunctionNames from './rules/no-global-function-names/index.js';
 import atUseNoRedundantAlias from './rules/at-use-no-redundant-alias/index.js';
 import atIfNoNull from './rules/at-if-no-null/index.js';
 import declarationsBeforeNesting from './rules/declarations-before-nesting/index.js';
+import atUseNoUnnamespaced from './rules/at-use-no-unnamespaced/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -36,6 +37,7 @@ const rules: stylelint.Plugin[] = [
   atUseNoRedundantAlias,
   atIfNoNull,
   declarationsBeforeNesting,
+  atUseNoUnnamespaced,
 ];
 
 export default rules;

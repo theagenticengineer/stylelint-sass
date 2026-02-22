@@ -60,5 +60,6 @@ export default {
     'sass/at-use-no-redundant-alias': true,
     'sass/at-if-no-null': true,
     'sass/declarations-before-nesting': true,
+    'sass/at-use-no-unnamespaced': true,
   },
 };
