@@ -61,5 +61,6 @@ export default {
     'sass/at-if-no-null': true,
     'sass/declarations-before-nesting': true,
     'sass/at-use-no-unnamespaced': true,
+    'sass/no-duplicate-mixins': true,
   },
 };
