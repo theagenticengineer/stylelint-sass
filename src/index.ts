@@ -10,7 +10,14 @@ import noWarn from './rules/no-warn/index.js';
 
 import noImport from './rules/no-import/index.js';
 import dollarVariablePattern from './rules/dollar-variable-pattern/index.js';
+import atMixinPattern from './rules/at-mixin-pattern/index.js';
 
-const rules: stylelint.Plugin[] = [noDebug, noWarn, noImport, dollarVariablePattern];
+const rules: stylelint.Plugin[] = [
+  noDebug,
+  noWarn,
+  noImport,
+  dollarVariablePattern,
+  atMixinPattern,
+];
 
 export default rules;
