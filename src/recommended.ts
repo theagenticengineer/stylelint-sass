@@ -67,5 +67,6 @@ export default {
     'sass/no-duplicate-dollar-variables': true,
     'sass/selector-no-union-class-name': true,
     'sass/dimension-no-non-numeric-values': true,
+    'sass/no-color-literals': true,
   },
 };
