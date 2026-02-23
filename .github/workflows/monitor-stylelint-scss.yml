@@ -30,7 +30,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           title="chore: new stylelint-scss release ${{ steps.latest.outputs.version }}"
-          count=$(gh issue list --search "\"$title\" in:title" --state all --json number --jq 'length')
+          count=$(gh issue list --repo "${{ github.repository }}" --search "\"$title\" in:title" --state all --json number --jq 'length')
           if [ "$count" -gt 0 ]; then
             echo "Issue already exists for ${{ steps.latest.outputs.version }}"
             echo "exists=true" >> "$GITHUB_OUTPUT"
@@ -65,6 +65,7 @@ jobs:
           FOOTER
 
           gh issue create \
+            --repo "${{ github.repository }}" \
             --title "chore: new stylelint-scss release ${{ steps.latest.outputs.version }}" \
             --body-file /tmp/issue-body.md \
             --label "enhancement"
