@@ -28,6 +28,7 @@ import noDuplicateDollarVariables from './rules/no-duplicate-dollar-variables/in
 import selectorNoUnionClassName from './rules/selector-no-union-class-name/index.js';
 import dimensionNoNonNumericValues from './rules/dimension-no-non-numeric-values/index.js';
 import noColorLiterals from './rules/no-color-literals/index.js';
+import operatorNoUnspaced from './rules/operator-no-unspaced/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -52,6 +53,7 @@ const rules: stylelint.Plugin[] = [
   selectorNoUnionClassName,
   dimensionNoNonNumericValues,
   noColorLiterals,
+  operatorNoUnspaced,
 ];
 
 export default rules;

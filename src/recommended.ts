@@ -68,5 +68,6 @@ export default {
     'sass/selector-no-union-class-name': true,
     'sass/dimension-no-non-numeric-values': true,
     'sass/no-color-literals': true,
+    'sass/operator-no-unspaced': true,
   },
 };
