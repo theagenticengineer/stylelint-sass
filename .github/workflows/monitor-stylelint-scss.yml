@@ -1,0 +1,70 @@
+name: Monitor stylelint-scss releases
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Daily at 9am UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch latest release
+        id: latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          release_json=$(gh api repos/stylelint-scss/stylelint-scss/releases/latest)
+          version=$(echo "$release_json" | jq -r '.tag_name')
+          url=$(echo "$release_json" | jq -r '.html_url')
+          echo "$release_json" | jq -r '.body' > /tmp/release-notes.md
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Check for existing issue
+        id: existing
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="chore: new stylelint-scss release ${{ steps.latest.outputs.version }}"
+          count=$(gh issue list --search "\"$title\" in:title" --state all --json number --jq 'length')
+          if [ "$count" -gt 0 ]; then
+            echo "Issue already exists for ${{ steps.latest.outputs.version }}"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open issue for new release
+        if: steps.existing.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat <<'HEADER' > /tmp/issue-body.md
+          ## New stylelint-scss release
+
+          **Version**: ${{ steps.latest.outputs.version }}
+          **Release**: ${{ steps.latest.outputs.url }}
+
+          ### Release notes
+
+          HEADER
+
+          cat /tmp/release-notes.md >> /tmp/issue-body.md
+
+          cat <<'FOOTER' >> /tmp/issue-body.md
+
+          ---
+
+          **Action required**: Review the release notes above for new or changed rules
+          that may affect `stylelint-sass`. Check whether any new rules map to existing
+          or planned rules in `docs/plan/rules/`.
+          FOOTER
+
+          gh issue create \
+            --title "chore: new stylelint-scss release ${{ steps.latest.outputs.version }}" \
+            --body-file /tmp/issue-body.md \
+            --label "enhancement"
