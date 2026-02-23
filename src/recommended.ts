@@ -66,5 +66,6 @@ export default {
     'sass/selector-no-redundant-nesting-selector': true,
     'sass/no-duplicate-dollar-variables': true,
     'sass/selector-no-union-class-name': true,
+    'sass/dimension-no-non-numeric-values': true,
   },
 };

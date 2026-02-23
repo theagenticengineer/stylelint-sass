@@ -60,6 +60,7 @@ describe('recommended config', () => {
         'sass/selector-no-redundant-nesting-selector',
         'sass/no-duplicate-dollar-variables',
         'sass/selector-no-union-class-name',
+        'sass/dimension-no-non-numeric-values',
       ]),
     );
   });

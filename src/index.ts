@@ -26,6 +26,7 @@ import noDuplicateLoadRules from './rules/no-duplicate-load-rules/index.js';
 import selectorNoRedundantNestingSelector from './rules/selector-no-redundant-nesting-selector/index.js';
 import noDuplicateDollarVariables from './rules/no-duplicate-dollar-variables/index.js';
 import selectorNoUnionClassName from './rules/selector-no-union-class-name/index.js';
+import dimensionNoNonNumericValues from './rules/dimension-no-non-numeric-values/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -48,6 +49,7 @@ const rules: stylelint.Plugin[] = [
   selectorNoRedundantNestingSelector,
   noDuplicateDollarVariables,
   selectorNoUnionClassName,
+  dimensionNoNonNumericValues,
 ];
 
 export default rules;
