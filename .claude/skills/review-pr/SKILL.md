@@ -46,7 +46,15 @@ If the issue is about implementing a lint rule:
      configs or built-in modules)?
    - Are GOOD cases correctly allowed (no false positives)?
 
-4. **Identify blind spots** — scenarios not in the spec but
+4. **Verify all deliverables from `/add-rule` exist**:
+   - `src/rules/<rule-name>/index.ts` — rule implementation
+   - `src/rules/<rule-name>/index.test.ts` — test file
+   - `src/index.ts` — rule registered
+   - `src/recommended.ts` — rule added with default setting
+   - `docs/rules/<rule-name>.md` — user-facing documentation
+   - `src/__tests__/fixtures/invalid.sass` — BAD example added
+
+5. **Identify blind spots** — scenarios not in the spec but
    discovered during implementation or obvious from the
    rule's purpose:
    - Edge cases the spec didn't anticipate (empty inputs,
