@@ -173,14 +173,15 @@ The 3 ordering rules use this classification.
 
 ## Phase 4 — Duplicate Detection Rules
 
-**Goal**: 2 rules that detect duplicate definitions within scope.
+**Goal**: 3 rules that detect duplicate definitions within scope.
 
 ### Rules
 
-| Rule                                 | Complexity | Notes                       |
-| ------------------------------------ | ---------- | --------------------------- |
-| `sass/no-duplicate-mixins`           | Medium     | Track mixin names per scope |
-| `sass/no-duplicate-dollar-variables` | Medium     | Track var names, `!default` |
+| Rule                                 | Complexity | Notes                              |
+| ------------------------------------ | ---------- | ---------------------------------- |
+| `sass/no-duplicate-mixins`           | Medium     | Track mixin names per scope        |
+| `sass/no-duplicate-dollar-variables` | Medium     | Track var names, `!default`        |
+| `sass/no-duplicate-load-rules`       | Low        | Detect duplicate `@use`/`@forward` |
 
 ### Tasks per rule
 
@@ -191,7 +192,7 @@ The 3 ordering rules use this classification.
 
 ### Exit criteria
 
-- 2 rules implemented and tested
+- 3 rules implemented and tested
 - Scope tracking works (same name in different scopes is OK)
 - `ignoreDefaults` option works for variables
 
@@ -203,7 +204,7 @@ The 3 ordering rules use this classification.
 
 ## Phase 5 — Best Practices Rules
 
-**Goal**: 3 rules that inspect selectors and values.
+**Goal**: 5 rules that inspect selectors and values.
 
 ### Rules
 
@@ -212,6 +213,8 @@ The 3 ordering rules use this classification.
 | `sass/selector-no-redundant-nesting-selector` | Medium     | Fixable                 |
 | `sass/no-color-literals`                      | High       | Needs `valueExpression` |
 | `sass/operator-no-unspaced`                   | High       | Needs `valueExpression` |
+| `sass/dimension-no-non-numeric-values`        | Medium     | Validate dimension args |
+| `sass/selector-no-union-class-name`           | Medium     | Disallow `&-suffix`     |
 
 ### sass-parser dependency risk
 
@@ -235,7 +238,7 @@ If this feature is incomplete in the current sass-parser version:
 
 ### Exit criteria
 
-- 3 rules implemented and tested
+- 5 rules implemented and tested
 - Autofix works for `selector-no-redundant-nesting-selector`
   and `operator-no-unspaced`
 - Fallback strategy documented if sass-parser gaps were hit
@@ -249,14 +252,16 @@ If this feature is incomplete in the current sass-parser version:
 
 ## Phase 6 — Modern Sass Rules
 
-**Goal**: 2 rules that enforce modern Sass module system usage.
+**Goal**: 4 rules that enforce modern Sass module system usage.
 
 ### Rules
 
-| Rule                            | Complexity | Notes                  |
-| ------------------------------- | ---------- | ---------------------- |
-| `sass/no-global-function-names` | High       | Map deprecated globals |
-| `sass/at-use-no-unnamespaced`   | Low        | Check `as *` in params |
+| Rule                             | Complexity | Notes                       |
+| -------------------------------- | ---------- | --------------------------- |
+| `sass/no-global-function-names`  | High       | Map deprecated globals      |
+| `sass/at-use-no-unnamespaced`    | Low        | Check `as *` in params      |
+| `sass/at-use-no-redundant-alias` | Low        | Check `as <name>` in `@use` |
+| `sass/at-if-no-null`             | Low        | Check `!= null` patterns    |
 
 ### Tasks
 
@@ -270,7 +275,7 @@ If this feature is incomplete in the current sass-parser version:
 
 ### Exit criteria
 
-- 2 rules implemented and tested
+- 4 rules implemented and tested
 - Global function map covers sass:math, sass:color, sass:list,
   sass:map, sass:string, sass:selector, sass:meta
 - `@forward ... as *` is NOT flagged (only `@use ... as *`)
@@ -304,7 +309,7 @@ If this feature is incomplete in the current sass-parser version:
 
 - `npm install stylelint-sass` works
 - README is complete
-- All 18 rules documented with examples
+- All 23 rules documented with examples
 
 ### Human feedback needed
 

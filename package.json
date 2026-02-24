@@ -2,8 +2,21 @@
   "name": "stylelint-sass",
   "version": "0.0.0",
   "description": "Stylelint plugin for Sass indented syntax (.sass) linting",
+  "keywords": [
+    "stylelint",
+    "stylelint-plugin",
+    "sass",
+    "indented-syntax",
+    "linter",
+    "css"
+  ],
   "type": "module",
   "license": "MIT",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
   "exports": {
     ".": "./dist/index.js",
     "./recommended": "./dist/recommended.js"

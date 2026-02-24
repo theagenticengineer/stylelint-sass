@@ -154,13 +154,18 @@ recommended config enables them with Sass-appropriate settings:
 | `sass/at-function-pattern`                    | `"/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/"` | Naming         |
 | `sass/no-duplicate-mixins`                    | `true`                              | Duplicates     |
 | `sass/no-duplicate-dollar-variables`          | `true`                              | Duplicates     |
+| `sass/no-duplicate-load-rules`                | `true`                              | Duplicates     |
 | `sass/no-global-function-names`               | `true`                              | Modern Sass    |
+| `sass/at-use-no-redundant-alias`              | `true`                              | Modern Sass    |
+| `sass/at-if-no-null`                          | `true`                              | Modern Sass    |
 | `sass/extends-before-declarations`            | `true`                              | Ordering       |
 | `sass/mixins-before-declarations`             | `true`                              | Ordering       |
 | `sass/declarations-before-nesting`            | `true`                              | Ordering       |
 | `sass/selector-no-redundant-nesting-selector` | `true`                              | Best practices |
 | `sass/no-color-literals`                      | `"warning"`                         | Best practices |
 | `sass/operator-no-unspaced`                   | `true`                              | Best practices |
+| `sass/dimension-no-non-numeric-values`        | `true`                              | Best practices |
+| `sass/selector-no-union-class-name`           | `true`                              | Best practices |
 | `sass/at-use-no-unnamespaced`                 | `true`                              | Modern Sass    |
 
 <!-- markdownlint-enable MD013 -->

@@ -123,7 +123,13 @@ Every PR goes through three layers of review:
 2. **Gemini CI review** — automated AI review workflow
    posts inline comments on every PR
 3. **CI checks** — markdownlint, prettier, typecheck,
-   eslint, vitest across Node 18/20/22
+   eslint, vitest across Node 20/22
+
+## Further Reading
+
+For a comprehensive guide to the full development lifecycle
+— project structure, quality gates, CI/CD, agentic
+workflows, and more — see [docs/sdlc.md](docs/sdlc.md).
 
 ## PR Workflow
 
