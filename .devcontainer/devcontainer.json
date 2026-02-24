@@ -4,7 +4,20 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "pnpm install && npm i -g @withgraphite/graphite-cli && curl -fsSL https://claude.ai/install.sh | bash && echo \"alias claude!='claude --dangerously-skip-permissions'\" >> ~/.bashrc",
+  "initializeCommand": "mkdir -p ${HOME}/.claude/projects ${HOME}/.config/gh ${HOME}/.config/graphite && [ -f ${HOME}/.claude.json ] || touch ${HOME}/.claude.json",
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/node/.claude-host,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/projects,target=/home/node/.claude/projects,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude.json,target=/home/node/.claude-host.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/gh,target=/home/node/.config/gh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/graphite,target=/home/node/.config/graphite,type=bind,consistency=cached"
+  ],
+  "remoteEnv": {
+    "HOST_PROJECT_PATH": "${localWorkspaceFolder}",
+    "CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+  },
+  "postCreateCommand": ".devcontainer/install-tools.sh",
+  "postStartCommand": ".devcontainer/link-claude-config.sh",
   "customizations": {
     "vscode": {
       "extensions": [
