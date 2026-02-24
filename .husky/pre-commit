@@ -1,1 +1,9 @@
-pnpm exec lint-staged
+# During rebase, lint-staged's backup stash leaves a transiently dirty
+# working tree between cherry-picks, causing "local changes would be
+# overwritten" errors.  --no-stash is safe here because rebase guarantees
+# a clean working tree before each commit.
+if [ -d "$(git rev-parse --git-dir)/rebase-merge" ] || [ -d "$(git rev-parse --git-dir)/rebase-apply" ]; then
+  pnpm exec lint-staged --no-stash
+else
+  pnpm exec lint-staged
+fi

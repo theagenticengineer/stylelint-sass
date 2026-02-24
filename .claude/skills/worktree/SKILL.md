@@ -11,16 +11,26 @@ phase description).
 
 1. Determine branch name from arguments
    (e.g. `feat/sass-lint-6-dollar-variable-pattern`)
-2. Create worktree:
+2. Create worktree — the directory path must mirror the branch
+   name exactly:
 
    ```bash
-   git worktree add .worktrees/<name> -b <branch> <parent>
+   git worktree add .worktrees/<type>/sass-lint-<N>-<title> \
+     -b <type>/sass-lint-<N>-<title> \
+     <parent>
+   ```
+
+   Example:
+
+   ```bash
+   git worktree add .worktrees/feat/sass-lint-6-dollar-variable-pattern \
+     -b feat/sass-lint-6-dollar-variable-pattern
    ```
 
 3. In the worktree directory:
 
    ```bash
-   cd .worktrees/<name>
+   cd .worktrees/<type>/sass-lint-<N>-<title>
    pnpm install
    ```
 
@@ -44,7 +54,7 @@ Every branch gets its own worktree. To stack branch B on
 top of branch A, pass the parent branch as the start point:
 
 ```bash
-git worktree add .worktrees/sass-lint-N-<title> \
+git worktree add .worktrees/feat/sass-lint-N-<title> \
   -b feat/sass-lint-N-<title> \
   feat/sass-lint-M-<parent-title>
 ```

@@ -49,10 +49,12 @@ These are non-negotiable and apply to every session:
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
    `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
 7. **Every branch = its own worktree** — never use `gt create` (it auto-generates bad names) or
-   `git checkout -b` in the main tree. Create worktrees via
-   `git worktree add .worktrees/<name> -b <type>/sass-lint-<issue#>-<title>`, then `gt track`.
+   `git checkout -b` in the main tree. The worktree path must mirror the branch name exactly:
+   `git worktree add .worktrees/<type>/sass-lint-<issue#>-<title> -b <type>/sass-lint-<issue#>-<title>`.
+   Example: `git worktree add .worktrees/feat/sass-lint-12-no-debug -b feat/sass-lint-12-no-debug`.
+   This creates a `<type>/` subdirectory under `.worktrees/`. Then run `gt track`.
    The main working tree stays on `main`. To stack B on A, pass the parent branch:
-   `git worktree add .worktrees/<name> -b <branch> <parent-branch>`.
+   `git worktree add .worktrees/<type>/sass-lint-<N>-<title> -b <type>/sass-lint-<N>-<title> <parent-branch>`.
    **Never use `isolation: "worktree"` on the Task tool** — it creates worktrees in
    `.claude/worktrees/` instead of `.worktrees/`. Always create worktrees manually per this rule.
    **Parallel branches**: when implementing independent rules in parallel, create each branch off
