@@ -26,8 +26,10 @@ pnpm run format:check
 - Conventional commits: `feat(#N):`, `fix(#N):`, `chore(#N):`, `docs(#N):` — always reference
   the issue number
 - Branch naming: `<type>/sass-lint-<issue#>-<title>` (e.g. `feat/sass-lint-12-no-debug`).
-  Enforced by a `pre-push` hook (`.husky/pre-push`). Valid types: `feat`, `fix`, `chore`, `docs`,
-  `refactor`, `test`, `ci`. Title must be kebab-case. Every branch must reference an issue number.
+  Enforced by a `post-checkout` hook (`.husky/post-checkout`) — fires immediately on branch
+  creation so the agent can self-correct before doing any work. Valid types: `feat`, `fix`,
+  `chore`, `docs`, `refactor`, `test`, `ci`. Title must be kebab-case. Every branch must
+  reference an issue number.
 - TSDoc on all exported functions and constants — include `@param`, `@returns`, `@example`
 
 ## Workflow Rules
