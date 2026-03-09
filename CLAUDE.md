@@ -30,6 +30,9 @@ pnpm run format:check
   creation so the agent can self-correct before doing any work. Valid types: `feat`, `fix`,
   `chore`, `docs`, `refactor`, `test`, `ci`. Title must be kebab-case. Every branch must
   reference an issue number.
+  If `git checkout -b <name>` exits 1, the hook detected a violation: propose a valid name
+  matching the pattern, retry up to 3 times (delete the invalid branch on success), then stop
+  and report after 3 failures.
 - TSDoc on all exported functions and constants — include `@param`, `@returns`, `@example`
 
 ## Workflow Rules

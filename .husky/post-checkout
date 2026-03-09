@@ -13,7 +13,7 @@ BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
 PATTERN='^(feat|fix|chore|docs|refactor|test|ci)/sass-lint-[0-9]+-[a-z0-9]+(-[a-z0-9]+)*$'
 
 if ! echo "$BRANCH" | grep -qE "$PATTERN"; then
-  echo "WARNING: Branch name '$BRANCH' does not follow convention."
+  echo "ERROR: Branch '$BRANCH' violates naming convention."
   echo ""
   echo "  Required: <type>/sass-lint-<issue#>-<title>"
   echo "  Example:  feat/sass-lint-12-no-debug"
@@ -22,5 +22,6 @@ if ! echo "$BRANCH" | grep -qE "$PATTERN"; then
   echo "  Title must be kebab-case (lowercase letters, numbers, hyphens)"
   echo ""
   echo "  Rename with: git branch -m $BRANCH <correct-name>"
+  exit 1
 fi
-# Note: post-checkout exit code is informational — git does not undo the checkout.
+# exit 0 implicit — valid branch, no output
