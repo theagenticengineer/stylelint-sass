@@ -29,7 +29,7 @@ const ruleName = 'sass/no-color-literals';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/no-color-literals.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/no-color-literals.md',
 };
 
 /**

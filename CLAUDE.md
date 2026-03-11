@@ -6,7 +6,7 @@
 [sass-parser](https://www.npmjs.com/package/sass-parser) (official, PostCSS-compatible, maintained
 by the Sass team).
 
-Repo: `CauseMint/stylelint-sass`
+Repo: `theagenticengineer/stylelint-sass`
 
 ## Commands
 
@@ -50,7 +50,7 @@ These are non-negotiable and apply to every session:
    proving the claim wrong — never post bare assertions. When Gemini raises a valid concern that
    the upstream also has, flag it as a potential upstream issue rather than silently dismissing.
 5. **Rule issues include full spec** — when creating a rule issue, copy the BAD/GOOD `.sass` code
-   blocks from `docs/plan/rules/design/` verbatim into the issue body.
+   blocks from the wiki rule spec verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
    `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
 7. **Every branch = its own worktree** — never use `gt create` (it auto-generates bad names) or
@@ -88,22 +88,38 @@ These are non-negotiable and apply to every session:
 - `/review-pr` — 5-phase review loop: PAL local review, submit PR, monitor CI, read Gemini
   review, hand off
 
-## Architecture
+## Knowledge Base (Wiki)
 
-- **Parser**: sass-parser (official, v0.4.x)
-- **Strategy**: Stylelint plugin using sass-parser as `customSyntax`
-- **Rule pattern**: see `docs/plan/01-architecture.md`
-- **23 rules** across 7 phases — see `docs/plan/02-roadmap.md`
+All planning docs and rule design specs live in the
+[GitHub Wiki](https://github.com/theagenticengineer/stylelint-sass/wiki).
 
-## Implementation Plan
+### Session bootstrap
 
-Full plan lives in `docs/plan/`:
+```bash
+WIKI=$(bash .claude/scripts/ensure-wiki.sh)
+```
 
-- `00-desired-state.md` — config, CLI usage
-- `01-architecture.md` — package structure, rule pattern
-- `02-roadmap.md` — 8-phase roadmap with exit criteria
-- `03-implementation-plan.md` — detailed implementation
-- `04-execution-steps.md` — atomic execution steps
-- `rules/` — 23 rule specs with BAD/GOOD `.sass` cases
+The helper clones the wiki to `.wiki/` (gitignored) on first run,
+then `pull --ff-only` on subsequent runs. All worktrees share the
+same clone via absolute path.
+
+### Key pages
+
+| Page                                | Content                                    |
+| ----------------------------------- | ------------------------------------------ |
+| `$WIKI/Architecture.md`             | Package structure, rule pattern, AST notes |
+| `$WIKI/Roadmap.md`                  | 8-phase roadmap with exit criteria         |
+| `$WIKI/Implementation-Plan.md`      | Detailed implementation plan               |
+| `$WIKI/Execution-Steps.md`          | Atomic execution steps                     |
+| `$WIKI/Desired-State.md`            | Config, CLI usage, recommended preset      |
+| `$WIKI/rules/design/sass-<name>.md` | Per-rule design specs (23 total)           |
+
+### Updating the wiki
+
+```bash
+cd .wiki
+# edit files
+git add -A && git commit -m "docs: <description>" && git push
+```
 
 Development is designed for autonomous agentic execution: each phase has clear entry/exit criteria.

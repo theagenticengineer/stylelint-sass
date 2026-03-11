@@ -84,7 +84,7 @@ If you prefer not to use a Dev Container:
    (`npm install -g @withgraphite/graphite-cli`)
 
 ```bash
-git clone https://github.com/CauseMint/stylelint-sass.git
+git clone https://github.com/theagenticengineer/stylelint-sass.git
 cd stylelint-sass
 pnpm install
 pnpm check  # verify everything works
@@ -126,7 +126,6 @@ stylelint-sass/
 │       └── ... (one directory per rule, 23 total)
 ├── docs/
 │   ├── rules/                       # Per-rule documentation (23 .md files)
-│   ├── plan/                        # Implementation plan and rule specs
 │   └── sdlc.md                      # This document
 ├── .github/
 │   ├── workflows/
@@ -334,7 +333,9 @@ automates this process, but the steps are the same for manual work.
 
 ### Step 1 — Read the spec
 
-Each rule has a design spec in `docs/plan/rules/design/` with:
+Each rule has a design spec in the
+[wiki](https://github.com/theagenticengineer/stylelint-sass/wiki)
+(`rules/design/` directory) with:
 
 - Rule name and description
 - BAD examples (code that should trigger a warning)
@@ -422,14 +423,18 @@ pnpm check  # all gates must pass
 
 ### File locations summary
 
-| Artifact            | Path                                    |
-| ------------------- | --------------------------------------- |
-| Rule implementation | `src/rules/<name>/index.ts`             |
-| Rule tests          | `src/rules/<name>/index.test.ts`        |
-| Rule documentation  | `docs/rules/<name>.md`                  |
-| Plugin registration | `src/index.ts`                          |
-| Recommended default | `src/recommended.ts`                    |
-| Rule spec (design)  | `docs/plan/rules/design/sass-<name>.md` |
+<!-- markdownlint-disable MD013 MD060 -->
+
+| Artifact            | Path                                                                                            |
+| ------------------- | ----------------------------------------------------------------------------------------------- |
+| Rule implementation | `src/rules/<name>/index.ts`                                                                     |
+| Rule tests          | `src/rules/<name>/index.test.ts`                                                                |
+| Rule documentation  | `docs/rules/<name>.md`                                                                          |
+| Plugin registration | `src/index.ts`                                                                                  |
+| Recommended default | `src/recommended.ts`                                                                            |
+| Rule spec (design)  | [Wiki](https://github.com/theagenticengineer/stylelint-sass/wiki) `rules/design/sass-<name>.md` |
+
+<!-- markdownlint-enable MD013 MD060 -->
 
 ---
 
@@ -547,7 +552,7 @@ These rules are non-negotiable and apply to every session:
 4. **Every PR goes through `/review-pr`** — local review, submit,
    monitor CI, read Gemini feedback, hand off
 5. **Rule issues include full spec** — BAD/GOOD code blocks from
-   `docs/plan/rules/design/`
+   the wiki rule specs
 6. **Fixup, don't separate** — use `git commit --fixup` for fixes
 7. **Every branch = its own worktree** — never `git checkout -b` in
    the main tree

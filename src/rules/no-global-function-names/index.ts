@@ -30,7 +30,7 @@ const ruleName = 'sass/no-global-function-names';
 
 /** Rule metadata for documentation linking. */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/no-global-function-names.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/no-global-function-names.md',
 };
 
 /**

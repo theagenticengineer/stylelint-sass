@@ -24,7 +24,7 @@ Create a GitHub issue based on `$ARGUMENTS`.
 
    ```bash
    gh issue create \
-     --repo CauseMint/stylelint-sass \
+     --repo theagenticengineer/stylelint-sass \
      --title "<title>" \
      --label "<labels>" \
      --body "<body>"

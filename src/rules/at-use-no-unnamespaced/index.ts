@@ -27,7 +27,7 @@ const ruleName = 'sass/at-use-no-unnamespaced';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/at-use-no-unnamespaced.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/at-use-no-unnamespaced.md',
 };
 
 /**

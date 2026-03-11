@@ -25,7 +25,7 @@ const ruleName = 'sass/percent-placeholder-pattern';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/percent-placeholder-pattern.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/percent-placeholder-pattern.md',
 };
 
 /**

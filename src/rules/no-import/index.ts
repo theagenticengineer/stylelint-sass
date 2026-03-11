@@ -20,7 +20,7 @@ const ruleName = 'sass/no-import';
 
 /** Rule metadata for documentation linking. */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/no-import.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/no-import.md',
 };
 
 /** Diagnostic messages produced by this rule. */

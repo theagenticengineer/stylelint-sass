@@ -28,7 +28,7 @@ const ruleName = 'sass/at-use-no-redundant-alias';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/at-use-no-redundant-alias.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/at-use-no-redundant-alias.md',
 };
 
 /**

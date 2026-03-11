@@ -8,7 +8,7 @@ agentic (Claude Code) workflows.
 
 ```bash
 # Fork and clone
-gh repo fork CauseMint/stylelint-sass --clone
+gh repo fork theagenticengineer/stylelint-sass --clone
 cd stylelint-sass
 
 # Install dependencies
@@ -68,11 +68,14 @@ Example session:
 
 Every rule follows the same pattern:
 
-1. **Read the spec** at `docs/plan/rules/design/sass-<name>.md`
+1. **Read the spec** from the
+   [wiki](https://github.com/theagenticengineer/stylelint-sass/wiki)
 2. **Write tests first** at `src/rules/<name>/index.test.ts`
    using the BAD/GOOD `.sass` cases from the spec
 3. **Implement** at `src/rules/<name>/index.ts` following
-   the pattern in `docs/plan/01-architecture.md`
+   the pattern in the wiki
+   [Architecture](https://github.com/theagenticengineer/stylelint-sass/wiki/Architecture)
+   page
 4. **Register** in `src/index.ts`
 5. **Add default** to `src/recommended.ts`
 6. **Write docs** at `docs/rules/<name>.md` — description,

@@ -30,7 +30,7 @@ const ruleName = 'sass/at-if-no-null';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/at-if-no-null.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/at-if-no-null.md',
 };
 
 /**

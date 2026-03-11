@@ -34,7 +34,7 @@ const ruleName = 'sass/dimension-no-non-numeric-values';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/dimension-no-non-numeric-values.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/dimension-no-non-numeric-values.md',
 };
 
 /**

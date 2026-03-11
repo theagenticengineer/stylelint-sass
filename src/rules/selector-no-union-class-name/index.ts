@@ -32,7 +32,7 @@ const ruleName = 'sass/selector-no-union-class-name';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/selector-no-union-class-name.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/selector-no-union-class-name.md',
 };
 
 /**

@@ -81,4 +81,4 @@ A `stylelint-sass/recommended` config that enables:
 - Dev Container for instant contributor onboarding
 - Comprehensive SDLC documentation
 
-[0.1.0]: https://github.com/CauseMint/stylelint-sass/releases/tag/v0.1.0
+[0.1.0]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.1.0

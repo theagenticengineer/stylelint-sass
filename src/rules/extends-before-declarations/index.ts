@@ -31,7 +31,7 @@ const ruleName = 'sass/extends-before-declarations';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/extends-before-declarations.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/extends-before-declarations.md',
 };
 
 /**

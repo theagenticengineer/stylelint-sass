@@ -36,7 +36,7 @@ const ruleName = 'sass/no-duplicate-mixins';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/no-duplicate-mixins.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/no-duplicate-mixins.md',
 };
 
 /**

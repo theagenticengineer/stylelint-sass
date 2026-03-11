@@ -36,7 +36,7 @@ const ruleName = 'sass/declarations-before-nesting';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/declarations-before-nesting.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/declarations-before-nesting.md',
 };
 
 /**

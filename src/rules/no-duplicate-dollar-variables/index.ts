@@ -30,7 +30,7 @@ const ruleName = 'sass/no-duplicate-dollar-variables';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/no-duplicate-dollar-variables.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/no-duplicate-dollar-variables.md',
 };
 
 /**

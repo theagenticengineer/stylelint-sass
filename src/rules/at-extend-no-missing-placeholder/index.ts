@@ -29,7 +29,7 @@ const ruleName = 'sass/at-extend-no-missing-placeholder';
  * Rule metadata for documentation linking.
  */
 const meta = {
-  url: 'https://github.com/CauseMint/stylelint-sass/blob/main/docs/rules/at-extend-no-missing-placeholder.md',
+  url: 'https://github.com/theagenticengineer/stylelint-sass/blob/main/docs/rules/at-extend-no-missing-placeholder.md',
 };
 
 /**
