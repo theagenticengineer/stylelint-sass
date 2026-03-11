@@ -29,7 +29,7 @@ Implement the rule specified in `$ARGUMENTS`.
    WIKI=$(bash .claude/scripts/ensure-wiki.sh)
    ```
 
-   Read the spec from `$WIKI/rules/design/sass-<rule-name>.md`
+   Read the spec from `$WIKI/sass-<rule-name>.md`
 
 3. Write the test file **first** at
    `src/rules/<rule-name>/index.test.ts` using the BAD/GOOD

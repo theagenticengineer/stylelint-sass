@@ -33,7 +33,7 @@ If the issue is about implementing a lint rule:
    WIKI=$(bash .claude/scripts/ensure-wiki.sh)
    ```
 
-   Load the spec from `$WIKI/rules/design/`.
+   Load the spec from `$WIKI/`.
    Match by rule name (e.g. issue title
    `sass/at-use-no-unnamespaced` →
    `sass-at-use-no-unnamespaced.md`).

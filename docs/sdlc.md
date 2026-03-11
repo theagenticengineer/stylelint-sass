@@ -335,7 +335,7 @@ automates this process, but the steps are the same for manual work.
 
 Each rule has a design spec in the
 [wiki](https://github.com/theagenticengineer/stylelint-sass/wiki)
-(`rules/design/` directory) with:
+(named `sass-<rule-name>.md`) with:
 
 - Rule name and description
 - BAD examples (code that should trigger a warning)
@@ -425,14 +425,14 @@ pnpm check  # all gates must pass
 
 <!-- markdownlint-disable MD013 MD060 -->
 
-| Artifact            | Path                                                                                            |
-| ------------------- | ----------------------------------------------------------------------------------------------- |
-| Rule implementation | `src/rules/<name>/index.ts`                                                                     |
-| Rule tests          | `src/rules/<name>/index.test.ts`                                                                |
-| Rule documentation  | `docs/rules/<name>.md`                                                                          |
-| Plugin registration | `src/index.ts`                                                                                  |
-| Recommended default | `src/recommended.ts`                                                                            |
-| Rule spec (design)  | [Wiki](https://github.com/theagenticengineer/stylelint-sass/wiki) `rules/design/sass-<name>.md` |
+| Artifact            | Path                                                                               |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| Rule implementation | `src/rules/<name>/index.ts`                                                        |
+| Rule tests          | `src/rules/<name>/index.test.ts`                                                   |
+| Rule documentation  | `docs/rules/<name>.md`                                                             |
+| Plugin registration | `src/index.ts`                                                                     |
+| Recommended default | `src/recommended.ts`                                                               |
+| Rule spec (design)  | [Wiki](https://github.com/theagenticengineer/stylelint-sass/wiki) `sass-<name>.md` |
 
 <!-- markdownlint-enable MD013 MD060 -->
 

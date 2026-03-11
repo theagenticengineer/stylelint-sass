@@ -105,14 +105,14 @@ same clone via absolute path.
 
 ### Key pages
 
-| Page                                | Content                                    |
-| ----------------------------------- | ------------------------------------------ |
-| `$WIKI/Architecture.md`             | Package structure, rule pattern, AST notes |
-| `$WIKI/Roadmap.md`                  | 8-phase roadmap with exit criteria         |
-| `$WIKI/Implementation-Plan.md`      | Detailed implementation plan               |
-| `$WIKI/Execution-Steps.md`          | Atomic execution steps                     |
-| `$WIKI/Desired-State.md`            | Config, CLI usage, recommended preset      |
-| `$WIKI/rules/design/sass-<name>.md` | Per-rule design specs (23 total)           |
+| Page                           | Content                                    |
+| ------------------------------ | ------------------------------------------ |
+| `$WIKI/Architecture.md`        | Package structure, rule pattern, AST notes |
+| `$WIKI/Roadmap.md`             | 8-phase roadmap with exit criteria         |
+| `$WIKI/Implementation-Plan.md` | Detailed implementation plan               |
+| `$WIKI/Execution-Steps.md`     | Atomic execution steps                     |
+| `$WIKI/Desired-State.md`       | Config, CLI usage, recommended preset      |
+| `$WIKI/sass-<name>.md`         | Per-rule design specs (23 total)           |
 
 ### Updating the wiki
 
