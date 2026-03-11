@@ -61,7 +61,7 @@ jobs:
 
           **Action required**: Review the release notes above for new or changed rules
           that may affect `stylelint-sass`. Check whether any new rules map to existing
-          or planned rules in `docs/plan/rules/`.
+          or planned rules in the [wiki](https://github.com/theagenticengineer/stylelint-sass/wiki).
           FOOTER
 
           gh issue create \

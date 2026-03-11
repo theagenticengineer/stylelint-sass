@@ -23,12 +23,19 @@ Implement the rule specified in `$ARGUMENTS`.
    parent branch (`main` for the first rule in a phase,
    or the previous rule's branch when stacking).
 
-2. Read the rule spec from `docs/plan/rules/design/sass-<rule-name>.md`
+2. Bootstrap the wiki and read the rule spec:
+
+   ```bash
+   WIKI=$(bash .claude/scripts/ensure-wiki.sh)
+   ```
+
+   Read the spec from `$WIKI/rules/design/sass-<rule-name>.md`
+
 3. Write the test file **first** at
    `src/rules/<rule-name>/index.test.ts` using the BAD/GOOD
    cases from the spec as acceptance criteria
 4. Implement the rule at `src/rules/<rule-name>/index.ts`
-   following the pattern in `docs/plan/01-architecture.md`
+   following the rule pattern in the wiki Architecture page
 5. Add TSDoc comments to the rule's exported function,
    `ruleName`, `messages`, and `meta` objects. Include
    `@example` showing a BAD case that triggers the rule.
