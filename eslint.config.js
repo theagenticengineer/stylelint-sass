@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import jsdoc from 'eslint-plugin-jsdoc';
 import tsdoc from 'eslint-plugin-tsdoc';
 import tseslint from 'typescript-eslint';
 
@@ -10,8 +11,29 @@ export default tseslint.config(
   },
   {
     files: ['**/*.ts'],
-    plugins: { tsdoc },
-    languageOptions: { parserOptions: { tsconfigRootDir: import.meta.dirname } },
-    rules: { 'tsdoc/syntax': 'warn' },
+    plugins: { tsdoc, jsdoc },
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      'tsdoc/syntax': 'warn',
+      'jsdoc/require-jsdoc': [
+        'warn',
+        {
+          publicOnly: true,
+          require: {
+            FunctionDeclaration: true,
+            MethodDefinition: true,
+            ClassDeclaration: true,
+            // Disabled to support the createPlugin(name, rule) pattern,
+            // where the rule is an anonymous function.
+            ArrowFunctionExpression: false,
+            FunctionExpression: false,
+          },
+        },
+      ],
+    },
   },
 );
