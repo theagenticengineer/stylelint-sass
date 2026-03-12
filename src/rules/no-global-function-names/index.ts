@@ -207,6 +207,9 @@ const ruleFunction: stylelint.Rule = (primary) => {
     /**
      * Check a string value for deprecated global function calls and
      * report any matches.
+     *
+     * @param value - The declaration value to scan
+     * @param node - The PostCSS node for error reporting
      */
     function checkValue(value: string, node: import('postcss').Node): void {
       FUNCTION_CALL_RE.lastIndex = 0;
