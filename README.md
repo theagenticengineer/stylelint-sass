@@ -109,6 +109,21 @@ export default {
 };
 ```
 
+A TypeScript config works too. Stylelint 18 loads it with Node.js type stripping, so it imports
+types with `import type` and uses erasable syntax only:
+
+```ts
+// stylelint.config.ts
+import type { Config } from 'stylelint';
+
+const config: Config = {
+  customSyntax: '@theagenticengineer/stylelint-sass/syntax',
+  extends: ['@theagenticengineer/stylelint-sass/recommended'],
+};
+
+export default config;
+```
+
 ```bash
 npx stylelint "src/**/*.sass"
 ```
