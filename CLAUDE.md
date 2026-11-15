@@ -39,8 +39,8 @@ pnpm run format:check
 
 These are non-negotiable and apply to every session:
 
-1. **Human merges PRs** — the agent never merges. Submit PRs via `gt submit`, human merges via
-   Graphite Web.
+1. **Human merges PRs**: the agent never merges. Open PRs with `git push -u origin <branch>` and
+   `gh pr create`, and the human merges on GitHub.
 2. **Test-first** — write tests before implementation. BAD/GOOD `.sass` cases from the rule spec
    are the acceptance criteria.
 3. **`pnpm check` before commit** — all quality gates must pass before any commit.
@@ -53,21 +53,23 @@ These are non-negotiable and apply to every session:
    blocks from the wiki rule spec verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
    `GIT_SEQUENCE_EDITOR=true git rebase --autosquash`.
-7. **Every branch = its own worktree** — never use `gt create` (it auto-generates bad names) or
-   `git checkout -b` in the main tree. The worktree path must mirror the branch name exactly:
+7. **Every branch = its own worktree**: never use `git checkout -b` in the main tree. The worktree
+   path must mirror the branch name exactly:
    `git worktree add .worktrees/<type>/sass-lint-<issue#>-<title> -b <type>/sass-lint-<issue#>-<title>`.
    Example: `git worktree add .worktrees/feat/sass-lint-12-no-debug -b feat/sass-lint-12-no-debug`.
-   This creates a `<type>/` subdirectory under `.worktrees/`. Then run `gt track`.
+   This creates a `<type>/` subdirectory under `.worktrees/`.
    The main working tree stays on `main`. To stack B on A, pass the parent branch:
-   `git worktree add .worktrees/<type>/sass-lint-<N>-<title> -b <type>/sass-lint-<N>-<title> <parent-branch>`.
+   `git worktree add .worktrees/<type>/sass-lint-<N>-<title> -b <type>/sass-lint-<N>-<title> <parent-branch>`,
+   and open its PR with `gh pr create --base <parent-branch>`.
    **Never use `isolation: "worktree"` on the Task tool** — it creates worktrees in
    `.claude/worktrees/` instead of `.worktrees/`. Always create worktrees manually per this rule.
    **Parallel branches**: when implementing independent rules in parallel, create each branch off
-   `main` (not stacked on each other). After merging one, `gt sync` to advance main, then
-   `gt restack` only the next branch to review — other worktrees remain untouched until their turn.
-8. **Pushing** — for feature branches (worktrees), never `git push`; always use `gt restack` then
-   `gt submit` to keep Graphite metadata in sync. For `main`, use `git push origin main` directly
-   (Graphite does not manage trunk). Never force-push main.
+   `main` (not stacked on each other). After merging one, run `git pull` in the main tree, then
+   rebase only the next branch to review onto `origin/main`. Other worktrees remain untouched
+   until their turn.
+8. **Pushing**: push a feature branch with `git push -u origin <branch>`. After a rebase, push it
+   with `git push --force-with-lease`. For `main`, use `git push origin main`. Never force-push
+   `main`.
 9. **Blockers interrupt, not fix** — when a task (skill, subagent, etc.) hits an unexpected issue
    outside its scope (infrastructure bug, tooling failure, missing dependency), it must **stop
    immediately** and report back with: (a) what failed, (b) a proposed GitHub issue with clear
