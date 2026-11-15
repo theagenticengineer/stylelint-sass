@@ -40,6 +40,7 @@ describe('recommended config', () => {
         'color-no-invalid-hex',
         'shorthand-property-no-redundant-values',
         'length-zero-no-unit',
+        'selector-no-deprecated',
         'block-no-empty',
         'no-duplicate-selectors',
         'no-descending-specificity',

@@ -1,0 +1,57 @@
+// Sass constructs that core Stylelint rules must read without false positives.
+// Each core-rule test lints this file through the plugin syntax.
+@use "sass:math"
+@use "sass:color"
+@use "sass:meta"
+@use "sass:map"
+
+$gap: 4px
+$colors: (primary: #336699, secondary: #993366)
+$name: "card"
+$side: left
+
+@function double($n)
+  @return $n * 2
+
+@mixin pad($v)
+  padding: $v
+
+%base
+  margin: 0
+
+.#{$name}
+  @extend %base
+  @include pad($gap)
+  width: math.div(100%, 3)
+  height: calc(100% - #{$gap})
+  margin-#{$side}: double($gap)
+  color: color.adjust(map.get($colors, primary), $lightness: -10%)
+  font:
+    family: sans-serif
+    size: 12px
+  &__title
+    color: red
+  &:hover
+    color: blue
+  &.is-active
+    color: green
+  > .child
+    color: red
+  + .sibling
+    color: red
+  .theme-dark &
+    color: white
+  @each $key, $value in $colors
+    &--#{$key}
+      color: $value
+  @if $gap > 2px
+    border: 1px solid red
+  @at-root .other
+    color: red
+  &:not(.#{$name}--x)
+    color: red
+
+@media (min-width: 600px)
+  .grid
+    display: grid
+    width: $gap + 2px

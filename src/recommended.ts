@@ -36,6 +36,7 @@ export default {
     ],
     'shorthand-property-no-redundant-values': true,
     'length-zero-no-unit': true,
+    'selector-no-deprecated': true,
 
     // Disabled pending sass-parser support for Declaration.important:
     // 'declaration-block-no-duplicate-properties': true,
