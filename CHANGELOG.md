@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- The `stylelint` peer range is `>=17.8.0 <19`, and CI tests stylelint 17.8.0 and 18.0.0
+  ([#112](https://github.com/theagenticengineer/stylelint-sass/issues/112)).
+- The Node.js floor is `>=20.19.0`, the floor of stylelint 17.8. Stylelint 18 needs Node.js 22.22.2
+  or later ([#111](https://github.com/theagenticengineer/stylelint-sass/issues/111)).
+- The development dependency is sass-parser 0.5.6, and CI also tests sass-parser 0.4.42
+  ([#123](https://github.com/theagenticengineer/stylelint-sass/issues/123)).
+- The rule tests lint through the plugin's `/syntax` entry, as consumers do.
+
 ## [0.1.1] - 2026-11-15
 
 ### Fixed

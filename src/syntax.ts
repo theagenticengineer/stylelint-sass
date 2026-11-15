@@ -63,7 +63,7 @@ adoptSassParserNodes();
  * };
  * ```
  */
-const syntax = {
+const syntax: { parse: typeof sass.parse; stringify: typeof sass.stringify } = {
   parse: sass.parse.bind(sass),
   stringify: sass.stringify.bind(sass),
 };
