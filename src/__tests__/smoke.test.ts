@@ -57,6 +57,7 @@ describe('recommended config', () => {
         'sass/selector-no-union-class-name',
         'sass/dimension-no-non-numeric-values',
         'sass/no-color-literals',
+        'sass/selector-no-adjacent-compounds',
       ]),
     );
   });
