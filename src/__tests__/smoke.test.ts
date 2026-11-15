@@ -1,17 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { resolve } from 'node:path';
 import stylelint from 'stylelint';
-import { sass } from 'sass-parser';
+import customSyntax from '../syntax.js';
 import plugin from '../index.js';
 import recommended from '../recommended.js';
 
 const fixturesDir = resolve(import.meta.dirname, 'fixtures');
-
-// .bind(sass) required — sass-parser loses `this` when methods are destructured
-const customSyntax = {
-  parse: sass.parse.bind(sass),
-  stringify: sass.stringify.bind(sass),
-};
 
 describe('plugin entry', () => {
   it('exports an array of rules', () => {

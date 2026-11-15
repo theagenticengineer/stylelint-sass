@@ -78,9 +78,26 @@ Then install:
 pnpm add -D stylelint sass-parser @theagenticengineer/stylelint-sass
 ```
 
-Peer dependencies: `stylelint >= 16` and `sass-parser >= 0.4 < 0.6`. The plugin works when
-sass-parser and Stylelint resolve different postcss copies, which is the usual pnpm layout, so a
-`postcss` override is optional.
+Install all three as local devDependencies of the project. Stylelint resolves `extends`,
+`plugins` and `customSyntax` from the project's `node_modules`, and Stylelint 18 no longer looks in
+the global `node_modules`.
+
+### Supported versions
+
+<!-- markdownlint-disable MD013 -->
+
+| Package     | Range          | Tested in CI      |
+| ----------- | -------------- | ----------------- |
+| stylelint   | `>=17.8.0 <19` | 17.8.0 and 18.0.0 |
+| sass-parser | `>=0.4 <0.6`   | 0.4.42 and 0.5.6  |
+| Node.js     | `>=20.19.0`    | 20, 22 and 24     |
+
+<!-- markdownlint-enable MD013 -->
+
+- Stylelint 17.8 runs on Node.js 20.19 and later.
+- Stylelint 18 runs on Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
+- The plugin works when sass-parser and Stylelint resolve different postcss copies, which is the
+  usual pnpm layout, so a `postcss` override is optional.
 
 ## Usage
 

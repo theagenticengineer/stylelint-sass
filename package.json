@@ -30,11 +30,11 @@
     "registry": "https://npm.pkg.github.com"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.0"
   },
   "peerDependencies": {
     "sass-parser": ">=0.4 <0.6",
-    "stylelint": ">=16"
+    "stylelint": ">=17.8.0 <19"
   },
   "scripts": {
     "lint": "eslint . && markdownlint-cli2 '**/*.md' '#node_modules' '#.worktrees'",
@@ -59,10 +59,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "markdownlint-cli2": "^0.21.0",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.33",
     "prettier": "^3.8.1",
-    "sass-parser": "^0.4.42",
-    "stylelint": "^17.3.0",
+    "sass-parser": "^0.5.6",
+    "stylelint": "^18.0.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.0",
     "vitest": "^4.0.18"

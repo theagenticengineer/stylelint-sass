@@ -27,12 +27,13 @@ const REGISTRY = 'https://npm.pkg.github.com';
 // both `sass/no-debug` and `at-rule-no-unknown` visit.
 const NESTED_SASS = '.card\n  color: red\n  .title\n    font-weight: bold\n\n@debug "x"\n';
 
-// Each consumer pins one end of the supported sass-parser range. sass-parser pins postcss
+// Each consumer pins one end of the supported ranges: the oldest stylelint (17.8.0) with
+// sass-parser 0.4, and the newest stylelint with sass-parser 0.5. sass-parser pins postcss
 // exactly, and stylelint takes the newest postcss 8, so every consumer holds two postcss copies.
-// stylelint 18 runs on Node 22 and later, so Node 20 covers the newer sass-parser with 17.
+// stylelint 18 runs on Node 22 and later, so Node 20 covers the newer sass-parser with 17.16.
 const NEWEST_STYLELINT = Number(process.versions.node.split('.')[0]) >= 22 ? '18.0.0' : '17.16.0';
 const CONSUMERS = [
-  { sassParser: '0.4.58', stylelint: '17.16.0' },
+  { sassParser: '0.4.58', stylelint: '17.8.0' },
   { sassParser: '0.5.6', stylelint: NEWEST_STYLELINT },
 ];
 

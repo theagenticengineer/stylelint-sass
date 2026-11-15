@@ -1,11 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import stylelint from 'stylelint';
-import { sass } from 'sass-parser';
-
-const customSyntax = {
-  parse: sass.parse.bind(sass),
-  stringify: sass.stringify.bind(sass),
-};
+import customSyntax from '../../syntax.js';
 
 const config = {
   plugins: ['./src/index.ts'],
