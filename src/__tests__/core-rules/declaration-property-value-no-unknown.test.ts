@@ -7,9 +7,9 @@ const rules = { [RULE]: true };
 
 describe(`${RULE} on .sass`, () => {
   it('reports an unknown value written in indented syntax', async () => {
-    const { problems } = await lintSass('.a\n  top: red\n', rules);
+    const { problems } = await lintSass('.a\n  top: solid\n', rules);
     expect(problems.map(({ line }) => line)).toEqual([2]);
-    expect(problems[0]!.text).toContain('"red" for property "top"');
+    expect(problems[0]!.text).toContain('"solid" for property "top"');
   });
 
   it('stays silent on Sass variables, functions and interpolation', async () => {
