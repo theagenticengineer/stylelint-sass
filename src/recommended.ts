@@ -1,3 +1,20 @@
+import stylelint from 'stylelint';
+
+/**
+ * Core rules newer than stylelint 17.8.0, the floor of the peer range. The recommended config
+ * enables each one only when the installed stylelint ships it, because a config that names an
+ * unknown rule makes stylelint report `Unknown rule` in every file.
+ */
+const NEWER_CORE_RULES: Record<string, unknown> = {
+  // stylelint 17.10.0
+  'selector-no-invalid': true,
+};
+
+/** The entries of {@link NEWER_CORE_RULES} that the installed stylelint ships. */
+const availableNewerCoreRules = Object.fromEntries(
+  Object.entries(NEWER_CORE_RULES).filter(([name]) => name in stylelint.rules),
+);
+
 /**
  * Recommended Stylelint configuration for `stylelint-sass`.
  *
@@ -37,6 +54,7 @@ export default {
     'shorthand-property-no-redundant-values': true,
     'length-zero-no-unit': true,
     'selector-no-deprecated': true,
+    ...availableNewerCoreRules,
 
     // Disabled pending sass-parser support for Declaration.important:
     // 'declaration-block-no-duplicate-properties': true,
