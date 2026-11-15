@@ -157,6 +157,10 @@ text:
 - Sass nested properties (`font:` with `family` and `size` children) leave the parent
   declaration with an empty value, which `declaration-property-value-no-unknown` reports. So
   `recommended` leaves that rule off.
+- `function-no-unknown` reports user-defined Sass functions, such as `double()` from
+  `@function double`, because CSS does not define them; it skips namespaced calls such as
+  `math.div()`. `recommended` turns it off, so list `recommended` after
+  `stylelint-config-standard` in `extends`.
 
 ## Contributing
 
