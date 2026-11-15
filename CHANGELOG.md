@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - Unreleased
+## [0.1.1] - 2026-11-15
+
+### Fixed
+
+- Linting nested `.sass` no longer crashes with a `TypeError` in sass-parser's stringifier when
+  sass-parser and Stylelint resolve different postcss copies. sass-parser pins postcss exactly,
+  so pnpm installs two copies, and Stylelint's postcss rebuilt sass-parser's nodes onto its plain
+  prototypes. The `/syntax` entry now marks sass-parser's nodes as native to Stylelint's postcss,
+  so they keep their sass-parser prototype.
+- The README install steps put the `_authToken` line in a user-level npmrc, because pnpm expands
+  environment variables in registry credentials only from there.
+
+### Changed
+
+- The `sass-parser` peer range is `>=0.4 <0.6`, the versions the pack test covers.
+- The pack test installs stylelint and sass-parser in the throwaway consumer from the registry,
+  for sass-parser 0.4 and 0.5, and runs the consumer's own stylelint CLI.
+
+## [0.1.0] - 2026-11-15
 
 Initial release of `@theagenticengineer/stylelint-sass` — a Stylelint plugin for linting `.sass`
 (indented syntax) files, built on
@@ -83,4 +101,5 @@ A `@theagenticengineer/stylelint-sass/recommended` config that enables:
 - Dev Container for instant contributor onboarding
 - Comprehensive SDLC documentation
 
+[0.1.1]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.1.1
 [0.1.0]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.1.0

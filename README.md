@@ -33,23 +33,54 @@ fills that gap, built on the official `sass-parser` maintained by the Sass team.
 
 ## Installation
 
-The package is published to GitHub Packages, which requires a token even to install. Point the
-`@theagenticengineer` scope at GitHub's registry in the project's `.npmrc`:
+The package is published to GitHub Packages, which requires a token even to install. Two npmrc
+files hold the setup:
+
+- the project `.npmrc` maps the `@theagenticengineer` scope to GitHub's registry
+- a user-level npmrc holds the token, because pnpm expands environment variables in registry
+  credentials only from a user-level npmrc
+
+Project `.npmrc`, committed with the project:
 
 ```ini
 @theagenticengineer:registry=https://npm.pkg.github.com
+```
+
+On a developer machine, add the token line to `~/.npmrc` and export `NODE_AUTH_TOKEN`, a classic
+personal access token with `read:packages`:
+
+```ini
 //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-`NODE_AUTH_TOKEN` is a classic personal access token with `read:packages` on a developer machine,
-and `secrets.GITHUB_TOKEN` in GitHub Actions once the package grants that repository read access
-(package settings, **Manage Actions access**). Then install:
+In GitHub Actions, `actions/setup-node` writes that user-level npmrc. The package grants the
+consuming repository read access in its package settings (**Manage Actions access**):
+
+```yaml
+permissions:
+  contents: read
+  packages: read
+
+steps:
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 22
+      registry-url: https://npm.pkg.github.com
+      scope: '@theagenticengineer'
+  - run: pnpm install --frozen-lockfile
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Then install:
 
 ```bash
 pnpm add -D stylelint sass-parser @theagenticengineer/stylelint-sass
 ```
 
-Peer dependencies: `stylelint >= 16` and `sass-parser >= 0.4`.
+Peer dependencies: `stylelint >= 16` and `sass-parser >= 0.4 < 0.6`. The plugin works when
+sass-parser and Stylelint resolve different postcss copies, which is the usual pnpm layout, so a
+`postcss` override is optional.
 
 ## Usage
 
