@@ -1,6 +1,6 @@
 {
   "name": "@theagenticengineer/stylelint-sass",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Stylelint plugin for Sass indented syntax (.sass) linting",
   "keywords": [
     "stylelint",

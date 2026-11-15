@@ -161,6 +161,27 @@ npx stylelint "src/**/*.sass"
 
 <!-- markdownlint-enable MD013 -->
 
+## Recommended config
+
+`@theagenticengineer/stylelint-sass/recommended` turns on every `sass/*` rule in the table below,
+at its default, and these core Stylelint rules:
+
+- `at-rule-no-unknown`, with the Sass at-rules in `ignoreAtRules`
+- `block-no-empty`
+- `color-no-invalid-hex`
+- `length-zero-no-unit`
+- `max-nesting-depth: 3`
+- `no-descending-specificity`
+- `no-duplicate-selectors`
+- `selector-no-deprecated`
+- `shorthand-property-no-redundant-values`
+- `selector-no-invalid`, when the installed Stylelint is 17.10 or later
+- `value-no-invalid`, when the installed Stylelint is 18 or later
+
+It turns `function-no-unknown` off. Core rules newer than Stylelint 17.8 join only when the
+installed Stylelint ships them, because a config that names an unknown rule makes Stylelint report
+`Unknown rule` in every file.
+
 ## Core rules on `.sass`
 
 Core Stylelint rules read the AST that sass-parser builds, and sass-parser rewrites some source
@@ -177,6 +198,23 @@ text:
   `@function double`, because CSS does not define them; it skips namespaced calls such as
   `math.div()`. `recommended` turns it off, so list `recommended` after
   `stylelint-config-standard` in `extends`.
+- `selector-no-unmatchable` reads `&` as CSS nesting does, as `:is()` of the parent. Sass joins
+  `&` as text, so `&:hover` under `&::before` compiles to the matchable `.a::before:hover`, which
+  the rule reports. `recommended` leaves it off.
+- sass-parser leaves `@charset` out of the AST, because Sass writes the charset itself, so
+  `at-charset-rule-no-invalid` never reports in `.sass`.
+- `relative-selector-nesting-notation` with `"implicit"` reports the same selectors as
+  `sass/selector-no-redundant-nesting-selector`.
+- The `*-layout-mappings` rules work on `.sass`; `unit-layout-mappings` skips units stored in
+  `$variables`.
+
+## Known limitations
+
+- `stylelint --fix` rewrites `.sass` files as SCSS, because sass-parser stringifies every root as
+  SCSS ([#146](https://github.com/theagenticengineer/stylelint-sass/issues/146)). Run Stylelint on
+  `.sass` without `--fix`.
+- A Sass syntax error is reported as a `CssSyntaxError` problem in its file, and the other files
+  of the run are still linted.
 
 ## Contributing
 

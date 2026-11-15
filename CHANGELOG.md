@@ -5,17 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2026-11-15
+
+Aligns the plugin with stylelint 17.8 through 18.0, sass-parser 0.5 and Dart Sass 1.108.
+
+### Added
+
+- `sass/selector-no-adjacent-compounds`: disallow compound selectors written without whitespace,
+  such as `[class]a`, which Dart Sass 1.100 deprecates and Dart Sass 2 rejects. It is in
+  `recommended` ([#125]).
+- `recommended` turns on `selector-no-deprecated` ([#99]), `selector-no-invalid` on
+  stylelint 17.10 and later ([#102]) and `value-no-invalid` on stylelint 18 ([#108]). Core
+  rules newer than stylelint 17.8 join only when the installed stylelint ships them.
+- README: supported versions, the recommended contents, a `stylelint.config.ts` example
+  ([#119]), how core rules behave on `.sass` and the known limitations.
+- Tests that pin each new stylelint rule through the `.sass` syntax, kept out of `recommended`
+  with the reasons: `relative-selector-nesting-notation` ([#100]), `property-layout-mappings`
+  ([#101]), `unit-layout-mappings` ([#103]), `value-keyword-layout-mappings` ([#104]),
+  `selector-no-unmatchable` ([#105]), `color-named` and `color-no-hex` with `ignoreFunctions`
+  ([#106]), `at-charset-rule-no-invalid` ([#107]),
+  `declaration-property-custom-property-allowed-list` ([#109]),
+  `value-type-custom-property-required-list` ([#110]) and
+  `declaration-property-value-no-unknown` ([#117]).
+- Tests for the stylelint 18 changes: full-path locators ([#113]), no global `node_modules`
+  ([#114]), rules and options of `recommended` on both majors ([#116], [#118]), guards against
+  `context.fix` and value imports of postcss ([#115], [#122]). The stylelint 18 CLI and
+  `globbyOptions` changes need no plugin change ([#120]).
+- Tests for sass-parser 0.5 and Dart Sass: CSS escapes in names ([#123]), selector rule
+  positions ([#124]), first-class modules ([#126]) and a map of every Dart Sass 2 fatal
+  deprecation to what reports it ([#128]).
 
 ### Changed
 
-- The `stylelint` peer range is `>=17.8.0 <19`, and CI tests stylelint 17.8.0 and 18.0.0
-  ([#112](https://github.com/theagenticengineer/stylelint-sass/issues/112)).
-- The Node.js floor is `>=20.19.0`, the floor of stylelint 17.8. Stylelint 18 needs Node.js 22.22.2
-  or later ([#111](https://github.com/theagenticengineer/stylelint-sass/issues/111)).
-- The development dependency is sass-parser 0.5.6, and CI also tests sass-parser 0.4.42
-  ([#123](https://github.com/theagenticengineer/stylelint-sass/issues/123)).
+- The `stylelint` peer range is `>=17.8.0 <19` ([#112]).
+- The Node.js floor is `>=20.19.0`, the floor of stylelint 17.8. Stylelint 18 needs Node.js
+  22.22.2 or later ([#111]).
+- CI runs `check (20)` on stylelint 17.8.0 with sass-parser 0.4.42, `check (22)` on stylelint
+  18.0.0 with sass-parser 0.5.6, and `compat` jobs on the other corners ([#112], [#123]).
+- `recommended` turns `function-no-unknown` off, which reports user-defined Sass functions
+  ([#121]).
+- `sass/selector-no-redundant-nesting-selector` checks only rules inside another style rule. A
+  root-level `&` (the scoping root since Dart Sass 1.99) and `&` in a `@mixin` stay ([#127]).
+- `sass/percent-placeholder-pattern` matches the name after decoding CSS escapes, and skips
+  interpolated names ([#123]).
 - The rule tests lint through the plugin's `/syntax` entry, as consumers do.
+
+### Fixed
+
+- A Sass syntax error is reported as a `CssSyntaxError` problem in its file. It used to abort the
+  whole run ([#137]).
+- `.sass` linting works when sass-parser and stylelint share one postcss copy, the usual npm
+  layout. 0.1.1 failed every parse there ([#139]).
+- `recommended` accepts `@return`, which it reported as an unknown at-rule ([#158]).
+
+### Removed
+
+- Support for stylelint 16 and 17.0 to 17.7 ([#112]).
+- Support for Node.js below 20.19 ([#111]).
 
 ## [0.1.1] - 2026-11-15
 
@@ -113,5 +159,39 @@ A `@theagenticengineer/stylelint-sass/recommended` config that enables:
 - Dev Container for instant contributor onboarding
 - Comprehensive SDLC documentation
 
+[0.2.0]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.2.0
 [0.1.1]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.1.1
 [0.1.0]: https://github.com/theagenticengineer/stylelint-sass/releases/tag/v0.1.0
+[#99]: https://github.com/theagenticengineer/stylelint-sass/issues/99
+[#100]: https://github.com/theagenticengineer/stylelint-sass/issues/100
+[#101]: https://github.com/theagenticengineer/stylelint-sass/issues/101
+[#102]: https://github.com/theagenticengineer/stylelint-sass/issues/102
+[#103]: https://github.com/theagenticengineer/stylelint-sass/issues/103
+[#104]: https://github.com/theagenticengineer/stylelint-sass/issues/104
+[#105]: https://github.com/theagenticengineer/stylelint-sass/issues/105
+[#106]: https://github.com/theagenticengineer/stylelint-sass/issues/106
+[#107]: https://github.com/theagenticengineer/stylelint-sass/issues/107
+[#108]: https://github.com/theagenticengineer/stylelint-sass/issues/108
+[#109]: https://github.com/theagenticengineer/stylelint-sass/issues/109
+[#110]: https://github.com/theagenticengineer/stylelint-sass/issues/110
+[#111]: https://github.com/theagenticengineer/stylelint-sass/issues/111
+[#112]: https://github.com/theagenticengineer/stylelint-sass/issues/112
+[#113]: https://github.com/theagenticengineer/stylelint-sass/issues/113
+[#114]: https://github.com/theagenticengineer/stylelint-sass/issues/114
+[#115]: https://github.com/theagenticengineer/stylelint-sass/issues/115
+[#116]: https://github.com/theagenticengineer/stylelint-sass/issues/116
+[#117]: https://github.com/theagenticengineer/stylelint-sass/issues/117
+[#118]: https://github.com/theagenticengineer/stylelint-sass/issues/118
+[#119]: https://github.com/theagenticengineer/stylelint-sass/issues/119
+[#120]: https://github.com/theagenticengineer/stylelint-sass/issues/120
+[#121]: https://github.com/theagenticengineer/stylelint-sass/issues/121
+[#122]: https://github.com/theagenticengineer/stylelint-sass/issues/122
+[#123]: https://github.com/theagenticengineer/stylelint-sass/issues/123
+[#124]: https://github.com/theagenticengineer/stylelint-sass/issues/124
+[#125]: https://github.com/theagenticengineer/stylelint-sass/issues/125
+[#126]: https://github.com/theagenticengineer/stylelint-sass/issues/126
+[#127]: https://github.com/theagenticengineer/stylelint-sass/issues/127
+[#128]: https://github.com/theagenticengineer/stylelint-sass/issues/128
+[#137]: https://github.com/theagenticengineer/stylelint-sass/issues/137
+[#139]: https://github.com/theagenticengineer/stylelint-sass/issues/139
+[#158]: https://github.com/theagenticengineer/stylelint-sass/issues/158
