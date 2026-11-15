@@ -95,9 +95,3 @@ The fastest way to get a working dev environment is with a
 **Dev Containers: Reopen in Container**. Everything (Node 22, pnpm, GitHub CLI (gh),
 Graphite CLI (gt), Claude Code) is pre-installed, and host authentication persists across rebuilds
 via bind mounts.
-
-For local AI code review before CI, install
-[PAL MCP Server](https://github.com/BeehiveInnovations/pal-mcp-server) on your host — the
-Dev Container picks up your MCP config automatically. PAL enables the `/review-pr` skill to run
-local code review (Phase 1) before pushing, catching issues without a full CI round-trip. See
-[setup details](.devcontainer/README.md#pal-mcp-server-recommended).

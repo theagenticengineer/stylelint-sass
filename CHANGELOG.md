@@ -76,7 +76,6 @@ A `stylelint-sass/recommended` config that enables:
 #### Dev infrastructure
 
 - CI pipeline (GitHub Actions) — typecheck, lint, format, test on Node 20/22
-- AI-powered code review (Gemini 2.5 Flash) on every PR
 - Upstream release monitoring (`stylelint-scss` release tracker)
 - Dev Container for instant contributor onboarding
 - Comprehensive SDLC documentation

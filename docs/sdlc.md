@@ -130,7 +130,6 @@ stylelint-sass/
 ├── .github/
 │   ├── workflows/
 │   │   ├── ci.yml                   # CI pipeline (typecheck + lint + test)
-│   │   ├── ai-review.yml           # Gemini AI code review on PRs
 │   │   └── monitor-stylelint-scss.yml  # Upstream release tracker
 │   └── ISSUE_TEMPLATE/
 │       ├── rule.yml                 # New rule request template
@@ -440,42 +439,15 @@ pnpm check  # all gates must pass
 
 ## Code Review Process
 
-Each review layer catches different things. Local PAL review
-catches issues before pushing, saving CI round-trips. Gemini CI
-review brings a fresh perspective to things the local pass may
-have missed. Human review ensures the change makes sense for the
-project direction. Together, the three layers balance speed with
-thoroughness.
+CI checks gate every PR, and the human maintainer reviews it.
 
-Every PR goes through three layers of review.
-
-### Layer 1 — PAL local review
-
-[PAL](https://github.com/BeehiveInnovations/pal-mcp-server)
-(Provider Abstraction Layer) is an MCP server that connects AI
-coding tools to multiple model providers — Gemini, OpenAI, Grok,
-Ollama, and others. Its `codereview` tool can run a review against
-a single model or build multi-model consensus, so the same diff
-gets evaluated from multiple perspectives before it leaves the
-developer's machine.
-
-### Layer 2 — Gemini CI review
-
-The `ai-review.yml` workflow automatically posts an AI review comment
-on every PR. It:
-
-1. Extracts the PR diff
-2. Sends it to Gemini 2.5 Flash for review
-3. Posts (or updates) a review comment on the PR
-4. Uses diff hashing for idempotency — unchanged diffs skip review
-
-### Layer 3 — Human review
+### Human review
 
 The human maintainer reviews the PR via Graphite Web and merges.
 
-### Handling Gemini feedback
+### Handling review feedback
 
-When Gemini raises a concern:
+When a review raises a concern:
 
 - **Valid concern, easy fix**: adopt the suggestion
 - **Invalid concern**: dismiss with **authoritative evidence** — link
@@ -513,17 +485,6 @@ Runs on every push to `main` and every PR.
 The Node matrix ensures compatibility across the two supported LTS
 versions.
 
-### ai-review.yml — Gemini code review
-
-Runs on `pull_request` events (`opened`, `synchronize`).
-
-- Uses `GEMINI_API_KEY` secret to call the Gemini API
-- Extracts the PR diff via `gh pr diff`
-- Hashes the diff for idempotency — if the diff hasn't changed since
-  the last review, it skips
-- Posts or updates a single review comment per PR
-- Reviews for: bugs, missing tests, type safety, naming, performance
-
 ### monitor-stylelint-scss.yml — Upstream tracker
 
 Runs daily at 9am UTC (and on manual dispatch).
@@ -549,8 +510,8 @@ These rules are non-negotiable and apply to every session:
 1. **Human merges PRs** — the agent never merges
 2. **Test-first** — write tests before implementation
 3. **`pnpm check` before commit** — all gates must pass
-4. **Every PR goes through `/review-pr`** — local review, submit,
-   monitor CI, read Gemini feedback, hand off
+4. **Every PR goes through `/review-pr`**: submit, monitor CI,
+   hand off
 5. **Rule issues include full spec** — BAD/GOOD code blocks from
    the wiki rule specs
 6. **Fixup, don't separate** — use `git commit --fixup` for fixes
@@ -572,7 +533,7 @@ are loaded only when invoked, not kept in context permanently.
 | `/create-issue` | Create a structured GitHub issue                          |
 | `/worktree`     | Create an isolated git worktree                           |
 | `/add-rule`     | Implement a rule from its spec (test-first)               |
-| `/review-pr`    | 5-phase review: local, submit, CI, Gemini, human          |
+| `/review-pr`    | Review loop: submit, CI, human                            |
 | `/post-merge`   | Sync main after merge, clean up worktree, suggest next PR |
 
 ### How skills work
@@ -644,7 +605,5 @@ Two templates are available in `.github/ISSUE_TEMPLATE/`:
 ### PR workflow
 
 1. All CI checks must be green
-2. Gemini review comments must be addressed (adopt, dismiss with
-   evidence, or flag as upstream issue)
-3. Human merges via Graphite Web
-4. PR title must follow `Closes #N: <description>` format
+2. Human merges via Graphite Web
+3. PR title must follow `Closes #N: <description>` format
