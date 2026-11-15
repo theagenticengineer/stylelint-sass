@@ -8,6 +8,8 @@ import stylelint from 'stylelint';
 const NEWER_CORE_RULES: Record<string, unknown> = {
   // stylelint 17.10.0
   'selector-no-invalid': true,
+  // stylelint 18.0.0
+  'value-no-invalid': true,
 };
 
 /** The entries of {@link NEWER_CORE_RULES} that the installed stylelint ships. */
