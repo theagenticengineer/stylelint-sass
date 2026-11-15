@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- `recommended` no longer turns on `value-no-invalid` on stylelint 18. The rule reports every
+  `$variable` inside a plain function call, such as `double($gap)` or `rgba($c, 0.5)`, and in
+  space-separated lists such as `1px solid $c` ([#166]).
+
 ## [0.2.0] - 2026-11-15
 
 Aligns the plugin with stylelint 17.8 through 18.0, sass-parser 0.5 and Dart Sass 1.108.
@@ -195,3 +203,4 @@ A `@theagenticengineer/stylelint-sass/recommended` config that enables:
 [#137]: https://github.com/theagenticengineer/stylelint-sass/issues/137
 [#139]: https://github.com/theagenticengineer/stylelint-sass/issues/139
 [#158]: https://github.com/theagenticengineer/stylelint-sass/issues/158
+[#166]: https://github.com/theagenticengineer/stylelint-sass/issues/166
