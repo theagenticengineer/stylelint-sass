@@ -56,6 +56,9 @@ export default {
     'shorthand-property-no-redundant-values': true,
     'length-zero-no-unit': true,
     'selector-no-deprecated': true,
+    // Off: CSS does not define user-defined Sass functions such as `double()`, so the rule
+    // reports them. sass/no-global-function-names covers the global Sass built-ins.
+    'function-no-unknown': null,
     ...availableNewerCoreRules,
 
     // Disabled pending sass-parser support for Declaration.important:
