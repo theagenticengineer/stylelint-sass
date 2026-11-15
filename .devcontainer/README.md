@@ -1,7 +1,7 @@
 # Dev Container
 
-A sandboxed development environment for stylelint-sass. Pre-installs Node 22, pnpm, gh CLI,
-Graphite CLI, and Claude Code so contributors can start working immediately. Host authentication
+A sandboxed development environment for stylelint-sass. Pre-installs Node 22, pnpm, gh CLI
+and Claude Code so contributors can start working immediately. Host authentication
 and context persist across container rebuilds via bind mounts.
 
 ## Why a Dev Container?
@@ -70,7 +70,6 @@ Host directories are bind-mounted into the container. CLI auth (`gh`, `gt`) and 
 | `~/.claude/projects/` | `/home/node/.claude/projects/` | Sessions and auto-memory (direct mount)                     |
 | `~/.claude.json`      | `/home/node/.claude-host.json` | OAuth session, project settings                             |
 | `~/.config/gh/`       | `/home/node/.config/gh/`       | GitHub CLI auth (`gh auth login`)                           |
-| `~/.config/graphite/` | `/home/node/.config/graphite/` | Graphite CLI auth                                           |
 
 <!-- markdownlint-enable MD013 -->
 
@@ -125,7 +124,6 @@ picks up existing auth automatically.
 ```bash
 # On your host (one-time)
 gh auth login
-gt auth              # if using Graphite
 claude               # completes OAuth login
 ```
 
@@ -135,9 +133,7 @@ claude               # completes OAuth login
 | --------------- | ---------------------------------------- |
 | Node 22 + pnpm  | Runtime and package manager              |
 | gh CLI          | GitHub issue/PR management               |
-| Graphite CLI    | Stacked PRs and branch workflow          |
 | Claude Code     | AI-powered development assistant         |
-| uv + uvx        | Python package runner (required by PAL)  |
 | ESLint          | Linting (via VS Code extension)          |
 | Prettier        | Formatting (via VS Code extension)       |
 | markdownlint    | Markdown linting (via VS Code extension) |
