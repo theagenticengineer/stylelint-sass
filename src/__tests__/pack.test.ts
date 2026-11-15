@@ -29,12 +29,15 @@ const NESTED_SASS = '.card\n  color: red\n  .title\n    font-weight: bold\n\n@de
 
 // Each consumer pins one end of the supported ranges: the oldest stylelint (17.8.0) with
 // sass-parser 0.4, and the newest stylelint with sass-parser 0.5. sass-parser pins postcss
-// exactly, and stylelint takes the newest postcss 8, so every consumer holds two postcss copies.
+// exactly, and stylelint takes the newest postcss 8, so pnpm gives those consumers two postcss
+// copies. The third consumer pins postcss to sass-parser's version, the single copy that npm's
+// dedupe or a `postcss` override produces.
 // stylelint 18 runs on Node 22 and later, so Node 20 covers the newer sass-parser with 17.16.
 const NEWEST_STYLELINT = Number(process.versions.node.split('.')[0]) >= 22 ? '18.0.0' : '17.16.0';
 const CONSUMERS = [
-  { sassParser: '0.4.58', stylelint: '17.8.0' },
-  { sassParser: '0.5.6', stylelint: NEWEST_STYLELINT },
+  { sassParser: '0.4.58', stylelint: '17.8.0', postcss: undefined },
+  { sassParser: '0.5.6', stylelint: NEWEST_STYLELINT, postcss: undefined },
+  { sassParser: '0.5.6', stylelint: NEWEST_STYLELINT, postcss: '8.5.32' },
 ];
 
 type LintResult = { warnings: { rule: string }[] };
@@ -66,19 +69,25 @@ describe('published package', () => {
   });
 
   describe.each(CONSUMERS)(
-    'in a consumer with sass-parser $sassParser and stylelint $stylelint',
-    ({ sassParser, stylelint }) => {
+    'in a consumer with sass-parser $sassParser, stylelint $stylelint and postcss $postcss',
+    ({ sassParser, stylelint, postcss }) => {
       let consumer = '';
       const resolveFromConsumer = (specifier: string) =>
         createRequire(join(consumer, 'package.json')).resolve(specifier);
 
       beforeAll(() => {
-        consumer = join(workdir, `sass-parser-${sassParser}`);
+        consumer = join(workdir, `sass-parser-${sassParser}-postcss-${postcss ?? 'any'}`);
         mkdirSync(consumer);
         writeFileSync(
           join(consumer, 'package.json'),
           JSON.stringify({ name: 'consumer', private: true, type: 'module' }),
         );
+        if (postcss) {
+          writeFileSync(
+            join(consumer, 'pnpm-workspace.yaml'),
+            `overrides:\n  postcss: ${postcss}\n`,
+          );
+        }
         // pnpm resolves each postcss range on its own, while npm would hoist one copy.
         execFileSync(
           'pnpm',
@@ -107,10 +116,11 @@ describe('published package', () => {
         copyFileSync(join(root, 'src/__tests__/fixtures/valid.sass'), join(consumer, 'valid.sass'));
       }, 180_000);
 
-      it('holds two postcss copies, one for sass-parser and one for stylelint', () => {
+      it(postcss ? 'holds one postcss copy' : 'holds two postcss copies', () => {
         const postcssOf = (dep: string) =>
           createRequire(resolveFromConsumer(dep)).resolve('postcss');
-        expect(postcssOf('sass-parser')).not.toBe(postcssOf('stylelint'));
+        if (postcss) expect(postcssOf('sass-parser')).toBe(postcssOf('stylelint'));
+        else expect(postcssOf('sass-parser')).not.toBe(postcssOf('stylelint'));
       });
 
       // Runs the consumer's own stylelint CLI, which exits 2 when it reports problems and 1

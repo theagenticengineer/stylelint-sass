@@ -42,7 +42,14 @@ function adoptSassParserNodes(): void {
   }
   if (!nodePrototype) return;
   for (const marker of stylelintPostcssMarkers()) {
-    Object.defineProperty(nodePrototype, marker, { value: true, configurable: true });
+    // Writable: when sass-parser and Stylelint share one postcss copy, the marker is
+    // sass-parser's own symbol, and its node constructors assign `this[my] = true`, which
+    // throws in strict mode when the inherited property is read-only.
+    Object.defineProperty(nodePrototype, marker, {
+      value: true,
+      configurable: true,
+      writable: true,
+    });
   }
 }
 
