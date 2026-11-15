@@ -176,7 +176,6 @@ at its default, and these core Stylelint rules:
 - `selector-no-deprecated`
 - `shorthand-property-no-redundant-values`
 - `selector-no-invalid`, when the installed Stylelint is 17.10 or later
-- `value-no-invalid`, when the installed Stylelint is 18 or later
 
 It turns `function-no-unknown` off. Core rules newer than Stylelint 17.8 join only when the
 installed Stylelint ships them, because a config that names an unknown rule makes Stylelint report
@@ -198,6 +197,9 @@ text:
   `@function double`, because CSS does not define them; it skips namespaced calls such as
   `math.div()`. `recommended` turns it off, so list `recommended` after
   `stylelint-config-standard` in `extends`.
+- `value-no-invalid` cannot parse a `$variable` inside a plain function call or a space-separated
+  list: it reports `double($gap)`, `rgba($c, 0.5)` and `1px solid $c`. `recommended` leaves it
+  off.
 - `selector-no-unmatchable` reads `&` as CSS nesting does, as `:is()` of the parent. Sass joins
   `&` as text, so `&:hover` under `&::before` compiles to the matchable `.a::before:hover`, which
   the rule reports. `recommended` leaves it off.

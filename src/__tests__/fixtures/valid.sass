@@ -1,6 +1,7 @@
 $white: #fff
 $dark: #333
 $link-color: #0af
+$gap: 4px
 
 .button
   color: $white
@@ -30,3 +31,8 @@ nav
 // @function bodies end with @return, a Sass at-rule
 @function double($n)
   @return $n * 2
+
+// $variables inside plain function calls and space-separated lists
+.panel
+  padding: double($gap)
+  border: 1px solid $dark
