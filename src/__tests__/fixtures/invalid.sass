@@ -106,3 +106,7 @@ $dupVar: blue
 // value-no-invalid (stylelint 18+): calc() cannot add a number to a length
 .bad-calc
   top: calc(1px + 2)
+
+// sass/selector-no-adjacent-compounds: Dart Sass 2 rejects `[type]input`
+[type]input
+  color: $white

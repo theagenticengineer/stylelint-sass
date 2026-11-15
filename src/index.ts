@@ -29,6 +29,7 @@ import selectorNoUnionClassName from './rules/selector-no-union-class-name/index
 import dimensionNoNonNumericValues from './rules/dimension-no-non-numeric-values/index.js';
 import noColorLiterals from './rules/no-color-literals/index.js';
 import operatorNoUnspaced from './rules/operator-no-unspaced/index.js';
+import selectorNoAdjacentCompounds from './rules/selector-no-adjacent-compounds/index.js';
 
 const rules: stylelint.Plugin[] = [
   noDebug,
@@ -54,6 +55,7 @@ const rules: stylelint.Plugin[] = [
   dimensionNoNonNumericValues,
   noColorLiterals,
   operatorNoUnspaced,
+  selectorNoAdjacentCompounds,
 ];
 
 export default rules;

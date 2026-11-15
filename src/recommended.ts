@@ -93,5 +93,6 @@ export default {
     'sass/dimension-no-non-numeric-values': true,
     'sass/no-color-literals': true,
     'sass/operator-no-unspaced': true,
+    'sass/selector-no-adjacent-compounds': true,
   },
 };

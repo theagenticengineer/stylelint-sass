@@ -157,6 +157,7 @@ npx stylelint "src/**/*.sass"
 | [`sass/dimension-no-non-numeric-values`](docs/rules/dimension-no-non-numeric-values.md)               | `true`       | Best Practices |
 | [`sass/selector-no-union-class-name`](docs/rules/selector-no-union-class-name.md)                     | `true`       | Best Practices |
 | [`sass/selector-no-redundant-nesting-selector`](docs/rules/selector-no-redundant-nesting-selector.md) | `true`       | Best Practices |
+| [`sass/selector-no-adjacent-compounds`](docs/rules/selector-no-adjacent-compounds.md)                 | `true`       | Modern Sass    |
 
 <!-- markdownlint-enable MD013 -->
 
