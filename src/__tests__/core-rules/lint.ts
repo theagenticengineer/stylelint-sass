@@ -45,7 +45,8 @@ export interface Problem {
 }
 
 /**
- * Lints indented Sass with the given rules through the plugin syntax.
+ * Lints indented Sass with the given rules through the plugin syntax, with the plugin's own
+ * `sass/*` rules available.
  *
  * @param code - The `.sass` source
  * @param rules - The Stylelint `rules` object
@@ -63,7 +64,7 @@ export async function lintSass(
   const { results } = await stylelint.lint({
     code,
     codeFilename: 'test.sass',
-    config: { customSyntax, rules },
+    config: { customSyntax, plugins: ['./src/index.ts'], rules },
   });
   const result = results[0]!;
   return {
