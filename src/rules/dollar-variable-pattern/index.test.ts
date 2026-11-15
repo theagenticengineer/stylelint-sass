@@ -45,11 +45,12 @@ describe('sass/dollar-variable-pattern', () => {
     expect(result.warnings[0].rule).toBe('sass/dollar-variable-pattern');
   });
 
-  // $1st-color is invalid Sass syntax — sass-parser throws a parse error.
+  // $1st-color is invalid Sass syntax, so sass-parser throws and the syntax reports it.
   // Variables cannot start with a digit in Sass, so this case is
   // caught by the parser before our rule runs.
   it('rejects variable starting with number (parse error)', async () => {
-    await expect(lint('$1st-color: red')).rejects.toThrow();
+    const result = await lint('$1st-color: red');
+    expect(result.warnings.map((w) => w.rule)).toEqual(['CssSyntaxError']);
   });
 
   it('rejects double hyphens', async () => {
