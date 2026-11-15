@@ -61,3 +61,30 @@ export function toRegExp(pattern: string | RegExp): RegExp | null {
 export function matchesPattern(name: string, pattern: RegExp): boolean {
   return pattern.test(name);
 }
+
+/** Matches one CSS escape: up to six hex digits plus one optional whitespace, or one character. */
+const CSS_ESCAPE = /\\(?:([0-9a-fA-F]{1,6})[ \t\n\r\f]?|([^\n\r\f0-9a-fA-F]))/g;
+
+/**
+ * Decode the CSS escapes of an identifier, as Sass does when it compares names.
+ *
+ * Code points that are zero, surrogates or beyond U+10FFFF decode to U+FFFD, as in CSS.
+ *
+ * @param name - An identifier as written in the source, such as `f\6Fo`
+ * @returns The identifier with every escape decoded, such as `foo`
+ *
+ * @example
+ * ```ts
+ * unescapeIdentifier('f\\6Fo'); // 'foo'
+ * unescapeIdentifier('a\\.b');  // 'a.b'
+ * ```
+ */
+export function unescapeIdentifier(name: string): string {
+  return name.replace(CSS_ESCAPE, (_, hex: string | undefined, char: string | undefined) => {
+    if (char !== undefined) return char;
+    const codePoint = parseInt(hex!, 16);
+    const valid =
+      codePoint > 0 && codePoint <= 0x10ffff && !(codePoint >= 0xd800 && codePoint <= 0xdfff);
+    return String.fromCodePoint(valid ? codePoint : 0xfffd);
+  });
+}
