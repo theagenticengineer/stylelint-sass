@@ -33,8 +33,20 @@ fills that gap, built on the official `sass-parser` maintained by the Sass team.
 
 ## Installation
 
+The package is published to GitHub Packages, which requires a token even to install. Point the
+`@theagenticengineer` scope at GitHub's registry in the project's `.npmrc`:
+
+```ini
+@theagenticengineer:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+`NODE_AUTH_TOKEN` is a classic personal access token with `read:packages` on a developer machine,
+and `secrets.GITHUB_TOKEN` in GitHub Actions once the package grants that repository read access
+(package settings, **Manage Actions access**). Then install:
+
 ```bash
-npm install --save-dev stylelint sass-parser stylelint-sass
+pnpm add -D stylelint sass-parser @theagenticengineer/stylelint-sass
 ```
 
 Peer dependencies: `stylelint >= 16` and `sass-parser >= 0.4`.
@@ -44,8 +56,8 @@ Peer dependencies: `stylelint >= 16` and `sass-parser >= 0.4`.
 ```js
 // stylelint.config.js
 export default {
-  customSyntax: 'sass-parser',
-  extends: ['stylelint-sass/recommended'],
+  customSyntax: '@theagenticengineer/stylelint-sass/syntax',
+  extends: ['@theagenticengineer/stylelint-sass/recommended'],
 };
 ```
 

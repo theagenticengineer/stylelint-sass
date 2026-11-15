@@ -1,6 +1,6 @@
 {
-  "name": "stylelint-sass",
-  "version": "0.0.0",
+  "name": "@theagenticengineer/stylelint-sass",
+  "version": "0.1.0",
   "description": "Stylelint plugin for Sass indented syntax (.sass) linting",
   "keywords": [
     "stylelint",
@@ -19,11 +19,15 @@
   ],
   "exports": {
     ".": "./dist/index.js",
-    "./recommended": "./dist/recommended.js"
+    "./recommended": "./dist/recommended.js",
+    "./syntax": "./dist/syntax.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/theagenticengineer/stylelint-sass.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "engines": {
     "node": ">=20"
@@ -41,7 +45,8 @@
     "build": "tsc",
     "prepare": "husky",
     "test": "vitest run",
-    "check": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test"
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run format:check && pnpm run test",
+    "prepublishOnly": "pnpm run check && pnpm run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",

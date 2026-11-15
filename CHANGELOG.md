@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - Unreleased
 
-Initial release of `stylelint-sass` — a Stylelint plugin for linting `.sass`
+Initial release of `@theagenticengineer/stylelint-sass` — a Stylelint plugin for linting `.sass`
 (indented syntax) files, built on
 [sass-parser](https://www.npmjs.com/package/sass-parser).
 
 ### Added
+
+- Published to GitHub Packages as `@theagenticengineer/stylelint-sass`, released by a `v*` tag
+- A `@theagenticengineer/stylelint-sass/syntax` entry for Stylelint's `customSyntax`
 
 #### 23 lint rules across 7 categories
 
@@ -66,7 +69,7 @@ Initial release of `stylelint-sass` — a Stylelint plugin for linting `.sass`
 
 #### Recommended config
 
-A `stylelint-sass/recommended` config that enables:
+A `@theagenticengineer/stylelint-sass/recommended` config that enables:
 
 - 8 core Stylelint rules pre-configured for Sass (`at-rule-no-unknown` with
   Sass at-rules whitelisted, `color-no-invalid-hex`, `block-no-empty`,
