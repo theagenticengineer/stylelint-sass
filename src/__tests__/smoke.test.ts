@@ -60,4 +60,17 @@ describe('recommended config', () => {
       ]),
     );
   });
+
+  // Core rules newer than stylelint 17.8 join recommended only when the installed stylelint has
+  // them, so each run expects exactly the ones it ships.
+  it('reports the newer core rules the installed stylelint ships', async () => {
+    const result = await stylelint.lint({
+      files: resolve(fixturesDir, 'invalid.sass'),
+      config,
+    });
+    const ruleNames = new Set(result.results[0]!.warnings.map((w) => w.rule));
+    for (const rule of ['selector-no-invalid']) {
+      expect(ruleNames.has(rule), rule).toBe(rule in stylelint.rules);
+    }
+  });
 });

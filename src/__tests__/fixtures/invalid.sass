@@ -98,3 +98,7 @@ $dupVar: blue
 // selector-no-deprecated: `:matches()` is the deprecated name of `:is()`
 .legacy:matches(.a, .b)
   color: $white
+
+// selector-no-invalid (stylelint 17.10+): sass-parser accepts the incomplete `2n+`
+.bad-nth:nth-child(2n+)
+  color: $white
