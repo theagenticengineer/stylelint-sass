@@ -94,3 +94,7 @@ $dupVar: blue
 // sass/dimension-no-non-numeric-values
 .bad-dimension
   width: $n + "px"
+
+// selector-no-deprecated: `:matches()` is the deprecated name of `:is()`
+.legacy:matches(.a, .b)
+  color: $white
