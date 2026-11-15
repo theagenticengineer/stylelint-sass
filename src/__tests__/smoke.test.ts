@@ -69,7 +69,7 @@ describe('recommended config', () => {
       config,
     });
     const ruleNames = new Set(result.results[0]!.warnings.map((w) => w.rule));
-    for (const rule of ['selector-no-invalid']) {
+    for (const rule of ['selector-no-invalid', 'value-no-invalid']) {
       expect(ruleNames.has(rule), rule).toBe(rule in stylelint.rules);
     }
   });

@@ -102,3 +102,7 @@ $dupVar: blue
 // selector-no-invalid (stylelint 17.10+): sass-parser accepts the incomplete `2n+`
 .bad-nth:nth-child(2n+)
   color: $white
+
+// value-no-invalid (stylelint 18+): calc() cannot add a number to a length
+.bad-calc
+  top: calc(1px + 2)
