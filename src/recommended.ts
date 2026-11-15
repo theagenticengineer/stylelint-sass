@@ -40,6 +40,7 @@ export default {
           'mixin',
           'include',
           'function',
+          'return',
           'extend',
           'at-root',
           'error',
