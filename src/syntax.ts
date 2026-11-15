@@ -1,6 +1,7 @@
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { sass } from 'sass-parser';
+import { toCssSyntaxError } from './utils/syntax-error.js';
 
 /**
  * Finds the private `my` symbol of each postcss copy that Stylelint runs on.
@@ -52,6 +53,8 @@ adoptSassParserNodes();
  *
  * `sass-parser` exports its syntaxes as named objects, so the package itself is not a
  * syntax. The methods are bound because `sass-parser` loses `this` when they are detached.
+ * A Sass syntax error becomes a `CssSyntaxError`, which Stylelint reports as a problem in that
+ * file instead of aborting the run.
  * Loading this module marks sass-parser's nodes as native to Stylelint's postcss, so they
  * keep their sass-parser prototype even when the consumer holds two postcss copies.
  *
@@ -64,7 +67,13 @@ adoptSassParserNodes();
  * ```
  */
 const syntax: { parse: typeof sass.parse; stringify: typeof sass.stringify } = {
-  parse: sass.parse.bind(sass),
+  parse: (css, opts) => {
+    try {
+      return sass.parse(css, opts);
+    } catch (error) {
+      throw toCssSyntaxError(error, opts?.from);
+    }
+  },
   stringify: sass.stringify.bind(sass),
 };
 
