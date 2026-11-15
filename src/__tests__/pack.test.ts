@@ -112,6 +112,22 @@ describe('published package', () => {
             '',
           ].join('\n'),
         );
+        // Stylelint 18 loads TypeScript configs with Node.js type stripping, which needs
+        // `import type` and erasable syntax only.
+        writeFileSync(
+          join(consumer, 'stylelint.config.ts'),
+          [
+            "import type { Config } from 'stylelint';",
+            '',
+            'const config: Config = {',
+            `  customSyntax: '${PUBLISHED_NAME}/syntax',`,
+            `  extends: ['${PUBLISHED_NAME}/recommended'],`,
+            '};',
+            '',
+            'export default config;',
+            '',
+          ].join('\n'),
+        );
         writeFileSync(join(consumer, 'nested.sass'), NESTED_SASS);
         copyFileSync(join(root, 'src/__tests__/fixtures/valid.sass'), join(consumer, 'valid.sass'));
       }, 180_000);
@@ -125,12 +141,19 @@ describe('published package', () => {
 
       // Runs the consumer's own stylelint CLI, which exits 2 when it reports problems and 1
       // when it crashes. It prints the formatter output to stderr.
-      const lint = (file: string) => {
+      const lint = (file: string, configFile?: string) => {
         const bin = join(
           dirname(resolveFromConsumer('stylelint/package.json')),
           'bin/stylelint.mjs',
         );
-        const run = spawnSync(process.execPath, [bin, file, '--formatter', 'json'], {
+        const args = [
+          bin,
+          file,
+          '--formatter',
+          'json',
+          ...(configFile ? ['--config', configFile] : []),
+        ];
+        const run = spawnSync(process.execPath, args, {
           cwd: consumer,
           encoding: 'utf8',
         });
@@ -149,6 +172,15 @@ describe('published package', () => {
         expect(rules).toContain('sass/no-color-literals');
         expect(rules).toContain('sass/no-debug');
       });
+
+      it.skipIf(!stylelint.startsWith('18.'))(
+        'lints nested .sass through a stylelint.config.ts on stylelint 18',
+        () => {
+          const { status, output, rules } = lint('nested.sass', 'stylelint.config.ts');
+          expect(status, output).toBe(2);
+          expect(rules).toContain('sass/no-debug');
+        },
+      );
 
       it('reports nothing on valid.sass', () => {
         const { status, output, rules } = lint('valid.sass');
