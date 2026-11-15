@@ -12,7 +12,7 @@
  * ```
  */
 import stylelint from 'stylelint';
-import { matchesPattern, toRegExp } from '../../utils/patterns.js';
+import { matchesPattern, toRegExp, unescapeIdentifier } from '../../utils/patterns.js';
 
 const { createPlugin, utils } = stylelint;
 
@@ -68,7 +68,12 @@ const ruleFunction: stylelint.Rule = (primary) => {
       // Only check placeholder selectors (%name)
       if (!selector.startsWith('%')) return;
 
-      const name = selector.slice(1);
+      // An interpolated name is only known once Sass runs.
+      if (selector.includes('#{')) return;
+
+      // sass-parser keeps CSS escapes in selectors as written, while Sass compares the decoded
+      // name, so `%f\6Fo` is `%foo`.
+      const name = unescapeIdentifier(selector.slice(1));
 
       if (!matchesPattern(name, pattern)) {
         utils.report({

@@ -40,6 +40,9 @@ Unlike `$variables` and mixin names, sass-parser does **not** normalize `_` to `
 selectors, so `%visually_hidden` and `%visually-hidden` are distinct. The default pattern uses `-`
 to match the broader Sass community convention.
 
+The rule decodes CSS escapes before matching, as Sass does, so `%f\6Fo` is checked as `%foo`. It
+skips interpolated names such as `%button-#{$size}`, which are only known once Sass runs.
+
 ## Configuration
 
 ```json
