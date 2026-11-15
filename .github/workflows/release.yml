@@ -1,0 +1,37 @@
+name: Release
+
+# Publishes the package to GitHub Packages when a version tag is pushed.
+# The tag must equal `v` + package.json version, so a tag cannot publish
+# a different version than the one reviewed in the PR.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://npm.pkg.github.com
+          scope: '@theagenticengineer'
+      - name: Tag matches package version
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "$version" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json $version"
+            exit 1
+          fi
+      - run: pnpm install --frozen-lockfile
+      # prepublishOnly runs `pnpm run check` and the build before upload.
+      - run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

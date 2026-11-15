@@ -5,7 +5,7 @@
  * Sass-specific rules suited for `.sass` (indented syntax) projects.
  */
 export default {
-  plugins: ['stylelint-sass'],
+  plugins: ['@theagenticengineer/stylelint-sass'],
   rules: {
     'color-no-invalid-hex': true,
     'block-no-empty': true,
