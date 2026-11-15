@@ -32,6 +32,26 @@ export function hasRule(name: string): boolean {
   return name in stylelint.rules;
 }
 
+/**
+ * Tells whether the installed Stylelint is at least the given version, for rule options newer
+ * than the oldest supported Stylelint.
+ *
+ * @param major - The minimum major version
+ * @param minor - The minimum minor version
+ * @returns `true` when the installed Stylelint is that version or newer
+ *
+ * @example
+ * ```ts
+ * it.skipIf(!stylelintAtLeast(17, 15))('uses ignoreFunctions', () => {});
+ * ```
+ */
+export function stylelintAtLeast(major: number, minor: number): boolean {
+  const manifest = resolve(import.meta.dirname, '../../../node_modules/stylelint/package.json');
+  const { version } = JSON.parse(readFileSync(manifest, 'utf8')) as { version: string };
+  const [installedMajor, installedMinor] = version.split('.').map(Number) as [number, number];
+  return installedMajor > major || (installedMajor === major && installedMinor >= minor);
+}
+
 /** A reported problem, reduced to what the tests assert. */
 export interface Problem {
   /** The rule that reported it. */
