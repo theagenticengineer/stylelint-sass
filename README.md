@@ -154,6 +154,9 @@ text:
   `color-named` never reports, and `color-no-hex` reports named colors as hex, with or without
   its `ignoreFunctions` option. `sass/no-color-literals` reads the source text, so it is the
   color rule for `.sass`.
+- Sass nested properties (`font:` with `family` and `size` children) leave the parent
+  declaration with an empty value, which `declaration-property-value-no-unknown` reports. So
+  `recommended` leaves that rule off.
 
 ## Contributing
 
