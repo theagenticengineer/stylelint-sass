@@ -145,6 +145,16 @@ npx stylelint "src/**/*.sass"
 
 <!-- markdownlint-enable MD013 -->
 
+## Core rules on `.sass`
+
+Core Stylelint rules read the AST that sass-parser builds, and sass-parser rewrites some source
+text:
+
+- Colors in declaration values become hex: `color: red` reaches the rules as `#ff0000`. So
+  `color-named` never reports, and `color-no-hex` reports named colors as hex, with or without
+  its `ignoreFunctions` option. `sass/no-color-literals` reads the source text, so it is the
+  color rule for `.sass`.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow, branch naming conventions,
