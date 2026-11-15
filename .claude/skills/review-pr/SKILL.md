@@ -97,17 +97,7 @@ If the issue is about implementing a lint rule:
 - **Blind spots found** → add high-value ones, note the
   rest as follow-up suggestions in the PR body.
 
-## Phase 1 — Local code review (before PR)
-
-Run PAL MCP Server `codereview` tool on the diff:
-
-- Address any issues found
-- If fixing the current (top) commit: amend it
-- If fixing an earlier commit in the stack: create a fixup
-  commit (`git commit --fixup <sha>`) then autosquash
-  (`git rebase --autosquash`)
-
-## Phase 2 — Submit PR
+## Phase 1 — Submit PR
 
 1. Submit via Graphite:
 
@@ -147,7 +137,7 @@ Run PAL MCP Server `codereview` tool on the diff:
    The title must start with `Closes #N:`. If not, re-run
    the `gh pr edit` command above.
 
-## Phase 3 — Monitor CI
+## Phase 2 — Monitor CI
 
 ```bash
 gh run list --branch <branch> --limit 1
@@ -162,68 +152,9 @@ gh run view <run-id> --log-failed
 
 Fix, push, re-monitor.
 
-## Phase 4 — Read Gemini CI review
+## Phase 3 — Hand off to human
 
-```bash
-gh api repos/theagenticengineer/stylelint-sass/pulls/<number>/comments
-```
-
-The ai-review workflow always posts (either inline issues
-or a "no issues found" summary).
-
-### Triage each suggestion
-
-For every suggestion Gemini raises, perform a rigorous
-analysis before deciding to adopt or dismiss:
-
-1. **Understand the claim** — restate what Gemini is
-   actually arguing (bug, missing test, style issue, etc.)
-   in your own words. Don't strawman it.
-
-2. **Gather authoritative evidence** — check the upstream
-   source of truth before forming an opinion:
-   - For rule behavior: read `stylelint-scss` source code
-     and test suite for the equivalent rule. Use web search
-     or the Task tool to fetch the actual implementation.
-   - For Sass semantics: check the official Sass docs.
-   - For Stylelint API usage: check Stylelint docs/source.
-   - For general coding claims: verify with language specs
-     or library docs.
-
-3. **Evaluate against evidence** — compare Gemini's claim
-   to what the authoritative source actually does:
-   - Does the evidence **support** Gemini? → Actionable.
-   - Does the evidence **contradict** Gemini? → Dismiss
-     with proof.
-   - Is the evidence **ambiguous** or does Gemini raise a
-     valid concern the upstream also has? → Consider
-     filing an upstream issue or adopting the fix as a
-     deliberate improvement. Flag to human reviewer.
-
-### Act on the verdict
-
-- **Actionable** — fix, push, re-monitor CI (back to
-  Phase 3).
-- **Upstream concern** — note it in the PR comment as a
-  potential upstream issue worth filing. Adopt or defer
-  based on scope.
-- **Dismissed** — post a PR comment with:
-  1. The specific claim being dismissed
-  2. The authoritative source consulted (link to source
-     code, test file, or docs)
-  3. What the source shows (concrete behavior, test cases,
-     or code paths)
-  4. The conclusion: why the claim is incorrect or out of
-     scope
-
-  Use `gh pr comment`. The human reviewer must be able to
-  verify the dismissal independently from the evidence
-  provided — never post bare assertions like "consistent
-  with X" without showing proof.
-
-## Phase 5 — Hand off to human
-
-All CI checks green + Gemini review addressed:
+All CI checks green:
 
 Report that the PR is ready for merge. The human merges
 via Graphite Web.

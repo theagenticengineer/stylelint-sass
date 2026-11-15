@@ -44,11 +44,11 @@ These are non-negotiable and apply to every session:
 2. **Test-first** — write tests before implementation. BAD/GOOD `.sass` cases from the rule spec
    are the acceptance criteria.
 3. **`pnpm check` before commit** — all quality gates must pass before any commit.
-4. **Every PR goes through `/review-pr`** — local PAL review, submit, monitor CI, read Gemini
-   feedback, then hand off to human. When dismissing a Gemini suggestion, the PR comment must
-   include **authoritative evidence** (link to upstream source code, test suite, or official docs)
-   proving the claim wrong — never post bare assertions. When Gemini raises a valid concern that
-   the upstream also has, flag it as a potential upstream issue rather than silently dismissing.
+4. **Every PR goes through `/review-pr`**: submit, monitor CI, then hand off to the human. When
+   dismissing a review suggestion, the PR comment must include **authoritative evidence** (link to
+   upstream source code, test suite, or official docs) proving the claim wrong. Never post bare
+   assertions. When a review raises a valid concern that the upstream also has, flag it as a
+   potential upstream issue rather than silently dismissing.
 5. **Rule issues include full spec** — when creating a rule issue, copy the BAD/GOOD `.sass` code
    blocks from the wiki rule spec verbatim into the issue body.
 6. **Fixup, don't separate** — when fixing a previous commit, use `git commit --fixup <sha>` then
@@ -75,7 +75,7 @@ These are non-negotiable and apply to every session:
    when multiple agents hit the same issue, wastes tokens on duplicate fixes.
 10. **PR title auto-closes its issue** — every PR title must follow the format
     `Closes #N: <description>` so GitHub automatically closes the linked issue on merge.
-    The `/review-pr` skill enforces this in Phase 2 via `gh pr edit --title`. The PR body
+    The `/review-pr` skill enforces this in Phase 1 via `gh pr edit --title`. The PR body
     should also include a summary of changes and a test plan. Never submit a PR with a bare
     template body.
 
@@ -85,8 +85,7 @@ These are non-negotiable and apply to every session:
 - `/create-issue` — create a structured GitHub issue via `gh` CLI
 - `/worktree` — create an isolated git worktree
 - `/post-merge` — sync main, clean up worktree, suggest next PR to review
-- `/review-pr` — 5-phase review loop: PAL local review, submit PR, monitor CI, read Gemini
-  review, hand off
+- `/review-pr`: review loop that submits the PR, monitors CI and hands off
 
 ## Knowledge Base (Wiki)
 

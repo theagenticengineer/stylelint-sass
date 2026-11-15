@@ -54,8 +54,8 @@ Claude Code skills automate the full workflow:
 - `/worktree` — create an isolated git worktree
 - `/post-merge` — sync main, clean up worktree, suggest
   next PR to review
-- `/review-pr` — full review loop (local review, submit,
-  monitor CI, read Gemini feedback)
+- `/review-pr`: full review loop (submit, monitor CI,
+  hand off)
 
 Example session:
 
@@ -119,13 +119,9 @@ commit (markdownlint + prettier on staged files).
 
 ## Code Review
 
-Every PR goes through three layers of review:
+Every PR goes through CI checks and human review:
 
-1. **PAL local review** — Gemini-powered code review via
-   PAL MCP Server, run locally before submitting the PR
-2. **Gemini CI review** — automated AI review workflow
-   posts inline comments on every PR
-3. **CI checks** — markdownlint, prettier, typecheck,
+1. **CI checks** — markdownlint, prettier, typecheck,
    eslint, vitest across Node 20/22
 
 ## Further Reading
@@ -137,5 +133,4 @@ workflows, and more — see [docs/sdlc.md](docs/sdlc.md).
 ## PR Workflow
 
 1. All CI checks must be green
-2. Gemini review comments must be addressed
-3. Human merges via Graphite Web
+2. Human merges via Graphite Web

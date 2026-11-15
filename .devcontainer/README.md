@@ -129,26 +129,6 @@ gt auth              # if using Graphite
 claude               # completes OAuth login
 ```
 
-## PAL MCP Server (recommended)
-
-[PAL MCP Server](https://github.com/BeehiveInnovations/pal-mcp-server) enables local AI code
-review via the `/review-pr` skill (Phase 1: `mcp__pal__codereview`). Local review catches issues
-before CI, saving a full push-and-wait round-trip.
-
-**How it works**: `link-claude-config.sh` symlinks `~/.claude/.mcp.json` to the host staging mount
-AND registers the server definitions into `~/.claude.json` (the same place `claude mcp add` writes).
-This is necessary because Claude Code requires servers to be registered at the top-level `mcpServers`
-key in `~/.claude.json` — merely having a `.mcp.json` file is not enough. If you have PAL configured
-on your host, it's available inside the container with no extra setup.
-
-**First-time setup** (on your host, not inside the container):
-
-1. Install PAL following the
-   [instructions](https://github.com/BeehiveInnovations/pal-mcp-server#installation)
-2. Ensure API keys (e.g. `GEMINI_API_KEY`) are available — for Codespaces, add them as
-   [encrypted secrets](https://docs.github.com/en/codespaces/managing-your-codespaces/managing-encrypted-secrets-for-your-codespaces)
-3. Verify PAL works: inside the container, run `/mcp` in Claude Code — PAL tools should appear
-
 ## What's included
 
 | Tool            | Purpose                                  |
