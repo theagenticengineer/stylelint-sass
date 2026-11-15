@@ -64,8 +64,8 @@ The fastest path to a working environment. Everything is pre-installed.
 2. Open the repo and run **Dev Containers: Reopen in Container**
 3. Wait for the container to build (first time takes a few minutes)
 
-The container includes: Node 22, pnpm, GitHub CLI (gh), Graphite
-CLI (gt), Claude Code, and all VS Code extensions.
+The container includes: Node 22, pnpm, GitHub CLI (gh), Claude
+Code, and all VS Code extensions.
 
 See [.devcontainer/README.md](../.devcontainer/README.md) for details.
 
@@ -79,9 +79,6 @@ If you prefer not to use a Dev Container:
 3. **GitHub CLI (gh)** — used by agentic skills for issue/PR
    management (`brew install gh` or
    [cli.github.com](https://cli.github.com/))
-4. **Graphite CLI (gt)** — used by agentic skills for branch
-   submission and restacking
-   (`npm install -g @withgraphite/graphite-cli`)
 
 ```bash
 git clone https://github.com/theagenticengineer/stylelint-sass.git
@@ -262,10 +259,9 @@ remove worktrees manually. After the human merges a PR, run
 surface the next PR to review.
 
 Independent features branch off `main`. Stacked features use a
-parent branch — this is
-[Graphite's stacking model](https://graphite.dev/docs/stacking),
-where a chain of dependent branches are reviewed as focused,
-incremental PRs instead of one large diff:
+parent branch, so a chain of dependent branches is reviewed as
+focused, incremental PRs instead of one large diff. Each stacked
+PR sets its parent with `gh pr create --base <parent-branch>`:
 
 ```bash
 git worktree add .worktrees/feat/sass-lint-13-child \
@@ -307,14 +303,9 @@ GIT_SEQUENCE_EDITOR=true git rebase --autosquash
 
 ### Pushing
 
-Feature branches go through Graphite so that stacking metadata
-stays in sync with the remote — using plain `git push` would
-break Graphite's dependency graph and cause restacking failures
-downstream.
-
-- **Feature branches** (worktrees): use `gt restack` then `gt submit`
-- **Main branch**: use `git push origin main` directly (Graphite
-  does not manage trunk)
+- **Feature branches** (worktrees): `git push -u origin <branch>`,
+  and `git push --force-with-lease` after a rebase
+- **Main branch**: `git push origin main`
 - **Never force-push** main
 
 ---
@@ -443,7 +434,7 @@ CI checks gate every PR, and the human maintainer reviews it.
 
 ### Human review
 
-The human maintainer reviews the PR via Graphite Web and merges.
+The human maintainer reviews the PR on GitHub and merges it.
 
 ### Handling review feedback
 
@@ -605,5 +596,5 @@ Two templates are available in `.github/ISSUE_TEMPLATE/`:
 ### PR workflow
 
 1. All CI checks must be green
-2. Human merges via Graphite Web
+2. Human merges on GitHub
 3. PR title must follow `Closes #N: <description>` format

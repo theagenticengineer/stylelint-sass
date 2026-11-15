@@ -99,13 +99,15 @@ If the issue is about implementing a lint rule:
 
 ## Phase 1 — Submit PR
 
-1. Submit via Graphite:
+1. Push the branch and open the PR (for a stacked PR, pass
+   `--base <parent-branch>`):
 
    ```bash
-   gt submit
+   git push -u origin <branch>
+   gh pr create --fill
    ```
 
-2. After submit, update the PR title and body. Extract the
+2. After the PR opens, update its title and body. Extract the
    issue number from the commit message (`feat(#N):`) or
    branch name (`feat/sass-lint-N-...`).
 
@@ -157,4 +159,4 @@ Fix, push, re-monitor.
 All CI checks green:
 
 Report that the PR is ready for merge. The human merges
-via Graphite Web.
+it on GitHub.

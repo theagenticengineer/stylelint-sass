@@ -13,17 +13,11 @@ set -euo pipefail
 # --- Project dependencies ---
 CI=1 pnpm install
 
-# --- Global CLIs ---
-npm i -g @withgraphite/graphite-cli
-
 # --- Claude Code (writes to container-local ~/.claude — no host interference) ---
 # The ~/.claude/projects bind mount causes Docker to create ~/.claude as root.
 # Fix ownership so the installer (and Claude Code itself) can write to it.
 sudo chown "$(id -u):$(id -g)" "$HOME/.claude"
 curl -fsSL https://claude.ai/install.sh | bash
-
-# --- uv/uvx (for PAL MCP server) ---
-curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # --- Shell config ---
 grep -q 'alias claude!' ~/.bashrc 2>/dev/null || \

@@ -105,5 +105,5 @@ and rule implementation guide.
 The fastest way to get a working dev environment is with a
 [Dev Container](.devcontainer/README.md) — open the repo in VS Code or Cursor and run
 **Dev Containers: Reopen in Container**. Everything (Node 22, pnpm, GitHub CLI (gh),
-Graphite CLI (gt), Claude Code) is pre-installed, and host authentication persists across rebuilds
+Claude Code) is pre-installed, and host authentication persists across rebuilds
 via bind mounts.

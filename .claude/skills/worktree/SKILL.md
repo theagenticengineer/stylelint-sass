@@ -34,19 +34,13 @@ phase description).
    pnpm install
    ```
 
-4. Register the branch with Graphite:
-
-   ```bash
-   gt track
-   ```
-
-5. Verify:
+4. Verify:
 
    ```bash
    pnpm check
    ```
 
-6. Report the worktree path for the subagent
+5. Report the worktree path for the subagent
 
 ## Stacking branches
 
@@ -59,5 +53,5 @@ git worktree add .worktrees/feat/sass-lint-N-<title> \
   feat/sass-lint-M-<parent-title>
 ```
 
-Then inside the new worktree: `pnpm install && gt track`.
-Graphite will recognize the stack automatically.
+Then inside the new worktree: `pnpm install`. Open its PR
+with `gh pr create --base feat/sass-lint-M-<parent-title>`.

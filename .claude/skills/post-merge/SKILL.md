@@ -1,7 +1,7 @@
 ---
 description: >-
   Sync main after a PR merge, clean up its worktree, and suggest the next PR to review.
-  Use after the human merges a PR via Graphite Web.
+  Use after the human merges a PR on GitHub.
 ---
 
 # Post-Merge
@@ -15,8 +15,9 @@ Argument: worktree name or branch (e.g. `mixins-before-decl`)
 ## Step 1 — Sync merged changes
 
 ```bash
-cd /Users/fabio/workspace/sass-lint
-gt sync
+cd "$(git worktree list | head -1 | cut -d' ' -f1)"  # the main working tree
+git pull --ff-only origin main
+git fetch --prune
 ```
 
 ## Step 2 — Identify what was merged
@@ -34,7 +35,7 @@ For each merged branch that still has a local worktree:
 
 ```bash
 git worktree remove .worktrees/<name>
-gt delete --force <branch>
+git branch -D <branch>
 ```
 
 If `$ARGUMENTS` was given, clean that specific worktree.
@@ -56,18 +57,19 @@ If there's a single clear candidate, propose it directly.
 If multiple are open, list them all with a recommendation.
 If none are open, report that the queue is clear.
 
-## Step 5 — Restack and prepare the next PR
+## Step 5 — Rebase and prepare the next PR
 
 If a next PR was identified and the user agrees:
 
 ```bash
 cd .worktrees/<next-worktree>
-gt restack
+git rebase origin/main  # or the parent branch, for a stacked PR
+git push --force-with-lease
 pnpm install
 pnpm check
 ```
 
 Then propose running `/review-pr` on it.
 
-If `pnpm check` fails after restack, report the failure —
+If `pnpm check` fails after the rebase, report the failure —
 do not attempt to fix (blockers interrupt, not fix).

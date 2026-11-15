@@ -133,4 +133,4 @@ workflows, and more — see [docs/sdlc.md](docs/sdlc.md).
 ## PR Workflow
 
 1. All CI checks must be green
-2. Human merges via Graphite Web
+2. Human merges on GitHub

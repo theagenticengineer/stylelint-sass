@@ -4,13 +4,12 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "initializeCommand": "mkdir -p ${HOME}/.claude/projects ${HOME}/.config/gh ${HOME}/.config/graphite && [ -f ${HOME}/.claude.json ] || touch ${HOME}/.claude.json",
+  "initializeCommand": "mkdir -p ${HOME}/.claude/projects ${HOME}/.config/gh && [ -f ${HOME}/.claude.json ] || touch ${HOME}/.claude.json",
   "mounts": [
     "source=${localEnv:HOME}/.claude,target=/home/node/.claude-host,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude/projects,target=/home/node/.claude/projects,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude.json,target=/home/node/.claude-host.json,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.config/gh,target=/home/node/.config/gh,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.config/graphite,target=/home/node/.config/graphite,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.config/gh,target=/home/node/.config/gh,type=bind,consistency=cached"
   ],
   "remoteEnv": {
     "HOST_PROJECT_PATH": "${localWorkspaceFolder}",

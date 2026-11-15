@@ -7,7 +7,7 @@ CHECKOUT_TYPE=$3
 
 BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
 
-# Allow main (managed directly, not via Graphite)
+# Allow main, which is never a feature branch
 [ "$BRANCH" = "main" ] && exit 0
 
 PATTERN='^(feat|fix|chore|docs|refactor|test|ci)/sass-lint-[0-9]+-[a-z0-9]+(-[a-z0-9]+)*$'
