@@ -31,6 +31,13 @@ like `&.is-active`), or when it appears in a non-first position (`.parent &`).
 
 Removing redundant `&` selectors keeps stylesheets concise and easier to scan.
 
+The rule checks only rules inside another style rule, through any `@media`, `@supports` or
+`@include` blocks in between. Elsewhere `&` carries meaning, so the rule accepts it:
+
+- at the root, and in root-level `@media`, `@supports` or `@include` blocks, Dart Sass 1.99 and
+  later emit `&` as-is, where CSS reads it as the scoping root
+- in a `@mixin`, `&` is the rule that includes the mixin, known only at the `@include`
+
 ## Configuration
 
 ```json

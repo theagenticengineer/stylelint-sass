@@ -77,6 +77,24 @@ function isRedundant(selector: string): boolean {
 }
 
 /**
+ * Check whether a rule sits inside another style rule, through any at-rules in between.
+ *
+ * @param rule - The rule to check
+ * @returns `true` when an ancestor is a style rule
+ */
+function hasParentRule(rule: { parent?: { type: string; parent?: unknown } }): boolean {
+  let ancestor = rule.parent;
+  while (ancestor) {
+    if (ancestor.type === 'rule') return true;
+    if (ancestor.type === 'atrule' && (ancestor as { name?: string }).name === 'mixin') {
+      return false;
+    }
+    ancestor = ancestor.parent as typeof ancestor;
+  }
+  return false;
+}
+
+/**
  * Stylelint rule function for `sass/selector-no-redundant-nesting-selector`.
  *
  * @param primary - The primary option (boolean `true` to enable)
@@ -90,8 +108,9 @@ const ruleFunction: stylelint.Rule = (primary) => {
     if (!validOptions) return;
 
     root.walkRules((rule) => {
-      // Skip rules that aren't nested (top-level rules can't have &)
-      if (!rule.parent || rule.parent.type === 'root') return;
+      // Without a parent rule, `&` is the scoping root (Dart Sass 1.99) or, in a `@mixin`, the
+      // rule that includes it, so `& .x` differs from `.x` and stays.
+      if (!hasParentRule(rule)) return;
 
       const selector = rule.selector;
 
